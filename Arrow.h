@@ -8,7 +8,6 @@ class Arrow
 	Point location;
 	//Direction;
 public:
-	void test();
 };
 
 #endif
