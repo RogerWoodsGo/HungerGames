@@ -8,5 +8,5 @@ class Arrow
 	Point location;
 	//Direction;
 public:
-
+	Void Test3(){}
 #endif
