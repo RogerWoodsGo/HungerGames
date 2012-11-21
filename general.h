@@ -8,4 +8,11 @@ const int WIDTH=79;
 const int HEIGHT=24;
 const int NUMBEROFPLAYERS=2;
 
+enum Direction { 
+	Up,
+	Right,
+	Down,
+	Left
+};
+
 #endif

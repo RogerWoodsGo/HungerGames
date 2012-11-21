@@ -1,8 +1,7 @@
 #ifndef _POINT_H_
 #define _POINT_H_
 
-#include <windows.h>
-#include <process.h>
+//#include "Board.h"
 #include "general.h"
 
 class Point
@@ -22,17 +21,8 @@ public:
 		x1=x;
 		y1=y;
 	}
-	void draw(char c)
-	{
-		HANDLE hConsoleOutput;
-		COORD dwCursorPosition;
-		cout.flush();
-		dwCursorPosition.X = x;
-		dwCursorPosition.Y = y;
-		hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetConsoleCursorPosition(hConsoleOutput,dwCursorPosition);
-		cout << c;
-	}
+	void draw(char c);
+	char getNextMove(char** text,Direction direct);
 };
 
 #endif

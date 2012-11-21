@@ -13,6 +13,7 @@ class Game
 public:
 	Game(){};
 	void play(char* fileName);
+	void movePlayers(PlayerList& pList,Board& b);
 	void throwGifts();
 };
 

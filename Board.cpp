@@ -1,6 +1,6 @@
 #include "Board.h"
 
-void Board::readFile(char* fileName,char text[HEIGHT][WIDTH+1],int& numOfPlayersOnBoard,Point& scoreBoardPlace,PlayerList& pList)
+void Board::readFile(char* fileName,char** text,int& numOfPlayersOnBoard,Point& scoreBoardPlace,PlayerList& pList)
 {
 	FILE* f;
 	char ch;
@@ -21,7 +21,7 @@ void Board::readFile(char* fileName,char text[HEIGHT][WIDTH+1],int& numOfPlayers
 				case 'P':
 					if(nOPOB<NUMBEROFPLAYERS)
 					{
-						//text[i][j]='P';
+						text[i][j]=' ';
 						pList.Add(j,i);
 						nOPOB++;
 					}
@@ -42,11 +42,12 @@ void Board::readFile(char* fileName,char text[HEIGHT][WIDTH+1],int& numOfPlayers
 		text[i][WIDTH]='\0';
 	}
 	fclose(f);
+	setText(text);
 	numOfPlayersOnBoard=nOPOB;
 	scoreBoardPlace=sBP;
 }
 
-void Board::printText(char text[HEIGHT][WIDTH+1],PlayerList& pList)
+void Board::printText(char** text,PlayerList& pList)
 {
 	for(int i=0;i<HEIGHT;i++)
 	{
@@ -54,3 +55,9 @@ void Board::printText(char text[HEIGHT][WIDTH+1],PlayerList& pList)
 	}
 	pList.Print();
 }
+/*
+char Board::getContent(int x, int y)
+{
+	return text[y][x];
+}
+*/

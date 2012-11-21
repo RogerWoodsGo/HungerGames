@@ -5,7 +5,7 @@
 
 class PlayerList
 {
-	PlayerItem *head;
+	PlayerItem* head;
 	char numOfPlayers;
 	PlayerList(const PlayerList&);
 public:
@@ -16,6 +16,7 @@ public:
 	}
 	void Add(int x,int y);
 	void Remove(const Player& player);
+	PlayerItem* getHead(){return head;}
 	void Print();
 };
 
