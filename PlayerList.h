@@ -10,14 +10,11 @@ class PlayerList
 	PlayerList(const PlayerList&);
 public:
 	PlayerList():head(0),numOfPlayers(0){}
-	~PlayerList()
-	{
-		delete head;
-	}
 	void Add(int x,int y);
 	void Remove(const Player& player);
 	PlayerItem* getHead(){return head;}
 	void Print();
+	~PlayerList(){delete head;}
 };
 
 #endif

@@ -1,12 +1,14 @@
 #include "Board.h"
 
-void Board::readFile(char* fileName,char** text,int& numOfPlayersOnBoard,Point& scoreBoardPlace,PlayerList& pList)
+void Board::readFile(char* fileName,PlayerList& pList)
 {
 	FILE* f;
-	char ch;
-	int nOPOB=0;
+	char ch,**text;
 	bool OWasFound=false;
-	Point sBP(0,0);
+	text=new char*[HEIGHT];
+	for(int i=0;i<HEIGHT;i++)
+		text[i]=new char[WIDTH+1];
+	setText(text);
 	f=fopen(fileName,"r");
 	for(int i=0;i<HEIGHT;i++)
 	{
@@ -19,11 +21,11 @@ void Board::readFile(char* fileName,char** text,int& numOfPlayersOnBoard,Point& 
 					text[i][j]=(char)178;
 					break;
 				case 'P':
-					if(nOPOB<NUMBEROFPLAYERS)
+					if(numOfPlayersOnBoard<NUMBEROFPLAYERS)
 					{
 						text[i][j]=' ';
-						pList.Add(j,i);
-						nOPOB++;
+						pList.Add(i,j);
+						numOfPlayersOnBoard++;
 					}
 					else text[i][j]=' ';
 					break;
@@ -31,7 +33,7 @@ void Board::readFile(char* fileName,char** text,int& numOfPlayersOnBoard,Point& 
 					if(!OWasFound)
 					{
 						OWasFound=true;
-						sBP.setPlace(i,j);
+						scoreBoardPlace.setPlace(i,j);
 					}
 					text[i][j]=' ';
 					break;
@@ -42,14 +44,10 @@ void Board::readFile(char* fileName,char** text,int& numOfPlayersOnBoard,Point& 
 		text[i][WIDTH]='\0';
 	}
 	fclose(f);
-	setText(text);
-	numOfPlayersOnBoard=nOPOB;
-	scoreBoardPlace=sBP;
 }
 
 void Board::printText(PlayerList& pList)
 {
-	char** text=getText();
 	for(int i=0;i<HEIGHT;i++)
 	{
 		cout << text[i] << endl;
@@ -59,5 +57,12 @@ void Board::printText(PlayerList& pList)
 
 char Board::getContent(int x, int y)
 {
-	return text[y][x];
+	return text[x][y];
+}
+
+Board::~Board()
+{
+	for(int i=0;i<HEIGHT;i++)
+		delete text[i];
+	delete []text;
 }

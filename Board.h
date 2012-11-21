@@ -8,14 +8,17 @@
 class Board
 {
 	char** text;
+	int numOfPlayersOnBoard;
+	Point scoreBoardPlace;
 	Board(const Board&);
 public:
-	Board(){};
-	void readFile(char* fileName,char** text,int& numOfPlayersOnBoard,Point& scoreBoardPlace,PlayerList& pList);
+	Board():text(0),numOfPlayersOnBoard(0),scoreBoardPlace(0,0){}
+	void readFile(char* fileName,PlayerList& pList);
 	void setText(char** textToSet){text=textToSet;}
 	char** getText(){return text;}
 	void printText(PlayerList& pList);
 	char getContent(int x, int y);
+	~Board();
 };
 
 #endif

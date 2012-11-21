@@ -8,8 +8,8 @@ void Point::draw(char c)
 	HANDLE hConsoleOutput;
 	COORD dwCursorPosition;
 	cout.flush();
-	dwCursorPosition.X = x;
-	dwCursorPosition.Y = y;
+	dwCursorPosition.X = y;
+	dwCursorPosition.Y = x;
 	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleCursorPosition(hConsoleOutput,dwCursorPosition);
 	cout << c;
