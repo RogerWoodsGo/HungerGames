@@ -3,9 +3,6 @@
 
 #include "Board.h"
 #include "PlayerList.h"
-#include "general.h"
-#include "Point.h"
-
 
 class Game
 {

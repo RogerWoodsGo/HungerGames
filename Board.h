@@ -14,8 +14,8 @@ public:
 	void readFile(char* fileName,char** text,int& numOfPlayersOnBoard,Point& scoreBoardPlace,PlayerList& pList);
 	void setText(char** textToSet){text=textToSet;}
 	char** getText(){return text;}
-	void printText(char** text,PlayerList& pList);
-	//char getContent(int x, int y);
+	void printText(PlayerList& pList);
+	char getContent(int x, int y);
 };
 
 #endif

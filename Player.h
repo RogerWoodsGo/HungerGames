@@ -8,12 +8,12 @@ class Player
 {
 	Point* location;
 	Direction direct;
-	int numOfArrowes;
+	int numOfArrows;
 	int score;
 	char ch;
 	Player(const Player&);
 public:
-	Player(int x,int y,char symbol):location(new Point(x,y)),numOfArrowes(4),score(1000),ch(symbol),direct(randomDirection()){}
+	Player(int x,int y,char symbol):location(new Point(x,y)),numOfArrows(4),score(1000),ch(symbol),direct(randomDirection()){}
 	void drawPlayer(){(*location).draw(ch);}
 	void setDirect(Direction newDirect){direct=newDirect;}
 	Point* getPlace(){return location;}

@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "general.h"
+#include "Point.h"
 
 void Game::play(char* fileName)
 {
@@ -12,7 +14,7 @@ void Game::play(char* fileName)
 	for(int i=0;i<HEIGHT;i++)
 		text[i]=new char[WIDTH+1];
 	b.readFile(fileName,text,numOfPlayersOnBoard,scoreBoardPlace,pList);
-	b.printText(text,pList);
+	b.printText(pList);
 
 	movePlayers(pList,b);
 
@@ -39,7 +41,7 @@ void Game::movePlayers(PlayerList& pList,Board& b)
 	while(curr!=0)
 	{
 		direct=curr->getPlayer()->getDirect();
-		nextPlace=curr->getPlayer()->getPlace()->getNextMove(b.getText(),direct);
+		nextPlace=curr->getPlayer()->getPlace()->getNextMove(b,direct);
 		switch (nextPlace)
 		{
 		case 'W':		break;

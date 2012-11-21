@@ -9,10 +9,10 @@ const int HEIGHT=24;
 const int NUMBEROFPLAYERS=2;
 
 enum Direction { 
-	Up,
-	Right,
-	Down,
-	Left
+	Up=0,
+	Right=1,
+	Down=2,
+	Left=3
 };
 
 #endif

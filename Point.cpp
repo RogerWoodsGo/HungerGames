@@ -1,4 +1,5 @@
 #include "Point.h"
+#include "Board.h"
 #include <windows.h>
 #include <process.h>
 
@@ -14,7 +15,7 @@ void Point::draw(char c)
 	cout << c;
 }
 
-char Point::getNextMove(char** text,Direction direct)
+char Point::getNextMove(Board& b,Direction direct)
 {
 	int nextX=x,nextY=y;
 	switch (direct)
@@ -24,5 +25,5 @@ char Point::getNextMove(char** text,Direction direct)
 		case Down:	nextY=(y+1+HEIGHT)%HEIGHT;	break;
 		case Left:	nextX=(x-1+WIDTH)%WIDTH;	break;
 		}
-	return text[nextY][nextX];
+	return b.getContent(nextX,nextY);
 }

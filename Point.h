@@ -1,8 +1,8 @@
 #ifndef _POINT_H_
 #define _POINT_H_
 
-//#include "Board.h"
 #include "general.h"
+class Board;// Forward Decleration
 
 class Point
 {
@@ -22,7 +22,7 @@ public:
 		y1=y;
 	}
 	void draw(char c);
-	char getNextMove(char** text,Direction direct);
+	char getNextMove(Board& b,Direction direct);
 };
 
 #endif

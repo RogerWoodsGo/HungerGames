@@ -47,17 +47,17 @@ void Board::readFile(char* fileName,char** text,int& numOfPlayersOnBoard,Point& 
 	scoreBoardPlace=sBP;
 }
 
-void Board::printText(char** text,PlayerList& pList)
+void Board::printText(PlayerList& pList)
 {
+	char** text=getText();
 	for(int i=0;i<HEIGHT;i++)
 	{
 		cout << text[i] << endl;
 	}
 	pList.Print();
 }
-/*
+
 char Board::getContent(int x, int y)
 {
 	return text[y][x];
 }
-*/
