@@ -2,14 +2,16 @@
 #define _PLAYERITEM_H_
 
 #include "Player.h"
+class PlayerList;// Forward Decleration
 
 class PlayerItem
 {
 	Player* pPlayer;
 	PlayerItem* next;
+	const PlayerList* pList;
 	PlayerItem(const PlayerItem&);
 public:
-	PlayerItem(int x,int y,char ch,PlayerItem* head):pPlayer(new Player(x,y,ch)),next(head){}
+	PlayerItem(const PlayerList* lst,int x,int y,char ch,PlayerItem* head):pList(lst),pPlayer(new Player(x,y,ch)),next(head){pPlayer->setItem(this);}
 	PlayerItem():pPlayer(0),next(0){}
 	~PlayerItem()
 	{

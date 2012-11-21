@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "PlayerItem.h"
 
 Direction Player::randomDirection()
 {/*
