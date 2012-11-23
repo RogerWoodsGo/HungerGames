@@ -7,7 +7,7 @@ void Board::readFile(char* fileName,PlayerList& pList)
 	bool OWasFound=false;
 	text=new char*[HEIGHT];
 	for(int i=0;i<HEIGHT;i++)
-		text[i]=new char[WIDTH+1];
+		text[i]=new char[WIDTH];
 	setText(text);
 	f=fopen(fileName,"r");
 	for(int i=0;i<HEIGHT;i++)
@@ -18,13 +18,14 @@ void Board::readFile(char* fileName,PlayerList& pList)
 			switch(ch)
 			{
 				case 'W':
-					text[i][j]=(char)178;
+					text[i][j]=(char)(178);
 					break;
 				case 'P':
 					if(numOfPlayersOnBoard<NUMBEROFPLAYERS)
 					{
-						text[i][j]=' ';
+						text[i][j]='P';
 						pList.Add(i,j);
+						pList.getHead()->getPlayer()->getPlace()->setBoard(this);
 						numOfPlayersOnBoard++;
 					}
 					else text[i][j]=' ';
@@ -41,7 +42,6 @@ void Board::readFile(char* fileName,PlayerList& pList)
 			}
 		}
 		fgetc(f);
-		text[i][WIDTH]='\0';
 	}
 	fclose(f);
 }
@@ -50,19 +50,41 @@ void Board::printText(PlayerList& pList)
 {
 	for(int i=0;i<HEIGHT;i++)
 	{
-		cout << text[i] << endl;
+		for(int j=0;j<WIDTH;j++)
+		{
+			if(text[i][j]=='P')
+			{
+				cout << " ";
+			}
+			else
+			{
+				cout << text[i][j];
+			}
+		}
+		cout << endl;
 	}
 	pList.Print();
 }
 
-char Board::getContent(int x, int y)
+char Board::getContent(Point& p)
 {
+	int x,y;
+	p.getPlace(x,y);
 	return text[x][y];
+}
+
+void Board::setContent(Point& p,char ch)
+{
+	int x,y;
+	p.getPlace(x,y);
+	text[x][y]=ch;
 }
 
 Board::~Board()
 {
 	for(int i=0;i<HEIGHT;i++)
+	{
 		delete text[i];
+	}
 	delete []text;
 }

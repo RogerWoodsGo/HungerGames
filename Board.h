@@ -12,12 +12,14 @@ class Board
 	Point scoreBoardPlace;
 	Board(const Board&);
 public:
-	Board():text(0),numOfPlayersOnBoard(0),scoreBoardPlace(0,0){}
+	Board():numOfPlayersOnBoard(0),scoreBoardPlace(0,0){}
 	void readFile(char* fileName,PlayerList& pList);
 	void setText(char** textToSet){text=textToSet;}
 	char** getText(){return text;}
 	void printText(PlayerList& pList);
-	char getContent(int x, int y);
+	char getContent(Point& p);
+	void setContent(Point& p,char ch);
+	bool checkBoard();
 	~Board();
 };
 

@@ -18,10 +18,13 @@ public:
 	Player(int x,int y,char symbol):location(new Point(x,y)),numOfArrows(4),score(1000),ch(symbol),direct(randomDirection()){}
 	void setItem(const PlayerItem* item){pItem=item;}
 	void drawPlayer(){(*location).draw(ch);}
-	void setDirect(Direction newDirect){direct=newDirect;}
+	//void setDirect(Direction newDirect){direct=newDirect;}
 	Point* getPlace(){return location;}
 	Direction getDirect(){return direct;}
+	void setDirection();
 	Direction randomDirection();
+	void move();
+	//PlayerItem* getPlayerItem(){return pItem;}
 	~Player(){delete location;}
 };
 

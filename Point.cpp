@@ -17,15 +17,30 @@ void Point::draw(char c)
 	cout << c;
 }
 
-char Point::getNextMove(Board& b,Direction direct)
+void Point::getNextMove(Direction direct,Point& p)
 {
 	int nextX=x,nextY=y;
 	switch (direct)
-		{
-		case Up:	nextY=(y-1+HEIGHT)%HEIGHT;	break;
-		case Right:	nextX=(x+1+WIDTH)%WIDTH;	break;
-		case Down:	nextY=(y+1+HEIGHT)%HEIGHT;	break;
-		case Left:	nextX=(x-1+WIDTH)%WIDTH;	break;
-		}
-	return b.getContent(nextX,nextY);
+	{
+	case Up:	nextX=(x-1+HEIGHT)%HEIGHT;	break;
+	case Right:	nextY=(y-1+WIDTH)%WIDTH;	break;
+	case Down:	nextX=(x+1+HEIGHT)%HEIGHT;	break;
+	case Left:	nextY=(y+1+WIDTH)%WIDTH;	break;
+	}
+	p.setPlace(nextX,nextY);
+}
+
+void Point::movePoint(Point& p,char ch)
+{
+	int x,y;
+	Point currentPoint;
+	getPlace(x,y);
+	currentPoint.setPlace(x,y);
+	draw(' ');//Remove player from screen
+	getBoard()->setContent(currentPoint,' ');//Remove player from text
+	p.getPlace(x,y);//Get the new place for player
+	setPlace(x,y);//Set the new place for player
+	draw(ch);//Draw player on screen
+	getBoard()->setContent(p,'P');//
+
 }

@@ -16,6 +16,7 @@ public:
 	void Remove(const Player& player);
 	PlayerItem* getHead(){return head;}
 	void Print();
+	//Board* getBoard(){return b;}
 	~PlayerList(){delete head;}
 };
 

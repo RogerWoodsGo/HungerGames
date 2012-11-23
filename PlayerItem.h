@@ -20,6 +20,7 @@ public:
 	}
 	PlayerItem* getNext(){return next;}
 	Player* getPlayer(){return pPlayer;}
+	//PlayerList* getPlayerList(){return pList;}
 	void setNext(PlayerItem* nextPlayer){next = nextPlayer;}
 };
 
