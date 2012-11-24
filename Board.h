@@ -22,7 +22,11 @@ public:
 	bool checkBoard(PlayerList& pList);
 	bool randomLocation(Point& p);
 	void throwGifts();
+<<<<<<< HEAD
 	void chen();
+=======
+	void Vladik();
+>>>>>>> d3ccc80f1f0d9c524c7e5bafe7e0cd1d04763599
 	~Board();
 };
 
