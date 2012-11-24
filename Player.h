@@ -21,6 +21,11 @@ public:
 	//void setDirect(Direction newDirect){direct=newDirect;}
 	Point* getPlace(){return location;}
 	Direction getDirect(){return direct;}
+	int getArrows(){return numOfArrows;}
+	void setArrows(int num){numOfArrows=num;}
+	int getScore(){return score;}
+	void setScore(int num){score=num;}
+	char getChar(){return ch;}
 	void setDirection();
 	Direction randomDirection();
 	void move();

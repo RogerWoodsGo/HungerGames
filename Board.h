@@ -24,6 +24,7 @@ public:
 	void throwGifts(PlayerList& pList);
 	bool isPointInScoreBoard(Point& p);
 	bool isPointNearAPlayer(Point& p,PlayerList& pList);
+	void printScoreBoard(PlayerList& pList);
 	~Board();
 };
 

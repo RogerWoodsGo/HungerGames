@@ -271,6 +271,58 @@ bool Board::isPointInScoreBoard(Point& p)
 	else return false;
 }
 
+void Board::printScoreBoard(PlayerList& pList)
+{
+	int SBx,SBy,x,y,score,arrows;
+	char ch;
+	Point p;
+	PlayerItem* curr = pList.getHead();
+	scoreBoardPlace.getPlace(SBx,SBy);
+	while(curr!=0)
+	{
+		x=SBx;
+		y=SBy;
+		scoreBoardPlace.getPlace(x,y);
+		arrows=curr->getPlayer()->getArrows();
+		score=curr->getPlayer()->getScore();
+		ch=curr->getPlayer()->getChar();
+		x+=(ch-1)*2;
+		p.setPlace(x,y);
+		p.draw(ch);
+		cout << " ";
+		if(arrows>99)
+		{
+			cout << arrows;
+		}
+		else if(arrows>9)
+		{
+			cout << " " << arrows;
+		}
+		else
+		{
+			cout << "  " << arrows;
+		}
+		cout << " ";
+		if(score>999)
+		{
+			cout << score;
+		}
+		else if(score>99)
+		{
+			cout << " " << score;
+		}
+		else if(score>9)
+		{
+			cout << "  " << score;
+		}
+		else
+		{
+			cout << "   " << score;
+		}
+		curr=curr->getNext();
+	}
+}
+
 Board::~Board()
 {
 	for(int i=0;i<HEIGHT;i++)

@@ -25,7 +25,7 @@ void Game::play(char* fileName)
 			movePlayers(pList);
 			//moveArrows(aList);
 			b.throwGifts(pList);
-			//updateScoreBoard(pList);
+			b.printScoreBoard(pList);
 			if(_kbhit()&&_getch()==ESC)
 			{
 				system("cls");
@@ -51,7 +51,7 @@ void Game::play(char* fileName)
 				}
 				answerPressed=false;
 			}
-			Sleep(1);
+			Sleep(500);
 		}
 
 	}
