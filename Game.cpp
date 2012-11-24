@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Board.h"
 #include "general.h"
 #include "Point.h"
 #include <Windows.h>
@@ -19,40 +20,44 @@ void Game::play(char* fileName)
 	if (validBoard)
 	{
 		b.printText(pList);
+		while(!stopGame)
+		{
+			movePlayers(pList);
+			//moveArrows(aList);
+			throwGifts();
+			//updateScoreBoard(pList);
+			if(_kbhit()&&_getch()==ESC)
+			{
+				system("cls");
+				cout << "Do you want to stop the game (y/n)? ";
+				while(!answerPressed)
+				{
+					if(_kbhit())
+					{
+						answer=_getch();
+						if(answer=='y')
+						{
+							answerPressed=true;
+							cout << "\nThank you for playing our hunger game" << endl;
+							stopGame=true;
+						}
+						else if(answer=='n')
+						{
+							answerPressed=true;
+							system("cls");
+							b.printText(pList);
+						}
+					}
+				}
+				answerPressed=false;
+			}
+			Sleep(30);
+		}
+
 	}
 	else 
 	{
-		cout << "The text file isn'nt valid" << endl;
-	}
-	while(!stopGame)
-	{
-		movePlayers(pList,b);
-		if(_kbhit()&&_getch()==ESC)
-		{
-			system("cls");
-			cout << "Do you want to stop the game (y/n)? ";
-			while(!answerPressed)
-			{
-				if(_kbhit())
-				{
-					answer=_getch();
-					if(answer=='y')
-					{
-						answerPressed=true;
-						cout << "\nThank you for playing our hunger game" << endl;
-						stopGame=true;
-					}
-					else if(answer=='n')
-					{
-						answerPressed=true;
-						system("cls");
-						b.printText(pList);
-					}
-				}
-			}
-			answerPressed=false;
-		}
-		Sleep(30);
+		cout << "The text file isn't valid" << endl;
 	}
 	//item.setPlace(24,0);
 	//item.draw(' ');
@@ -62,7 +67,7 @@ void Game::play(char* fileName)
 	//cout << x << "," << y << endl;
 }
 
-void Game::movePlayers(PlayerList& pList,Board& b)
+void Game::movePlayers(PlayerList& pList)
 {
 	PlayerItem* curr=pList.getHead();
 	while(curr!=0)

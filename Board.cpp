@@ -46,6 +46,35 @@ void Board::readFile(char* fileName,PlayerList& pList)
 	fclose(f);
 }
 
+bool Board::checkBoard()
+{
+	int x,y;
+	bool validBoard=true;
+	scoreBoardPlace.getPlace(x,y);
+	if((x<=0 || x>18) || (y<=0 || y>68))
+	{
+		validBoard=false;
+		cout << "Illegal Text file" << endl;
+	}
+	else
+	{
+		y=y-1;
+		x=x-1;
+		for(int i=y;i<y+12;i++)
+		{
+			text[x][i] = (char)(178);
+			text[x+6][i] = (char)(178);
+		}
+		for(int j=x+1;j<x+7;j++)
+		{
+			text[j][y] = (char)(178);
+			text[j][y+11] = (char)(178);
+		}
+	}
+
+	return validBoard;
+}
+
 void Board::printText(PlayerList& pList)
 {
 	for(int i=0;i<HEIGHT;i++)
