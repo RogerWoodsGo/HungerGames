@@ -11,7 +11,7 @@ const int ESC=27;
 void Game::play(char* fileName)
 {
 	Board b;
-	bool answerPressed=false,stopGame=false,validBoard=false;
+	bool answerPressed=false,stopGame=false,validBoard;
 	char answer;
 	PlayerList pList(b);
 	Point item(0,0);
@@ -24,7 +24,7 @@ void Game::play(char* fileName)
 		{
 			movePlayers(pList);
 			//moveArrows(aList);
-			b.throwGifts();
+			b.throwGifts(pList);
 			//updateScoreBoard(pList);
 			if(_kbhit()&&_getch()==ESC)
 			{

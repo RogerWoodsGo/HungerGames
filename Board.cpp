@@ -66,7 +66,7 @@ bool Board::checkBoard(PlayerList& pList)
 			if((isPointInScoreBoard(playerPlace)))
 			{
 				playerPlace.getPlace(x,y);
-				setContent(playerPlace,' '); //remove player from board
+				setContent(playerPlace,' ');//remove player from board
 				validPlace = randomLocation(playerPlace);
 				if(!validPlace)
 				{
@@ -78,6 +78,7 @@ bool Board::checkBoard(PlayerList& pList)
 					setContent(playerPlace, 'P');
 				}
 			}
+			curr=curr->getNext();
 		}
 	}
 	if(validBoard)
@@ -94,11 +95,13 @@ bool Board::checkBoard(PlayerList& pList)
 			{
 				playerPlace.getPlace(x,y);
 				pList.Add(x,y);
+				pList.getHead()->getPlayer()->getPlace()->setBoard(this);
 			}
 		}
 	}
 	if(validBoard)
 	{
+		scoreBoardPlace.getPlace(x,y);
 		y=y-1;
 		x=x-1;
 		for(int i=y;i<y+12;i++)
@@ -188,12 +191,27 @@ bool Board::randomLocation(Point& p)
 	return newLocationWasFound;
 }
 
-bool Board::isPointNearAPlayer(Point& p)
+bool Board::isPointNearAPlayer(Point& p,PlayerList& pList)
 {
-
+	PlayerItem* curr=pList.getHead();
+	int x,y,playerX,playerY;
+	p.getPlace(x,y);
+	bool isPointNearThePlayer=false;
+	while((curr!=0)&&(!isPointNearThePlayer))
+	{
+		curr->getPlayer()->getPlace()->getPlace(playerX,playerY);
+		playerX--;
+		playerY--;
+		if((x-playerX<=4)&&(y-playerY<=4)&&(x-playerX>=0)&&(y-playerY>=0))
+		{
+			isPointNearThePlayer=true;
+		}
+		curr=curr->getNext();
+	}
+	return isPointNearThePlayer;
 }
 
-void Board::throwGifts()
+void Board::throwGifts(PlayerList& pList)
 {
 	Point giftLocation;
 	int chance=(rand()%20)+1;//1-20
@@ -202,8 +220,11 @@ void Board::throwGifts()
 	{
 		if(randomLocation(giftLocation))
 		{
-			setContent(giftLocation,'B');
-			giftLocation.draw('B');
+			if(!isPointNearAPlayer(giftLocation,pList))
+			{
+				setContent(giftLocation,'B');
+				giftLocation.draw('B');
+			}
 		}
 	}
 	//Arrow 0.1
@@ -211,8 +232,11 @@ void Board::throwGifts()
 	{
 		if(randomLocation(giftLocation))
 		{
-			setContent(giftLocation,'A');
-			giftLocation.draw('A');
+			if(!isPointNearAPlayer(giftLocation,pList))
+			{
+				setContent(giftLocation,'A');
+				giftLocation.draw('A');
+			}
 		}
 	}
 	//Food 0.2
@@ -220,8 +244,11 @@ void Board::throwGifts()
 	{
 		if(randomLocation(giftLocation))
 		{
-			setContent(giftLocation,'F');
-			giftLocation.draw('F');
+			if(!isPointNearAPlayer(giftLocation,pList))
+			{
+				setContent(giftLocation,'F');
+				giftLocation.draw('F');
+			}
 		}
 	}
 }
@@ -233,7 +260,7 @@ bool Board::isPointInScoreBoard(Point& p)
 	SBx--;
 	SBy--;
 	p.getPlace(x,y);
-	if((x-SBx<=6)&&(y-SBy<=11)&&(x-SBx>0)&&(y-SBy>0))
+	if((x-SBx<=6)&&(y-SBy<=11)&&(x-SBx>=0)&&(y-SBy>=0))
 	{
 		return true;
 	}
