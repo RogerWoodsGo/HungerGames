@@ -46,7 +46,7 @@ void Board::readFile(char* fileName,PlayerList& pList)
 	fclose(f);
 }
 
-bool Board::checkBoard()
+bool Board::checkBoard(PlayerList& pList)
 {
 	int x,y;
 	bool validBoard=true;
@@ -126,8 +126,9 @@ bool Board::randomLocation(Point& p)
 			newLocationWasFound=true;
 			p.setPlace(x,y);
 		}
+		timeSearchedForLocation++;
 	}
-	while(!newLocationWasFound)
+	if(!newLocationWasFound)
 	{
 		for(x=0;x<HEIGHT;x++)
 		{
@@ -142,7 +143,7 @@ bool Board::randomLocation(Point& p)
 				}
 			}
 		}
-				
+
 	}
 	return newLocationWasFound;
 }
@@ -150,24 +151,33 @@ bool Board::randomLocation(Point& p)
 void Board::throwGifts()
 {
 	Point giftLocation;
-	int chance=(rand()%22)+1;//1-22
+	int chance=(rand()%20)+1;//1-20
 	//Bomb 0.05
-	if(chance%20==0)
+	if(chance%20==0)//20
 	{
 		if(randomLocation(giftLocation))
-			setContent(giftLocation,'B')
+		{
+			setContent(giftLocation,'B');
+			giftLocation.draw('B');
+		}
 	}
 	//Arrow 0.1
-	if(chance%10==1)
+	if(chance%10==0)//10,20
 	{
 		if(randomLocation(giftLocation))
-			setContent(giftLocation,'A')
+		{
+			setContent(giftLocation,'A');
+			giftLocation.draw('A');
+		}
 	}
 	//Food 0.2
-	if(chance%5==2)
+	if(chance%5==0)//5,10,15,20
 	{
 		if(randomLocation(giftLocation))
-			setContent(giftLocation,'F')
+		{
+			setContent(giftLocation,'F');
+			giftLocation.draw('F');
+		}
 	}
 }
 

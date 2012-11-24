@@ -16,7 +16,7 @@ void Game::play(char* fileName)
 	PlayerList pList(b);
 	Point item(0,0);
 	b.readFile(fileName,pList);
-	validBoard=b.checkBoard();
+	validBoard=b.checkBoard(pList);
 	if (validBoard)
 	{
 		b.printText(pList);
@@ -24,7 +24,7 @@ void Game::play(char* fileName)
 		{
 			movePlayers(pList);
 			//moveArrows(aList);
-			throwGifts();
+			b.throwGifts();
 			//updateScoreBoard(pList);
 			if(_kbhit()&&_getch()==ESC)
 			{
@@ -51,7 +51,7 @@ void Game::play(char* fileName)
 				}
 				answerPressed=false;
 			}
-			Sleep(30);
+			Sleep(10);
 		}
 
 	}
@@ -75,9 +75,4 @@ void Game::movePlayers(PlayerList& pList)
 		curr->getPlayer()->move();
 		curr=curr->getNext();
 	}
-}
-
-void Game::throwGifts()
-{
-
 }
