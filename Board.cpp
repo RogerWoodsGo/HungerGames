@@ -46,8 +46,6 @@ void Board::readFile(char* fileName,PlayerList& pList)
 	fclose(f);
 }
 
-void Board::chen();
-
 bool Board::checkBoard(PlayerList& pList)
 {
 	int x,y;
@@ -121,13 +119,13 @@ bool Board::randomLocation(Point& p)
 	char newLocationContent;
 	bool newLocationWasFound=false;
 	int x,y,timeSearchedForLocation=0;
-	while((!newLocationWasFound)&&(timeSearchedForLocation<=50))
+	while((!newLocationWasFound)&&(timeSearchedForLocation<=30))
 	{
 		x=rand()%HEIGHT;
 		y=rand()%WIDTH;
 		newLocation.setPlace(x,y);
 		newLocationContent=getContent(newLocation);
-		if(newLocationContent==' ')
+		if((newLocationContent==' ')&&(!isPointInScoreBoard(newLocation)))
 		{
 			newLocationWasFound=true;
 			p.setPlace(x,y);
@@ -142,7 +140,7 @@ bool Board::randomLocation(Point& p)
 			{
 				newLocation.setPlace(x,y);
 				newLocationContent=getContent(newLocation);
-				if(newLocationContent==' ')
+				if((newLocationContent==' ')&&(!isPointInScoreBoard(newLocation)))
 				{
 					newLocationWasFound=true;
 					p.setPlace(x,y);
@@ -152,6 +150,11 @@ bool Board::randomLocation(Point& p)
 
 	}
 	return newLocationWasFound;
+}
+
+bool Board::isPointNearAPlayer(Point& p)
+{
+
 }
 
 void Board::throwGifts()
@@ -187,6 +190,20 @@ void Board::throwGifts()
 	}
 }
 
+bool Board::isPointInScoreBoard(Point& p)
+{
+	int SBx,SBy,x,y;
+	scoreBoardPlace.getPlace(SBx,SBy);
+	SBx--;
+	SBy--;
+	p.getPlace(x,y);
+	if((x-SBx<=6)&&(y-SBy<=11)&&(x-SBx>0)&&(y-SBy>0))
+	{
+		return true;
+	}
+	else return false;
+}
+
 Board::~Board()
 {
 	for(int i=0;i<HEIGHT;i++)
@@ -194,9 +211,4 @@ Board::~Board()
 		delete text[i];
 	}
 	delete []text;
-}
-
-void Board::Vladik()
-{
-
 }
