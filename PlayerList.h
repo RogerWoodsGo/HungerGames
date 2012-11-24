@@ -13,11 +13,11 @@ class PlayerList
 public:
 	PlayerList(Board& brd):b(&brd),head(0),numOfPlayers(0){}
 	void Add(int x,int y);
-	void Remove(const Player& player);
+	void Remove(Player& player);
 	PlayerItem* getHead(){return head;}
 	void Print();
 	//Board* getBoard(){return b;}
-	~PlayerList(){delete head;}
+	~PlayerList();
 };
 
 #endif

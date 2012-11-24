@@ -10,6 +10,7 @@ class Game
 public:
 	Game(){};
 	void play(char* fileName);
+	bool isThereAWinner(PlayerList& pList);
 	void movePlayers(PlayerList& pList);
 	//void moveArrows(ArrowList& pList);
 };

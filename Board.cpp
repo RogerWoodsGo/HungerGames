@@ -18,7 +18,7 @@ void Board::readFile(char* fileName,PlayerList& pList)
 			switch(ch)
 			{
 			case 'W':
-				text[i][j]=(char)(178);
+				text[i][j]=WALL;
 				break;
 			case 'P':
 				if(numOfPlayersOnBoard<NUMBEROFPLAYERS)
@@ -111,13 +111,13 @@ bool Board::checkBoard(PlayerList& pList)
 		x--;
 		for(int i=y;i<y+12;i++)
 		{
-			text[x][i] = (char)(178);
-			text[x+6][i] = (char)(178);
+			text[x][i] = WALL;
+			text[x+6][i] = WALL;
 		}
 		for(int j=x+1;j<x+7;j++)
 		{
-			text[j][y] = (char)(178);
-			text[j][y+11] = (char)(178);
+			text[j][y] = WALL;
+			text[j][y+11] = WALL;
 		}
 	}
 	return validBoard;
@@ -226,8 +226,8 @@ void Board::throwGifts(PlayerList& pList)
 		{
 			if(!isPointNearAPlayer(giftLocation,pList))
 			{
-				setContent(giftLocation,'B');
-				giftLocation.draw('B');
+				setContent(giftLocation,BOMB);
+				giftLocation.draw(BOMB);
 			}
 		}
 	}
@@ -238,8 +238,8 @@ void Board::throwGifts(PlayerList& pList)
 		{
 			if(!isPointNearAPlayer(giftLocation,pList))
 			{
-				setContent(giftLocation,'A');
-				giftLocation.draw('A');
+				setContent(giftLocation,ARROW);
+				giftLocation.draw(ARROW);
 			}
 		}
 	}
@@ -250,8 +250,8 @@ void Board::throwGifts(PlayerList& pList)
 		{
 			if(!isPointNearAPlayer(giftLocation,pList))
 			{
-				setContent(giftLocation,'F');
-				giftLocation.draw('F');
+				setContent(giftLocation,FOOD);
+				giftLocation.draw(FOOD);
 			}
 		}
 	}
@@ -315,12 +315,21 @@ void Board::printScoreBoard(PlayerList& pList)
 		{
 			cout << "  " << score;
 		}
-		else
+		else if(score>0)
 		{
 			cout << "   " << score;
 		}
+		else
+		{
+			cout << "   0";
+		}
 		curr=curr->getNext();
 	}
+}
+
+void Board::playerFight(Point& p)
+{
+
 }
 
 Board::~Board()

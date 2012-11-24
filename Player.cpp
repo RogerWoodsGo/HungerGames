@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "PlayerItem.h"
 #include "Board.h"
+#include "general.h"
 
 Direction Player::randomDirection()
 {
@@ -14,6 +15,8 @@ void Player::setDirection()
 
 void Player::move()
 {
+	int score=getScore();
+	int arrows=getArrows();
 	char nextPlace;
 	Point p;
 	if(rand()%7==0)
@@ -22,16 +25,25 @@ void Player::move()
 	(char)nextPlace=location->getBoard()->getContent(p);
 	switch (nextPlace)
 	{
-	case (char)(178):
+	case WALL:
 		setDirection();	break;
-	/*case 'F':		break;
-	case 'A':		break;
-	case 'P':		break;
-	case 'B':		break;
-	default:*/
-	case ' ':
+	case FOOD:
 		location->movePoint(p,ch);
+		setScore(score+200);
 		break;
-		//default: setDirection();
+	case ARROW:
+		location->movePoint(p,ch);
+		setArrows(arrows+3);
+		break;
+	case 'P':
+		location->movePoint(p,ch);
+		//location->getBoard()->playerFight(location);
+		break;
+	case BOMB:
+		location->movePoint(p,ch);
+		setScore(score-900);
+		break;
+	case ' ':
+		location->movePoint(p,ch);	break;
 	}
 }

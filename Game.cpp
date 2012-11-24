@@ -20,7 +20,7 @@ void Game::play(char* fileName)
 	if (validBoard)
 	{
 		b.printText(pList);
-		while(!stopGame)
+		while((!stopGame)&&(!isThereAWinner(pList)))
 		{
 			movePlayers(pList);
 			//moveArrows(aList);
@@ -38,7 +38,6 @@ void Game::play(char* fileName)
 						if(answer=='y')
 						{
 							answerPressed=true;
-							cout << "\nThank you for playing our hunger game" << endl;
 							stopGame=true;
 						}
 						else if(answer=='n')
@@ -51,9 +50,25 @@ void Game::play(char* fileName)
 				}
 				answerPressed=false;
 			}
-			Sleep(500);
+			Sleep(50);
 		}
-
+		if(stopGame==true)
+		{
+			cout << "\nThank you for playing our hunger game" << endl;
+		}
+		else
+		{
+			if((pList.getHead()!=0)&&(pList.getHead()->getPlayer()->getScore()>0))
+			{
+				system("cls");
+				cout << pList.getHead()->getPlayer()->getChar() << " is the winner!!!" << endl;
+			}
+			else
+			{
+				system("cls");
+				cout << "Game over. Thank you for playing our hunger game" << endl;
+			}
+		}
 	}
 	else 
 	{
@@ -66,6 +81,30 @@ void Game::play(char* fileName)
 	//p->getPlace(x,y);
 	//cout << x << "," << y << endl;
 }
+
+bool Game::isThereAWinner(PlayerList& pList)
+{
+	int score;
+	bool winnerFound=false;
+	PlayerItem* curr = pList.getHead(),*next;
+	while((curr!=0)&&(!winnerFound))
+	{
+		next=curr->getNext();
+		score=curr->getPlayer()->getScore();
+		if(score<=0)
+		{
+			curr->getPlayer()->getPlace()->draw(' ');
+			pList.Remove(*(curr->getPlayer()));
+		}
+		curr=next;
+		if(pList.getHead()->getNext()==0)
+		{
+			winnerFound=true;
+		}
+	}
+	return winnerFound;
+}
+
 
 void Game::movePlayers(PlayerList& pList)
 {

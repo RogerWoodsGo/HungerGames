@@ -9,7 +9,7 @@ void PlayerList::Add(int x,int y)
 	head=newPlayer;
 }
 
-void PlayerList::Remove(const Player& player)
+void PlayerList::Remove(Player& player)
 {
 	PlayerItem* curr=head,*saver;
 	while(curr->getPlayer()!=&player)
@@ -43,5 +43,16 @@ void PlayerList::Print()
 	{
 		curr->getPlayer()->drawPlayer();
 		curr=curr->getNext();
+	}
+}
+
+PlayerList::~PlayerList()
+{
+	PlayerItem* curr=head,*saver;
+	while(curr!=0)
+	{
+		saver=curr->getNext();
+		delete curr;
+		curr=saver;
 	}
 }

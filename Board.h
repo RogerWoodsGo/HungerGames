@@ -10,6 +10,7 @@ class Board
 	char** text;
 	int numOfPlayersOnBoard;
 	Point scoreBoardPlace;
+	//PlayerList* pList;
 	Board(const Board&);
 public:
 	Board():numOfPlayersOnBoard(0),scoreBoardPlace(0,0){}
@@ -24,6 +25,7 @@ public:
 	void throwGifts(PlayerList& pList);
 	bool isPointInScoreBoard(Point& p);
 	bool isPointNearAPlayer(Point& p,PlayerList& pList);
+	void playerFight(Point& p);
 	void printScoreBoard(PlayerList& pList);
 	~Board();
 };
