@@ -21,7 +21,7 @@ public:
 	void setContent(Point& p,char ch);
 	bool checkBoard(PlayerList& pList);
 	bool randomLocation(Point& p);
-	void throwGifts();
+	void throwGifts(PlayerList& pList);
 	bool isPointInScoreBoard(Point& p);
 	bool isPointNearAPlayer(Point& p);
 	~Board();

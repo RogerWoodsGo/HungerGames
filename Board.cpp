@@ -50,7 +50,7 @@ bool Board::checkBoard(PlayerList& pList)
 {
 	int x,y;
 	bool validBoard=true, validPlace=true;
-	Point playerPlace;
+	Point playerPlace, nextPlace;
 	PlayerItem* curr=pList.getHead();
 	scoreBoardPlace.getPlace(x,y);
 	if((x<=0 || x>18) || (y<=0 || y>68))
@@ -62,10 +62,10 @@ bool Board::checkBoard(PlayerList& pList)
 	{
 		while(curr!=0)
 		{
-			playerPlace = *(curr->getPlayer()->getPlace());
+			curr->getPlayer()->getPlace()->getPlace(x,y);
+			playerPlace.setPlace(x,y);
 			if((isPointInScoreBoard(playerPlace)))
 			{
-				playerPlace.getPlace(x,y);
 				setContent(playerPlace,' '); //remove player from board
 				validPlace = randomLocation(playerPlace);
 				if(!validPlace)
@@ -75,9 +75,12 @@ bool Board::checkBoard(PlayerList& pList)
 				}
 				else
 				{
+					playerPlace.getPlace(x,y);
+					curr->getPlayer()->getPlace()->setPlace(x,y);
 					setContent(playerPlace, 'P');
 				}
 			}
+			curr=curr->getNext();
 		}
 	}
 	if(validBoard)
@@ -94,13 +97,17 @@ bool Board::checkBoard(PlayerList& pList)
 			{
 				playerPlace.getPlace(x,y);
 				pList.Add(x,y);
+				pList.getHead()->getPlayer()->getPlace()->setBoard(this);
+				setContent(playerPlace, 'P');
+				numOfPlayersOnBoard++;
 			}
 		}
 	}
 	if(validBoard)
 	{
-		y=y-1;
-		x=x-1;
+		scoreBoardPlace.getPlace(x,y);
+		y--;
+		x--;
 		for(int i=y;i<y+12;i++)
 		{
 			text[x][i] = (char)(178);
@@ -190,10 +197,10 @@ bool Board::randomLocation(Point& p)
 
 bool Board::isPointNearAPlayer(Point& p)
 {
-
+	return true;
 }
 
-void Board::throwGifts()
+void Board::throwGifts(PlayerList& pList)
 {
 	Point giftLocation;
 	int chance=(rand()%20)+1;//1-20
@@ -233,7 +240,7 @@ bool Board::isPointInScoreBoard(Point& p)
 	SBx--;
 	SBy--;
 	p.getPlace(x,y);
-	if((x-SBx<=6)&&(y-SBy<=11)&&(x-SBx>0)&&(y-SBy>0))
+	if((x-SBx<=6)&&(y-SBy<=11)&&(x-SBx>=0)&&(y-SBy>=0))
 	{
 		return true;
 	}

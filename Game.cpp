@@ -24,7 +24,7 @@ void Game::play(char* fileName)
 		{
 			movePlayers(pList);
 			//moveArrows(aList);
-			b.throwGifts();
+			b.throwGifts(pList);
 			//updateScoreBoard(pList);
 			if(_kbhit()&&_getch()==ESC)
 			{
