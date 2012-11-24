@@ -19,7 +19,9 @@ public:
 	void printText(PlayerList& pList);
 	char getContent(Point& p);
 	void setContent(Point& p,char ch);
-	bool checkBoard();
+	bool checkBoard(PlayerList& pList);
+	bool randomLocation(Point& p);
+	void throwGifts();
 	~Board();
 };
 

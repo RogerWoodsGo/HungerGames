@@ -1,8 +1,8 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#include "Board.h"
 #include "PlayerList.h"
+//#include "ArrowList.h"
 
 class Game
 {
@@ -10,8 +10,8 @@ class Game
 public:
 	Game(){};
 	void play(char* fileName);
-	void movePlayers(PlayerList& pList,Board& b);
-	void throwGifts();
+	void movePlayers(PlayerList& pList);
+	//void moveArrows(ArrowList& pList);
 };
 
 #endif

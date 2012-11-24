@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Board.h"
 #include "general.h"
 #include "Point.h"
 #include <Windows.h>
@@ -26,7 +27,7 @@ void Game::play(char* fileName)
 	}
 	while(!stopGame)
 	{
-		movePlayers(pList,b);
+		movePlayers(pList);
 		if(_kbhit()&&_getch()==ESC)
 		{
 			system("cls");
@@ -62,7 +63,7 @@ void Game::play(char* fileName)
 	//cout << x << "," << y << endl;
 }
 
-void Game::movePlayers(PlayerList& pList,Board& b)
+void Game::movePlayers(PlayerList& pList)
 {
 	PlayerItem* curr=pList.getHead();
 	while(curr!=0)
@@ -70,9 +71,4 @@ void Game::movePlayers(PlayerList& pList,Board& b)
 		curr->getPlayer()->move();
 		curr=curr->getNext();
 	}
-}
-
-void Game::throwGifts()
-{
-
 }

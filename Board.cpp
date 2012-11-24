@@ -80,6 +80,68 @@ void Board::setContent(Point& p,char ch)
 	text[x][y]=ch;
 }
 
+bool Board::randomLocation(Point& p)
+{
+	Point newLocation;
+	char newLocationContent;
+	bool newLocationWasFound=false;
+	int x,y,timeSearchedForLocation=0;
+	while((!newLocationWasFound)&&(timeSearchedForLocation<=50))
+	{
+		x=rand()%HEIGHT;
+		y=rand()%WIDTH;
+		newLocation.setPlace(x,y);
+		newLocationContent=getContent(newLocation);
+		if(newLocationContent==' ')
+		{
+			newLocationWasFound=true;
+			p.setPlace(x,y);
+		}
+	}
+	while(!newLocationWasFound)
+	{
+		for(x=0;x<HEIGHT;x++)
+		{
+			for(y=0;y<WIDTH;y++)
+			{
+				newLocation.setPlace(x,y);
+				newLocationContent=getContent(newLocation);
+				if(newLocationContent==' ')
+				{
+					newLocationWasFound=true;
+					p.setPlace(x,y);
+				}
+			}
+		}
+				
+	}
+	return newLocationWasFound;
+}
+
+void Board::throwGifts()
+{
+	Point giftLocation;
+	int chance=(rand()%22)+1;//1-22
+	//Bomb 0.05
+	if(chance%20==0)
+	{
+		if(randomLocation(giftLocation))
+			setContent(giftLocation,'B')
+	}
+	//Arrow 0.1
+	if(chance%10==1)
+	{
+		if(randomLocation(giftLocation))
+			setContent(giftLocation,'A')
+	}
+	//Food 0.2
+	if(chance%5==2)
+	{
+		if(randomLocation(giftLocation))
+			setContent(giftLocation,'F')
+	}
+}
+
 Board::~Board()
 {
 	for(int i=0;i<HEIGHT;i++)
