@@ -71,6 +71,10 @@ bool Board::checkBoard(PlayerList& pList)
 			text[j][y+11] = (char)(178);
 		}
 	}
+	while (numOfPlayersOnBoard < NUMBEROFPLAYERS)
+	{
+
+	}
 
 	return validBoard;
 }
