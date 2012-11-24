@@ -46,11 +46,12 @@ void Board::readFile(char* fileName,PlayerList& pList)
 	fclose(f);
 }
 
+
 bool Board::checkBoard(PlayerList& pList)
 {
 	int x,y;
 	bool validBoard=true, validPlace=true;
-	Point playerPlace;
+	Point playerPlace, nextPlace;
 	PlayerItem* curr=pList.getHead();
 	scoreBoardPlace.getPlace(x,y);
 	if((x<=0 || x>18) || (y<=0 || y>68))
@@ -62,11 +63,11 @@ bool Board::checkBoard(PlayerList& pList)
 	{
 		while(curr!=0)
 		{
-			playerPlace = *(curr->getPlayer()->getPlace());
+			curr->getPlayer()->getPlace()->getPlace(x,y);
+			playerPlace.setPlace(x,y);
 			if((isPointInScoreBoard(playerPlace)))
 			{
-				playerPlace.getPlace(x,y);
-				setContent(playerPlace,' ');//remove player from board
+				setContent(playerPlace,' '); //remove player from board
 				validPlace = randomLocation(playerPlace);
 				if(!validPlace)
 				{
@@ -75,6 +76,8 @@ bool Board::checkBoard(PlayerList& pList)
 				}
 				else
 				{
+					playerPlace.getPlace(x,y);
+					curr->getPlayer()->getPlace()->setPlace(x,y);
 					setContent(playerPlace, 'P');
 				}
 			}
@@ -96,14 +99,16 @@ bool Board::checkBoard(PlayerList& pList)
 				playerPlace.getPlace(x,y);
 				pList.Add(x,y);
 				pList.getHead()->getPlayer()->getPlace()->setBoard(this);
+				setContent(playerPlace, 'P');
+				numOfPlayersOnBoard++;
 			}
 		}
 	}
 	if(validBoard)
 	{
 		scoreBoardPlace.getPlace(x,y);
-		y=y-1;
-		x=x-1;
+		y--;
+		x--;
 		for(int i=y;i<y+12;i++)
 		{
 			text[x][i] = (char)(178);
@@ -117,7 +122,6 @@ bool Board::checkBoard(PlayerList& pList)
 	}
 	return validBoard;
 }
-
 void Board::printText(PlayerList& pList)
 {
 	for(int i=0;i<HEIGHT;i++)
