@@ -6,7 +6,7 @@
 #include <conio.h>
 #include <process.h>
 
-#define ESC 27
+const int ESC=27;
 
 void Game::play(char* fileName)
 {
