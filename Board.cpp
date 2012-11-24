@@ -17,28 +17,28 @@ void Board::readFile(char* fileName,PlayerList& pList)
 			ch=(char)(fgetc(f));
 			switch(ch)
 			{
-				case 'W':
-					text[i][j]=(char)(178);
-					break;
-				case 'P':
-					if(numOfPlayersOnBoard<NUMBEROFPLAYERS)
-					{
-						text[i][j]='P';
-						pList.Add(i,j);
-						pList.getHead()->getPlayer()->getPlace()->setBoard(this);
-						numOfPlayersOnBoard++;
-					}
-					else text[i][j]=' ';
-					break;
-				case 'O':
-					if(!OWasFound)
-					{
-						OWasFound=true;
-						scoreBoardPlace.setPlace(i,j);
-					}
-					text[i][j]=' ';
-					break;
-				default: text[i][j]=' ';
+			case 'W':
+				text[i][j]=(char)(178);
+				break;
+			case 'P':
+				if(numOfPlayersOnBoard<NUMBEROFPLAYERS)
+				{
+					text[i][j]='P';
+					pList.Add(i,j);
+					pList.getHead()->getPlayer()->getPlace()->setBoard(this);
+					numOfPlayersOnBoard++;
+				}
+				else text[i][j]=' ';
+				break;
+			case 'O':
+				if(!OWasFound)
+				{
+					OWasFound=true;
+					scoreBoardPlace.setPlace(i,j);
+				}
+				text[i][j]=' ';
+				break;
+			default: text[i][j]=' ';
 			}
 		}
 		fgetc(f);
@@ -49,14 +49,55 @@ void Board::readFile(char* fileName,PlayerList& pList)
 bool Board::checkBoard(PlayerList& pList)
 {
 	int x,y;
-	bool validBoard=true;
+	bool validBoard=true, validPlace=true;
+	Point playerPlace;
+	PlayerItem* curr=pList.getHead();
 	scoreBoardPlace.getPlace(x,y);
 	if((x<=0 || x>18) || (y<=0 || y>68))
 	{
 		validBoard=false;
 		cout << "Illegal Text file" << endl;
 	}
-	else
+	if(validBoard)
+	{
+		while(curr!=0)
+		{
+			playerPlace = *(curr->getPlayer()->getPlace());
+			if((isPointInScoreBoard(playerPlace)))
+			{
+				playerPlace.getPlace(x,y);
+				setContent(playerPlace,' '); //remove player from board
+				validPlace = randomLocation(playerPlace);
+				if(!validPlace)
+				{
+					cout << "Valid place didn't found" << endl;
+					validBoard = false;
+				}
+				else
+				{
+					setContent(playerPlace, 'P');
+				}
+			}
+		}
+	}
+	if(validBoard)
+	{
+		while (numOfPlayersOnBoard < NUMBEROFPLAYERS)
+		{
+			validPlace = randomLocation(playerPlace);
+			if(!validPlace)
+			{
+				cout << "Valid place didn't found" << endl;
+				validBoard = false;
+			}
+			else
+			{
+				playerPlace.getPlace(x,y);
+				pList.Add(x,y);
+			}
+		}
+	}
+	if(validBoard)
 	{
 		y=y-1;
 		x=x-1;
@@ -71,11 +112,6 @@ bool Board::checkBoard(PlayerList& pList)
 			text[j][y+11] = (char)(178);
 		}
 	}
-	while (numOfPlayersOnBoard < NUMBEROFPLAYERS)
-	{
-
-	}
-
 	return validBoard;
 }
 
