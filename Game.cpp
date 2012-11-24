@@ -51,7 +51,7 @@ void Game::play(char* fileName)
 				}
 				answerPressed=false;
 			}
-			Sleep(10);
+			Sleep(1);
 		}
 
 	}

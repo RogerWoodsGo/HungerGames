@@ -33,6 +33,7 @@ void PlayerList::Remove(const Player& player)
 		saver->setNext(curr->getNext());
 	}
 	delete curr;
+	numOfPlayers--;
 }
 
 void PlayerList::Print()
