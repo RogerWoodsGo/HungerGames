@@ -46,6 +46,8 @@ void Board::readFile(char* fileName,PlayerList& pList)
 	fclose(f);
 }
 
+void Board::chen();
+
 bool Board::checkBoard(PlayerList& pList)
 {
 	int x,y;
