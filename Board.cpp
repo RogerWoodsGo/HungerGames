@@ -193,3 +193,8 @@ Board::~Board()
 	}
 	delete []text;
 }
+
+void Board::Vladik()
+{
+
+}

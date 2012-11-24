@@ -22,6 +22,7 @@ public:
 	bool checkBoard(PlayerList& pList);
 	bool randomLocation(Point& p);
 	void throwGifts();
+	void Vladik();
 	~Board();
 };
 
