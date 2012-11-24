@@ -10,23 +10,24 @@ class Board
 	char** text;
 	int numOfPlayersOnBoard;
 	Point scoreBoardPlace;
-	//PlayerList* pList;
+	PlayerList* pList;
 	Board(const Board&);
 public:
 	Board():numOfPlayersOnBoard(0),scoreBoardPlace(0,0){}
 	void readFile(char* fileName,PlayerList& pList);
 	void setText(char** textToSet){text=textToSet;}
 	char** getText(){return text;}
-	void printText(PlayerList& pList);
+	void setPList(PlayerList& lst){pList=&lst;}
+	void printText();
 	char getContent(Point& p);
 	void setContent(Point& p,char ch);
-	bool checkBoard(PlayerList& pList);
+	bool checkBoard();
 	bool randomLocation(Point& p);
-	void throwGifts(PlayerList& pList);
+	void throwGifts();
 	bool isPointInScoreBoard(Point& p);
-	bool isPointNearAPlayer(Point& p,PlayerList& pList);
+	bool isPointNearAPlayer(Point& p);
 	void playerFight(Point& p);
-	void printScoreBoard(PlayerList& pList);
+	void printScoreBoard();
 	~Board();
 };
 

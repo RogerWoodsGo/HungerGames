@@ -37,11 +37,11 @@ void Player::move()
 		break;
 	case 'P':
 		location->movePoint(p,ch);
-		//location->getBoard()->playerFight(location);
+		location->getBoard()->playerFight(*location);
 		break;
 	case BOMB:
 		location->movePoint(p,ch);
-		setScore(score-900);
+		setScore(score-50);
 		break;
 	case ' ':
 		location->movePoint(p,ch);	break;

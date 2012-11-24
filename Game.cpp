@@ -13,19 +13,19 @@ void Game::play(char* fileName)
 	Board b;
 	bool answerPressed=false,stopGame=false,validBoard;
 	char answer;
-	PlayerList pList(b);
+	PlayerList pList;
 	Point item(0,0);
 	b.readFile(fileName,pList);
-	validBoard=b.checkBoard(pList);
+	validBoard=b.checkBoard();
 	if (validBoard)
 	{
-		b.printText(pList);
+		b.printText();
 		while((!stopGame)&&(!isThereAWinner(pList)))
 		{
 			movePlayers(pList);
 			//moveArrows(aList);
-			b.throwGifts(pList);
-			b.printScoreBoard(pList);
+			b.throwGifts();
+			b.printScoreBoard();
 			if(_kbhit()&&_getch()==ESC)
 			{
 				system("cls");
@@ -44,13 +44,13 @@ void Game::play(char* fileName)
 						{
 							answerPressed=true;
 							system("cls");
-							b.printText(pList);
+							b.printText();
 						}
 					}
 				}
 				answerPressed=false;
 			}
-			Sleep(50);
+			Sleep(1);
 		}
 		if(stopGame==true)
 		{

@@ -5,7 +5,7 @@ void PlayerList::Add(int x,int y)
 {
 	PlayerItem* newPlayer;
 	numOfPlayers++;
-	newPlayer = new PlayerItem(this,x,y,numOfPlayers,head);
+	newPlayer = new PlayerItem(x,y,numOfPlayers,head);
 	head=newPlayer;
 }
 

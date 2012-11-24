@@ -1,11 +1,12 @@
 #include "Board.h"
 
-void Board::readFile(char* fileName,PlayerList& pList)
+void Board::readFile(char* fileName,PlayerList& lst)
 {
 	FILE* f;
 	char ch,**text;
 	bool OWasFound=false;
 	text=new char*[HEIGHT];
+	setPList(lst);
 	for(int i=0;i<HEIGHT;i++)
 		text[i]=new char[WIDTH];
 	setText(text);
@@ -24,8 +25,8 @@ void Board::readFile(char* fileName,PlayerList& pList)
 				if(numOfPlayersOnBoard<NUMBEROFPLAYERS)
 				{
 					text[i][j]='P';
-					pList.Add(i,j);
-					pList.getHead()->getPlayer()->getPlace()->setBoard(this);
+					pList->Add(i,j);
+					pList->getHead()->getPlayer()->getPlace()->setBoard(this);
 					numOfPlayersOnBoard++;
 				}
 				else text[i][j]=' ';
@@ -47,12 +48,12 @@ void Board::readFile(char* fileName,PlayerList& pList)
 }
 
 
-bool Board::checkBoard(PlayerList& pList)
+bool Board::checkBoard()
 {
 	int x,y;
 	bool validBoard=true, validPlace=true;
 	Point playerPlace, nextPlace;
-	PlayerItem* curr=pList.getHead();
+	PlayerItem* curr=pList->getHead();
 	scoreBoardPlace.getPlace(x,y);
 	if((x<=0 || x>18) || (y<=0 || y>68))
 	{
@@ -97,8 +98,8 @@ bool Board::checkBoard(PlayerList& pList)
 			else
 			{
 				playerPlace.getPlace(x,y);
-				pList.Add(x,y);
-				pList.getHead()->getPlayer()->getPlace()->setBoard(this);
+				pList->Add(x,y);
+				pList->getHead()->getPlayer()->getPlace()->setBoard(this);
 				setContent(playerPlace, 'P');
 				numOfPlayersOnBoard++;
 			}
@@ -122,7 +123,7 @@ bool Board::checkBoard(PlayerList& pList)
 	}
 	return validBoard;
 }
-void Board::printText(PlayerList& pList)
+void Board::printText()
 {
 	for(int i=0;i<HEIGHT;i++)
 	{
@@ -139,7 +140,7 @@ void Board::printText(PlayerList& pList)
 		}
 		cout << endl;
 	}
-	pList.Print();
+	pList->Print();
 }
 
 char Board::getContent(Point& p)
@@ -195,9 +196,9 @@ bool Board::randomLocation(Point& p)
 	return newLocationWasFound;
 }
 
-bool Board::isPointNearAPlayer(Point& p,PlayerList& pList)
+bool Board::isPointNearAPlayer(Point& p)
 {
-	PlayerItem* curr=pList.getHead();
+	PlayerItem* curr=pList->getHead();
 	int x,y,playerX,playerY;
 	p.getPlace(x,y);
 	bool isPointNearThePlayer=false;
@@ -215,7 +216,7 @@ bool Board::isPointNearAPlayer(Point& p,PlayerList& pList)
 	return isPointNearThePlayer;
 }
 
-void Board::throwGifts(PlayerList& pList)
+void Board::throwGifts()
 {
 	Point giftLocation;
 	int chance=(rand()%20)+1;//1-20
@@ -224,7 +225,7 @@ void Board::throwGifts(PlayerList& pList)
 	{
 		if(randomLocation(giftLocation))
 		{
-			if(!isPointNearAPlayer(giftLocation,pList))
+			if(!isPointNearAPlayer(giftLocation))
 			{
 				setContent(giftLocation,BOMB);
 				giftLocation.draw(BOMB);
@@ -236,7 +237,7 @@ void Board::throwGifts(PlayerList& pList)
 	{
 		if(randomLocation(giftLocation))
 		{
-			if(!isPointNearAPlayer(giftLocation,pList))
+			if(!isPointNearAPlayer(giftLocation))
 			{
 				setContent(giftLocation,ARROW);
 				giftLocation.draw(ARROW);
@@ -248,7 +249,7 @@ void Board::throwGifts(PlayerList& pList)
 	{
 		if(randomLocation(giftLocation))
 		{
-			if(!isPointNearAPlayer(giftLocation,pList))
+			if(!isPointNearAPlayer(giftLocation))
 			{
 				setContent(giftLocation,FOOD);
 				giftLocation.draw(FOOD);
@@ -271,12 +272,12 @@ bool Board::isPointInScoreBoard(Point& p)
 	else return false;
 }
 
-void Board::printScoreBoard(PlayerList& pList)
+void Board::printScoreBoard()
 {
 	int SBx,SBy,x,y,score,arrows;
 	char ch;
 	Point p;
-	PlayerItem* curr = pList.getHead();
+	PlayerItem* curr = pList->getHead();
 	scoreBoardPlace.getPlace(SBx,SBy);
 	while(curr!=0)
 	{
@@ -329,7 +330,50 @@ void Board::printScoreBoard(PlayerList& pList)
 
 void Board::playerFight(Point& p)
 {
-
+	int x,y,playerX,playerY,numOfMaxPlayers=0,max=0,score;
+	PlayerItem* curr=pList->getHead();
+	p.getPlace(x,y);
+	while(curr!=0)
+	{
+		curr->getPlayer()->getPlace()->getPlace(playerX,playerY);
+		if((x==playerX)&&(y=playerY))
+		{
+			if(curr->getPlayer()->getScore()>max)
+			{
+				max=curr->getPlayer()->getScore();
+				numOfMaxPlayers=1;
+			}
+			else if(curr->getPlayer()->getScore()==max)
+			{
+				numOfMaxPlayers++;
+			}
+		}
+		curr=curr->getNext();
+	}
+	curr=pList->getHead();
+	while(curr!=0)
+	{
+		curr->getPlayer()->getPlace()->getPlace(playerX,playerY);
+		if((x==playerX)&&(y=playerY))
+		{
+			if(curr->getPlayer()->getScore()<max)
+			{
+				score=curr->getPlayer()->getScore();
+				curr->getPlayer()->setScore(score-200);
+			}
+			else if((curr->getPlayer()->getScore()==max)&&(numOfMaxPlayers==1))
+			{
+				score=curr->getPlayer()->getScore();
+				curr->getPlayer()->setScore(score-10);
+			}
+			else if((curr->getPlayer()->getScore()==max)&&(numOfMaxPlayers>1))
+			{
+				score=curr->getPlayer()->getScore();
+				curr->getPlayer()->setScore(score-50);
+			}
+		}
+		curr=curr->getNext();
+	}
 }
 
 Board::~Board()
