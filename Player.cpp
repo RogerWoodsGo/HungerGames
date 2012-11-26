@@ -32,8 +32,8 @@ void Player::move()
 		location->getBoard()->playerFight(*location);
 		break;
 	case ARROW:
-		location->getBoard()->arrowHitsPlayer(*location);
 		location->movePoint(p,ch);
+		location->getBoard()->arrowHitsPlayer(*location);
 		break;
 	case FOOD_GIFT:
 		location->movePoint(p,ch);

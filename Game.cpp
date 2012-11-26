@@ -65,18 +65,18 @@ void Game::play(char* fileName)
 		}
 		if(stopGame==true)
 		{
-			cout << "\nThank you for playing our hunger game" << endl;
+			cout << "Thank you for playing our hunger game." << endl;
 		}
 		else
 		{
 			system("cls");
 			if((pList.getHead()!=0)&&(pList.getHead()->getPlayer()->getScore()>0))
 			{
-				cout << pList.getHead()->getPlayer()->getChar() << " is the winner!!!" << endl;
+				cout << pList.getHead()->getPlayer()->getChar() << " is the winner!!! Thank you for playing our hunger game." << endl;
 			}
 			else
 			{	
-				cout << "\nGame over. Thank you for playing our hunger game" << endl;
+				cout << "Game over. Thank you for playing our hunger game." << endl;
 			}
 		}
 	}
