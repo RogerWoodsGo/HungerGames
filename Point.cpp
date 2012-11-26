@@ -1,7 +1,5 @@
 #include "Point.h"
 #include "Board.h"
-//#include "Arrow.h"
-#include "Player.h"
 #include <windows.h>
 #include <process.h>
 

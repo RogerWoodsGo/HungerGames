@@ -1,7 +1,6 @@
 #include "Arrow.h"
 #include "ArrowItem.h"
 #include "Board.h"
-#include "general.h"
 
 void Arrow::move()
 {
@@ -13,7 +12,7 @@ void Arrow::move()
 	{
 		location->getBoard()->arrowHitsPlayer(*location);
 	}
-	else //if((nextPlace==ARROW_GIFT)||(nextPlace==BOMB_GIFT)||(nextPlace==FOOD_GIFT)||(nextPlace==' '))
+	else
 	{
 		currentPlace=location->getBoard()->getContent(*location);
 		if(currentPlace==ARROW)

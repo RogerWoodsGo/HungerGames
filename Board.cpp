@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "general.h"
 
 void Board::readFile(char* fileName)
 {

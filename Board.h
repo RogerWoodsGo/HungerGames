@@ -3,7 +3,6 @@
 
 #include "PlayerList.h"
 #include "ArrowList.h"
-#include "general.h"
 #include "Point.h"
 
 class Board

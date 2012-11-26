@@ -2,7 +2,6 @@
 #define _ARROWITEM_H_
 
 #include "Arrow.h"
-class ArrowList;// Forward Decleration
 
 class ArrowItem
 {

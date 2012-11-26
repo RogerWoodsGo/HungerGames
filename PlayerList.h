@@ -2,7 +2,6 @@
 #define _PLAYERLIST_H
 
 #include "PlayerItem.h"
-class Board;// Forward Decleration
 
 class PlayerList
 {

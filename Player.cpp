@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "PlayerItem.h"
 #include "Board.h"
-#include "general.h"
 
 Direction Player::randomDirection()
 {

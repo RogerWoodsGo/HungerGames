@@ -3,7 +3,6 @@
 
 #include "Point.h"
 #include "general.h"
-class ArrowItem;//Forward Decleration
 
 class Arrow
 {
