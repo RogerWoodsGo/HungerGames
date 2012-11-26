@@ -32,7 +32,7 @@ void Game::play(char* fileName)
 			{
 				movePlayers(pList);
 			}
-			if(playCounter%6==0)
+			if(playCounter%8==0)
 			{
 				shootArrows(pList,aList);
 			}
@@ -72,7 +72,7 @@ void Game::play(char* fileName)
 			system("cls");
 			if((pList.getHead()!=0)&&(pList.getHead()->getPlayer()->getScore()>0))
 			{
-				cout << "\n" << pList.getHead()->getPlayer()->getChar() << " is the winner!!!" << endl;
+				cout << pList.getHead()->getPlayer()->getChar() << " is the winner!!!" << endl;
 			}
 			else
 			{	
@@ -84,6 +84,7 @@ void Game::play(char* fileName)
 	{
 		cout << "The text file isn't valid" << endl;
 	}
+	cin.get();
 }
 
 bool Game::isThereAWinner(PlayerList& pList)

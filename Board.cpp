@@ -336,7 +336,7 @@ void Board::playerFight(Point& p)
 	while(curr!=0)
 	{
 		curr->getPlayer()->getLocation()->getPlace(playerX,playerY);
-		if((x==playerX)&&(y=playerY))
+		if((x==playerX)&&(y==playerY))
 		{
 			if(curr->getPlayer()->getScore()>max)
 			{
@@ -354,7 +354,7 @@ void Board::playerFight(Point& p)
 	while(curr!=0)
 	{
 		curr->getPlayer()->getLocation()->getPlace(playerX,playerY);
-		if((x==playerX)&&(y=playerY))
+		if((x==playerX)&&(y==playerY))
 		{
 			if(curr->getPlayer()->getScore()<max)
 			{
@@ -385,7 +385,7 @@ void Board::arrowHitsPlayer(Point& p)
 	while(pCurr!=0)
 	{
 		pCurr->getPlayer()->getLocation()->getPlace(playerX,playerY);
-		if((x==playerX)&&(y=playerY))
+		if((x==playerX)&&(y==playerY))
 		{
 			score=pCurr->getPlayer()->getScore();
 			pCurr->getPlayer()->setScore(score-500);
@@ -395,7 +395,7 @@ void Board::arrowHitsPlayer(Point& p)
 	while(aCurr!=0)
 	{
 		aCurr->getArrow()->getLocation()->getPlace(arrowX,arrowY);
-		if((x==arrowX)&&(y=arrowX))
+		if((x==arrowX)&&(y==arrowX))
 		{
 			aCurr->getArrow()->setKillArrow();
 		}

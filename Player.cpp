@@ -33,6 +33,7 @@ void Player::move()
 		break;
 	case ARROW:
 		location->getBoard()->arrowHitsPlayer(*location);
+		location->movePoint(p,ch);
 		break;
 	case FOOD_GIFT:
 		location->movePoint(p,ch);
@@ -44,7 +45,7 @@ void Player::move()
 		break;
 	case BOMB_GIFT:
 		location->movePoint(p,ch);
-		setScore(score-50);
+		setScore(score-750);
 		break;
 	case ' ':
 		location->movePoint(p,ch);	break;
