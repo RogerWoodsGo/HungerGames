@@ -7,11 +7,12 @@ using namespace std;
 const int WIDTH=79;
 const int HEIGHT=24;
 const int NUMBEROFPLAYERS=2;
-const char FOOD='F';
-const char ARROW='A';
-const char BOMB='B';
+const char FOOD_GIFT='F';
+const char ARROW_GIFT='A';
+const char BOMB_GIFT='B';
+const char PLAYER='P';
+const char ARROW=(char)(248);
 const char WALL=(char)(178);
-
 
 enum Direction { 
 	Up=0,

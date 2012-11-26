@@ -5,7 +5,7 @@ void PlayerList::Add(int x,int y)
 {
 	PlayerItem* newPlayer;
 	numOfPlayers++;
-	newPlayer = new PlayerItem(x,y,numOfPlayers,head);
+	newPlayer=new PlayerItem(x,y,numOfPlayers,head);
 	head=newPlayer;
 }
 
@@ -38,7 +38,7 @@ void PlayerList::Remove(Player& player)
 
 void PlayerList::Print()
 {
-	PlayerItem* curr = head;
+	PlayerItem* curr=head;
 	while(curr!=0)
 	{
 		curr->getPlayer()->drawPlayer();

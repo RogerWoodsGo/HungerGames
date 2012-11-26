@@ -14,7 +14,7 @@ public:
 	PlayerItem():pPlayer(0),next(0){}
 	PlayerItem* getNext(){return next;}
 	Player* getPlayer(){return pPlayer;}
-	void setNext(PlayerItem* nextPlayer){next = nextPlayer;}
+	void setNext(PlayerItem* nextPlayer){next=nextPlayer;}
 	~PlayerItem(){delete pPlayer;}
 };
 

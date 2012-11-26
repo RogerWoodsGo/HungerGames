@@ -10,9 +10,9 @@ void Point::draw(char c)
 	HANDLE hConsoleOutput;
 	COORD dwCursorPosition;
 	cout.flush();
-	dwCursorPosition.X = y;
-	dwCursorPosition.Y = x;
-	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+	dwCursorPosition.X=y;
+	dwCursorPosition.Y=x;
+	hConsoleOutput=GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleCursorPosition(hConsoleOutput,dwCursorPosition);
 	cout << c;
 }
@@ -36,11 +36,20 @@ void Point::movePoint(Point& p,char ch)
 	Point currentPoint;
 	getPlace(x,y);
 	currentPoint.setPlace(x,y);
-	draw(' ');//Remove player from screen
-	getBoard()->setContent(currentPoint,' ');//Remove player from text
-	p.getPlace(x,y);//Get the new place for player
-	setPlace(x,y);//Set the new place for player
-	draw(ch);//Draw player on screen
-	getBoard()->setContent(p,'P');//
-
+	if(ch==ARROW)
+	{
+		p.getPlace(x,y);//Get the new place for arrow
+		setPlace(x,y);//Set the new place for arrow
+		draw(ARROW);//Draw arrow on screen
+		getBoard()->setContent(p,ARROW);//Write the arrow to the text	
+	}
+	else
+	{
+		draw(' ');//Remove player from screen
+		getBoard()->setContent(currentPoint,' ');//Remove player from text
+		p.getPlace(x,y);//Get the new place for player
+		setPlace(x,y);//Set the new place for player
+		draw(ch);//Draw player on screen
+		getBoard()->setContent(p,PLAYER);//Write the player to the text
+	}
 }

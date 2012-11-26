@@ -2,24 +2,19 @@
 #define _ARROWLIST_H
 
 #include "ArrowItem.h"
+class Board;// Forward Decleration
 
 class ArrowList
 {
-	ArrowItem *head, *tail;
+	ArrowItem* head;
 	ArrowList(const ArrowList&);
 public:
-	ArrowList():head(new ArrowItem),tail(new ArrowItem)
-	{
-		head->setNext(tail);
-		tail->setNext(NULL);
-	}
-	~ArrowList()
-	{
-		delete head;
-	}
-	void Add(const Arrow& arrow);
-	void Remove(const Arrow& arrow);
-	//void Print();
+	ArrowList():head(0){}
+	void Add(int x,int y,Direction direct);
+	void Remove(Arrow& arrow);
+	ArrowItem* getHead(){return head;}
+	void Print();
+	~ArrowList();
 };
 
 #endif

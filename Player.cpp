@@ -22,24 +22,28 @@ void Player::move()
 	if(rand()%7==0)
 		setDirection();
 	location->getNextMove(direct,p);
-	(char)nextPlace=location->getBoard()->getContent(p);
+	nextPlace=location->getBoard()->getContent(p);
 	switch (nextPlace)
 	{
 	case WALL:
-		setDirection();	break;
-	case FOOD:
-		location->movePoint(p,ch);
-		setScore(score+200);
-		break;
-	case ARROW:
-		location->movePoint(p,ch);
-		setArrows(arrows+3);
+		setDirection();
 		break;
 	case 'P':
 		location->movePoint(p,ch);
 		location->getBoard()->playerFight(*location);
 		break;
-	case BOMB:
+	case ARROW:
+		location->getBoard()->arrowHitsPlayer(*location);
+		break;
+	case FOOD_GIFT:
+		location->movePoint(p,ch);
+		setScore(score+200);
+		break;
+	case ARROW_GIFT:
+		location->movePoint(p,ch);
+		setArrows(arrows+3);
+		break;
+	case BOMB_GIFT:
 		location->movePoint(p,ch);
 		setScore(score-50);
 		break;

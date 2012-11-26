@@ -1,14 +1,14 @@
 #include "ArrowList.h"
+#include "Board.h"
 
-void ArrowList::Add(const Arrow& arrow)
+void ArrowList::Add(int x,int y,Direction direct)
 {
-	ArrowItem* newArrow = new ArrowItem(arrow);
-
-	tail->setNext(newArrow);
-	tail=newArrow;
+	ArrowItem* newArrow;
+	newArrow=new ArrowItem(x,y,direct,head);
+	head=newArrow;
 }
 
-void ArrowList::Remove(const Arrow& arrow)
+void ArrowList::Remove(Arrow& arrow)
 {
 	ArrowItem* curr=head,*saver;
 	while(curr->getArrow()!=&arrow)
@@ -27,25 +27,30 @@ void ArrowList::Remove(const Arrow& arrow)
 	{
 		head=curr->getNext();
 	}
-	else if(curr==tail)
-	{
-		tail=saver;
-	}
 	else
 	{
-		saver=curr->getNext();
+		saver->setNext(curr->getNext());
 	}
 	delete curr;
 }
 
-/*
-void List::Print()
+void ArrowList::Print()
 {
-	for(Item* curr = head->getNext();
-		curr != tail;
-		curr = curr->getNext())
+	ArrowItem* curr=head;
+	while(curr!=0)
 	{
-			curr->getData()->Print();
+		curr->getArrow()->drawArrow();
+		curr=curr->getNext();
 	}
 }
-*/
+
+ArrowList::~ArrowList()
+{
+	ArrowItem* curr=head,*saver;
+	while(curr!=0)
+	{
+		saver=curr->getNext();
+		delete curr;
+		curr=saver;
+	}
+}

@@ -16,7 +16,7 @@ class Player
 public:
 	Player(int x,int y,char symbol):location(new Point(x,y)),numOfArrows(4),score(1000),ch(symbol),direct(randomDirection()){}
 	void drawPlayer(){(*location).draw(ch);}
-	Point* getPlace(){return location;}
+	Point* getLocation(){return location;}
 	Direction getDirect(){return direct;}
 	int getArrows(){return numOfArrows;}
 	void setArrows(int num){numOfArrows=num;}

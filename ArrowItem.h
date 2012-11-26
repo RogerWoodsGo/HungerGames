@@ -2,24 +2,20 @@
 #define _ARROWITEM_H_
 
 #include "Arrow.h"
+class ArrowList;// Forward Decleration
 
 class ArrowItem
 {
-	const Arrow* pArrow;
+	Arrow* pArrow;
 	ArrowItem* next;
 	ArrowItem(const ArrowItem&);
 public:
-	ArrowItem(const Arrow& arrow):pArrow(&arrow),next(0){}
+	ArrowItem(int x,int y,Direction direct,ArrowItem* head):pArrow(new Arrow(x,y,direct)),next(head){}
 	ArrowItem():pArrow(0),next(0){}
-	~ArrowItem()
-	{
-		delete pArrow;
-		delete next;
-	}
 	ArrowItem* getNext(){return next;}
-	const Arrow* getArrow(){return pArrow;}
-	void setNext(ArrowItem* nextArrow){next = nextArrow;}
-	//void setArrow(Arrow* pArrow){this->pArrow = pArrow;}
+	Arrow* getArrow(){return pArrow;}
+	void setNext(ArrowItem* nextArrow){next=nextArrow;}
+	~ArrowItem(){delete pArrow;}
 };
 
 #endif
