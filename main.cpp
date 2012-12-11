@@ -5,5 +5,5 @@ void main(int argc,char* argv[])
 {
 	Game g;
 	srand((unsigned)(time(0)));
-	g.play(argv[1]);
+	g.run(argv[1]);
 }

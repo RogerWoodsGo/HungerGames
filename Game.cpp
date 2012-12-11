@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "Board.h"
 #include "general.h"
 #include "Point.h"
 #include <Windows.h>
@@ -7,15 +6,25 @@
 #include <process.h>
 
 const int ESC=27;
+void Game::run(char* fileName)
+{
+	system("cls");
+	if(fileName==NULL)
+	{
+		cout << "Please specify a file" << endl;
+	}
+	else
+	{
+		play(fileName);
+	}
+	cin.get();
+}
 
 void Game::play(char* fileName)
 {
-	Board b;
 	bool answerPressed=false,stopGame=false,validBoard;
 	char answer;
 	int playCounter=0;
-	PlayerList pList;
-	ArrowList aList;
 	b.setPList(pList);
 	b.setAList(aList);
 	b.readFile(fileName);
@@ -23,18 +32,18 @@ void Game::play(char* fileName)
 	if (validBoard)
 	{
 		b.printText();
-		while((!stopGame)&&(!isThereAWinner(pList)))
+		while((!stopGame)&&(!isThereAWinner()))
 		{
 			playCounter++;
-			moveArrows(aList);
+			moveArrows();
 			b.throwGifts();
 			if(playCounter%2==0)
 			{
-				movePlayers(pList);
+				movePlayers();
 			}
-			if(playCounter%8==0)
+			if(playCounter%8==0)//A player can shoot an arrow every 4th move so its every 8th arrow move because arrows are twice as fast as the player
 			{
-				shootArrows(pList,aList);
+				shootArrows();
 			}
 			b.printScoreBoard();
 			if(_kbhit()&&_getch()==ESC)
@@ -61,11 +70,11 @@ void Game::play(char* fileName)
 				}
 				answerPressed=false;
 			}
-			Sleep(50);
+			Sleep(250);
 		}
 		if(stopGame==true)
 		{
-			cout << "Thank you for playing our hunger game." << endl;
+			cout << endl << "Thank you for playing our hunger game." << endl;
 		}
 		else
 		{
@@ -84,10 +93,9 @@ void Game::play(char* fileName)
 	{
 		cout << "The text file isn't valid" << endl;
 	}
-	cin.get();
 }
 
-bool Game::isThereAWinner(PlayerList& pList)
+bool Game::isThereAWinner()
 {
 	int score;
 	bool winnerFound=false;
@@ -110,7 +118,7 @@ bool Game::isThereAWinner(PlayerList& pList)
 	return winnerFound;
 }
 
-void Game::movePlayers(PlayerList& pList)
+void Game::movePlayers()
 {
 	PlayerItem* curr=pList.getHead();
 	while(curr!=0)
@@ -120,7 +128,7 @@ void Game::movePlayers(PlayerList& pList)
 	}
 }
 
-void Game::moveArrows(ArrowList& aList)
+void Game::moveArrows()
 {
 	ArrowItem* curr=aList.getHead(),*next;
 	char giftSteppedOn;
@@ -142,7 +150,7 @@ void Game::moveArrows(ArrowList& aList)
 	}
 }
 
-void Game::shootArrows(PlayerList& pList,ArrowList& aList)
+void Game::shootArrows()
 {
 	PlayerItem* curr=pList.getHead();
 	Point p;

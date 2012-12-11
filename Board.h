@@ -14,10 +14,9 @@ class Board
 	ArrowList* aList;
 	Board(const Board&);
 public:
-	Board():numOfPlayersOnBoard(0),scoreBoardPlace(0,0){}
+	Board();
 	void readFile(char* fileName);
-	void setText(char** textToSet){text=textToSet;}
-	char** getText(){return text;}
+	//char** getText(){return text;}
 	void setPList(PlayerList& lst){pList=&lst;}
 	void setAList(ArrowList& lst){aList=&lst;}
 	void printText();

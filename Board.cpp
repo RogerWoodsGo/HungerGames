@@ -1,15 +1,20 @@
 #include "Board.h"
 #include "general.h"
 
-void Board::readFile(char* fileName)
+Board::Board()
 {
-	FILE* f;
-	char ch,**text;
-	bool OWasFound=false;
 	text=new char*[HEIGHT];
 	for(int i=0;i<HEIGHT;i++)
 		text[i]=new char[WIDTH];
-	setText(text);
+	numOfPlayersOnBoard=0;
+	scoreBoardPlace.setPlace(0,0);
+}
+
+void Board::readFile(char* fileName)
+{
+	FILE* f;
+	char ch;
+	bool OWasFound=false;
 	f=fopen(fileName,"r");
 	for(int i=0;i<HEIGHT;i++)
 	{
@@ -71,7 +76,7 @@ bool Board::checkBoard()
 				validPlace=randomLocation(playerPlace);
 				if(!validPlace)
 				{
-					cout << "Valid place didn't found" << endl;
+					cout << "Valid place wasn't found" << endl;
 					validBoard=false;
 				}
 				else
