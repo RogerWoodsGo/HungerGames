@@ -37,11 +37,11 @@ void Game::play(char* fileName)
 			playCounter++;
 			moveArrows();
 			b.throwGifts();
-			if(playCounter%2==0)
+			if(playCounter%PLAYER_ROUND_MOVE==0)
 			{
 				movePlayers();
 			}
-			if(playCounter%8==0)//A player can shoot an arrow every 4th move so its every 8th arrow move because arrows are twice as fast as the player
+			if(playCounter%(PLAYER_ROUND_MOVE*4)==0)//A player can shoot an arrow every 4th move so its every 8th arrow move because arrows are twice as fast as the player
 			{
 				shootArrows();
 			}
@@ -70,7 +70,7 @@ void Game::play(char* fileName)
 				}
 				answerPressed=false;
 			}
-			Sleep(250);
+			Sleep(SLEEP_TIME);
 		}
 		if(stopGame==true)
 		{

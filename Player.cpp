@@ -4,7 +4,7 @@
 
 Direction Player::randomDirection()
 {
-	return (Direction)(rand()%4);
+	return (Direction)(rand()%DIRECTION_OPTION);
 }
 
 void Player::setDirection()
@@ -18,7 +18,7 @@ void Player::move()
 	int arrows=getArrows();
 	char nextPlace;
 	Point p;
-	if(rand()%7==0)
+	if(rand()%CHANCE_TO_CHANGE_DIRECTION==0)
 		setDirection();
 	location->getNextMove(direct,p);
 	nextPlace=location->getBoard()->getContent(p);
@@ -37,15 +37,15 @@ void Player::move()
 		break;
 	case FOOD_GIFT:
 		location->movePoint(p,ch);
-		setScore(score+200);
+		setScore(score+FOOD_BONUS);
 		break;
 	case ARROW_GIFT:
 		location->movePoint(p,ch);
-		setArrows(arrows+3);
+		setArrows(arrows+ARROWS_BONUS);
 		break;
 	case BOMB_GIFT:
 		location->movePoint(p,ch);
-		setScore(score-750);
+		setScore(score-BOMB_BONUS);
 		break;
 	case ' ':
 		location->movePoint(p,ch);	break;

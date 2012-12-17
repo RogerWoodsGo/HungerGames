@@ -59,7 +59,7 @@ bool Board::checkBoard()
 	Point playerPlace,nextPlace;
 	PlayerItem* curr=pList->getHead();
 	scoreBoardPlace.getPlace(x,y);
-	if((x<=0)||(x>18)||(y<=0)||(y>68))
+	if((x<=MIN_BOARD_HEIGHT_OR_WIDTH)||(x>MAX_BOARD_HEIGHT)||(y<=MIN_BOARD_HEIGHT_OR_WIDTH)||(y>MAX_BOARD_WIDTH))
 	{
 		validBoard=false;
 		cout << "Illegal Text file" << endl;
@@ -114,15 +114,15 @@ bool Board::checkBoard()
 		scoreBoardPlace.getPlace(x,y);
 		y--;
 		x--;
-		for(int i=y;i<y+12;i++)
+		for(int i=y;i<y+SCORE_BOARD_WIDTH;i++)
 		{
 			text[x][i]=WALL;
-			text[x+6][i]=WALL;
+			text[x+(SCORE_BOARD_HEIGHT-1)][i]=WALL;
 		}
-		for(int j=x+1;j<x+7;j++)
+		for(int j=x+1;j<x+SCORE_BOARD_HEIGHT;j++)
 		{
 			text[j][y]=WALL;
-			text[j][y+11]=WALL;
+			text[j][y+(SCORE_BOARD_WIDTH-1)]=WALL;
 		}
 	}
 	return validBoard;
@@ -168,7 +168,7 @@ bool Board::randomLocation(Point& p)
 	char newLocationContent;
 	bool newLocationWasFound=false;
 	int x,y,timeSearchedForLocation=0;
-	while((!newLocationWasFound)&&(timeSearchedForLocation<=30))
+	while((!newLocationWasFound)&&(timeSearchedForLocation<=NUM_OF_TRIES_TO_FIND_NEW_LOCATION))
 	{
 		x=rand()%HEIGHT;
 		y=rand()%WIDTH;
@@ -210,9 +210,10 @@ bool Board::isPointNearAPlayer(Point& p)
 	while((curr!=0)&&(!isPointNearThePlayer))
 	{
 		curr->getPlayer()->getLocation()->getPlace(playerX,playerY);
-		playerX-=2;
-		playerY-=2;
-		if((x-playerX<=4)&&(y-playerY<=4)&&(x-playerX>=0)&&(y-playerY>=0))
+		playerX-=DISTANCE_BETWEEN_ITEM_TO_PLAYER;
+		playerY-=DISTANCE_BETWEEN_ITEM_TO_PLAYER;
+		if((x-playerX<=DISTANCE_BETWEEN_ITEM_TO_PLAYER+2)&&(y-playerY<=DISTANCE_BETWEEN_ITEM_TO_PLAYER+2)
+			&&(x-playerX>=DISTANCE_BETWEEN_ITEM_TO_PLAYER-2)&&(y-playerY>=DISTANCE_BETWEEN_ITEM_TO_PLAYER-2))
 		{
 			isPointNearThePlayer=true;
 		}
@@ -224,9 +225,9 @@ bool Board::isPointNearAPlayer(Point& p)
 void Board::throwGifts()
 {
 	Point giftLocation;
-	int chance=(rand()%20)+1;//1-20
+	int chance=(rand()%BOMB_CHANCE)+1;//1-20
 	//Bomb 0.05
-	if(chance%20==0)//20
+	if(chance%BOMB_CHANCE==0)//20
 	{
 		if(randomLocation(giftLocation))
 		{
@@ -238,7 +239,7 @@ void Board::throwGifts()
 		}
 	}
 	//Arrow 0.1
-	if(chance%10==0)//10,20
+	if(chance%ARROW_CHANCE==0)//10,20
 	{
 		if(randomLocation(giftLocation))
 		{
@@ -250,7 +251,7 @@ void Board::throwGifts()
 		}
 	}
 	//Food 0.2
-	if(chance%5==0)//5,10,15,20
+	if(chance%FOOD_CHANCE==0)//5,10,15,20
 	{
 		if(randomLocation(giftLocation))
 		{
@@ -270,7 +271,7 @@ bool Board::isPointInScoreBoard(Point& p)
 	SBx--;
 	SBy--;
 	p.getPlace(x,y);
-	if((x-SBx<=6)&&(y-SBy<=11)&&(x-SBx>=0)&&(y-SBy>=0))
+	if((x-SBx<=SCORE_BOARD_HEIGHT-1)&&(y-SBy<=SCORE_BOARD_WIDTH-1)&&(x-SBx>=MIN_BOARD_HEIGHT_OR_WIDTH)&&(y-SBy>=MIN_BOARD_HEIGHT_OR_WIDTH))
 	{
 		return true;
 	}
@@ -364,17 +365,17 @@ void Board::playerFight(Point& p)
 			if(curr->getPlayer()->getScore()<max)
 			{
 				score=curr->getPlayer()->getScore();
-				curr->getPlayer()->setScore(score-200);
+				curr->getPlayer()->setScore(score-LOW_POWER_PLAYER);
 			}
-			else if((curr->getPlayer()->getScore()==max)&&(numOfMaxPlayers==1))
+			else if((curr->getPlayer()->getScore()==max)&&(numOfMaxPlayers==NUM_OF_PLAYERS_WITH_MAX_SCORE))
 			{
 				score=curr->getPlayer()->getScore();
-				curr->getPlayer()->setScore(score-10);
+				curr->getPlayer()->setScore(score-HIGH_POWER_PLAYER);
 			}
-			else if((curr->getPlayer()->getScore()==max)&&(numOfMaxPlayers>1))
+			else if((curr->getPlayer()->getScore()==max)&&(numOfMaxPlayers>NUM_OF_PLAYERS_WITH_MAX_SCORE))
 			{
 				score=curr->getPlayer()->getScore();
-				curr->getPlayer()->setScore(score-50);
+				curr->getPlayer()->setScore(score-EQUAL_POWER_PLAYER);
 			}
 		}
 		curr=curr->getNext();
@@ -393,7 +394,7 @@ void Board::arrowHitsPlayer(Point& p)
 		if((x==playerX)&&(y==playerY))
 		{
 			score=pCurr->getPlayer()->getScore();
-			pCurr->getPlayer()->setScore(score-500);
+			pCurr->getPlayer()->setScore(score-ARROW_HIT_PLAYER);
 		}
 		pCurr=pCurr->getNext();
 	}
