@@ -13,16 +13,18 @@ const char BOMB_GIFT='B';
 const char PLAYER='P';
 const char ARROW=(char)(248);
 const char WALL=(char)(178);
-const int MIN_BOARD_HEIGHT_OR_WIDTH=0;
-const int MAX_BOARD_HEIGHT=18;
-const int MAX_BOARD_WIDTH=68;
+const int MIN_VALID_BOARD_PLACE_X=1;
+const int MIN_VALID_BOARD_PLACE_Y=1;
+const int MAX_VALID_BOARD_PLACE_X=18;
+const int MAX_VALID_BOARD_PLACE_Y=68;
 const int SCORE_BOARD_WIDTH=12;
 const int SCORE_BOARD_HEIGHT=7;
 const int NUM_OF_TRIES_TO_FIND_NEW_LOCATION=30;
 const int DISTANCE_BETWEEN_ITEM_TO_PLAYER=2;
-const int BOMB_CHANCE=20;
-const int ARROW_CHANCE=10;
-const int FOOD_CHANCE=5;
+const int GIFT_CHANCE=20;
+const double BOMB_CHANCE=0.05;
+const double ARROW_CHANCE=0.1;
+const double FOOD_CHANCE=0.2;
 const int LOW_POWER_PLAYER=200;
 const int HIGH_POWER_PLAYER=10;
 const int EQUAL_POWER_PLAYER=50;
@@ -35,8 +37,6 @@ const int FOOD_BONUS=200;
 const int ARROWS_BONUS=3;
 const int BOMB_BONUS=750;
 const int CHANCE_TO_CHANGE_DIRECTION=7;
-
-
 
 enum Direction { 
 	Up=0,

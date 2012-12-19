@@ -59,7 +59,7 @@ bool Board::checkBoard()
 	Point playerPlace,nextPlace;
 	PlayerItem* curr=pList->getHead();
 	scoreBoardPlace.getPlace(x,y);
-	if((x<=MIN_BOARD_HEIGHT_OR_WIDTH)||(x>MAX_BOARD_HEIGHT)||(y<=MIN_BOARD_HEIGHT_OR_WIDTH)||(y>MAX_BOARD_WIDTH))
+	if((x<MIN_VALID_BOARD_PLACE_X)||(x>MAX_VALID_BOARD_PLACE_X)||(y<MIN_VALID_BOARD_PLACE_Y)||(y>MAX_VALID_BOARD_PLACE_Y))
 	{
 		validBoard=false;
 		cout << "Illegal Text file" << endl;
@@ -225,9 +225,9 @@ bool Board::isPointNearAPlayer(Point& p)
 void Board::throwGifts()
 {
 	Point giftLocation;
-	int chance=(rand()%BOMB_CHANCE)+1;//1-20
+	int chance=(rand()%GIFT_CHANCE)+1;//1-20
 	//Bomb 0.05
-	if(chance%BOMB_CHANCE==0)//20
+	if(chance%int((1/BOMB_CHANCE))==0)//20
 	{
 		if(randomLocation(giftLocation))
 		{
@@ -239,7 +239,7 @@ void Board::throwGifts()
 		}
 	}
 	//Arrow 0.1
-	if(chance%ARROW_CHANCE==0)//10,20
+	if(chance%int((1/ARROW_CHANCE))==0)//10,20
 	{
 		if(randomLocation(giftLocation))
 		{
@@ -251,7 +251,7 @@ void Board::throwGifts()
 		}
 	}
 	//Food 0.2
-	if(chance%FOOD_CHANCE==0)//5,10,15,20
+	if(chance%int((1/FOOD_CHANCE))==0)//5,10,15,20
 	{
 		if(randomLocation(giftLocation))
 		{
@@ -271,7 +271,7 @@ bool Board::isPointInScoreBoard(Point& p)
 	SBx--;
 	SBy--;
 	p.getPlace(x,y);
-	if((x-SBx<=SCORE_BOARD_HEIGHT-1)&&(y-SBy<=SCORE_BOARD_WIDTH-1)&&(x-SBx>=MIN_BOARD_HEIGHT_OR_WIDTH)&&(y-SBy>=MIN_BOARD_HEIGHT_OR_WIDTH))
+	if((x-SBx<SCORE_BOARD_HEIGHT)&&(y-SBy<SCORE_BOARD_WIDTH)&&(x-SBx>=0)&&(y-SBy>=0))
 	{
 		return true;
 	}
