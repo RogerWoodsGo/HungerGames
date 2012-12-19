@@ -15,7 +15,7 @@ void Player::setDirection()
 void Player::move()
 {
 	int score=getScore();
-	int arrows=getArrows();
+	//int arrows=getArrows();
 	char nextPlace;
 	Point p;
 	if(rand()%CHANCE_TO_CHANGE_DIRECTION==0)
@@ -31,7 +31,9 @@ void Player::move()
 		location->movePoint(p,ch);
 		location->getBoard()->playerFight(*location);
 		break;
-	case ARROW:
+	case REGULAR_ARROW:
+	case PASSING_ARROW:
+	case BOMBING_ARROW:
 		location->movePoint(p,ch);
 		location->getBoard()->arrowHitsPlayer(*location);
 		break;
@@ -41,7 +43,7 @@ void Player::move()
 		break;
 	case ARROW_GIFT:
 		location->movePoint(p,ch);
-		setArrows(arrows+ARROWS_BONUS);
+		raiseArrows();
 		break;
 	case BOMB_GIFT:
 		location->movePoint(p,ch);

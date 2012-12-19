@@ -3,13 +3,13 @@
                     WWW      WWW                 O                             
                     WWW      WWW                                               
                     WWW      WWW                                               
-                    WWW      WWW                                               
+        H           WWW      WWW                                               
                     WWW      WWW                                               
                     WWW      WWW                                               
                     WWWWW  WWWWW    WWWWWWW                                    
                     WWWWW  WWWWW  WWWWWWWWWW                                   
                     WWW      WWW WWWW     WW                                   
-                    WWW      WWWWWW                     P                      
+                    WWW      WWWWWW                                            
                     WWW      WWWWWW                                            
                     WWW      WWWWW                                             
                     WWW      WWWWW   WWWWWWW                                   
@@ -17,7 +17,7 @@
                                WWW        WWW                                  
                                WWW        WWW                                  
                                WWWW       WWW                                  
-            P                             WWW                                  
+            H                             WWW                                  
                                  WWWW     WWW                                  
                                   WWWWWWWWWW                                   
                                     WWWWWW                                     

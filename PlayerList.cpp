@@ -1,11 +1,10 @@
 #include "PlayerList.h"
 #include "Board.h"
 
-void PlayerList::Add(int x,int y)
+void PlayerList::Add(int x,int y,char ch)
 {
 	PlayerItem* newPlayer;
-	numOfPlayers++;
-	newPlayer=new PlayerItem(x,y,numOfPlayers,head);
+	newPlayer=new PlayerItem(x,y,ch,head);
 	head=newPlayer;
 }
 
@@ -33,7 +32,6 @@ void PlayerList::Remove(Player& player)
 		saver->setNext(curr->getNext());
 	}
 	delete curr;
-	numOfPlayers--;
 }
 
 void PlayerList::Print()

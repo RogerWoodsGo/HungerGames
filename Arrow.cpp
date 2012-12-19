@@ -15,7 +15,7 @@ void Arrow::move()
 	else
 	{
 		currentPlace=location->getBoard()->getContent(*location);
-		if(currentPlace==ARROW)
+		if((currentPlace==REGULAR_ARROW)||(currentPlace==PASSING_ARROW)||(currentPlace==BOMBING_ARROW))
 		{
 			location->draw(giftSteppedOn);//Drawing the gift I just stepped on
 			location->getBoard()->setContent(*location,giftSteppedOn);//Returning the gift I just stepped on to the text
@@ -26,7 +26,7 @@ void Arrow::move()
 		}
 		else
 		{
-			if(nextPlace==ARROW)
+			if((nextPlace==REGULAR_ARROW)||(nextPlace==PASSING_ARROW)||(nextPlace==BOMBING_ARROW))
 			{
 				setGiftSteppedOn(' ');//Not saving the arrow I am stepping on
 			}
@@ -34,7 +34,7 @@ void Arrow::move()
 			{
 				setGiftSteppedOn(nextPlace);//Saving the gift on the next step
 			}
-			location->movePoint(p,ARROW);
+			location->movePoint(p,ch);
 		}
 	}
 }

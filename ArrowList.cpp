@@ -1,7 +1,7 @@
 #include "ArrowList.h"
 #include "Board.h"
 
-void ArrowList::Add(int x,int y,Direction direct)
+void ArrowList::Add(int x,int y,Direction direct,char ch)
 {
 	ArrowItem* newArrow;
 	newArrow=new ArrowItem(x,y,direct,head);

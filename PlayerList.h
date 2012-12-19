@@ -6,11 +6,10 @@
 class PlayerList
 {
 	PlayerItem* head;
-	char numOfPlayers;
 	PlayerList(const PlayerList&);
 public:
-	PlayerList():head(0),numOfPlayers(0){}
-	void Add(int x,int y);
+	PlayerList():head(0){}
+	void Add(int x,int y,char ch);
 	void Remove(Player& player);
 	PlayerItem* getHead(){return head;}
 	void Print();

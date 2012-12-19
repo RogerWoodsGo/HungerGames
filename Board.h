@@ -8,7 +8,8 @@
 class Board
 {
 	char** text;
-	int numOfPlayersOnBoard;
+	int numOfComputerPlayersOnBoard;
+	int numOfHumanPlayersOnBoard;
 	Point scoreBoardPlace;
 	PlayerList* pList;
 	ArrowList* aList;

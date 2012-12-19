@@ -154,8 +154,8 @@ void Game::shootArrows()
 {
 	PlayerItem* curr=pList.getHead();
 	Point p;
-	char nextPlace;
-	int x,y,numOfArrows;
+	char nextPlace,arrowChar;
+	int x,y,numOfArrows,numOfRegularArrows,numOfPassingArrows,numOfBombingArrows;
 	Board* b;
 	Direction direct;
 	while(curr!=0)
@@ -167,20 +167,36 @@ void Game::shootArrows()
 			direct=curr->getPlayer()->getDirect();
 			curr->getPlayer()->getLocation()->getNextMove(direct,p);
 			nextPlace=b->getContent(p);
-			if((nextPlace!=WALL)&&(nextPlace!=ARROW))
+			//We don't shoot arrows near a wall or another arrow because we want to see the arrow being shot before it hits something
+			if((nextPlace!=WALL)&&(nextPlace!=REGULAR_ARROW)&&(nextPlace!=PASSING_ARROW)&&(nextPlace!=BOMBING_ARROW))
 			{
+				curr->getPlayer()->getArrows(numOfRegularArrows,numOfPassingArrows,numOfBombingArrows);
+				p.getPlace(x,y);
+				if(numOfBombingArrows>0)
+				{
+					curr->getPlayer()->decreaseArrows(0,0,1);
+					arrowChar=BOMBING_ARROW;
+				}
+				else if(numOfPassingArrows>0)
+				{
+					curr->getPlayer()->decreaseArrows(0,1,0);
+					arrowChar=PASSING_ARROW;
+				}
+				else
+				{
+					curr->getPlayer()->decreaseArrows(1,0,0);
+					arrowChar=REGULAR_ARROW;
+				}
 				if(nextPlace==PLAYER)
 				{
 					b->arrowHitsPlayer(p);
 				}
 				else
 				{
-					p.getPlace(x,y);
-					aList.Add(x,y,direct);
+					aList.Add(x,y,direct,arrowChar);
 					aList.getHead()->getArrow()->getLocation()->setBoard(b);
-					curr->getPlayer()->setArrows(numOfArrows-1);
 					aList.getHead()->getArrow()->setGiftSteppedOn(nextPlace);
-					b->setContent(p,ARROW);
+					b->setContent(p,arrowChar);
 				}
 			}
 		}

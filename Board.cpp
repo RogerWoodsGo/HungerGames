@@ -6,7 +6,8 @@ Board::Board()
 	text=new char*[HEIGHT];
 	for(int i=0;i<HEIGHT;i++)
 		text[i]=new char[WIDTH];
-	numOfPlayersOnBoard=0;
+	numOfComputerPlayersOnBoard=0;
+	numOfHumanPlayersOnBoard=0;
 	scoreBoardPlace.setPlace(0,0);
 }
 
@@ -26,13 +27,23 @@ void Board::readFile(char* fileName)
 			case 'W':
 				text[i][j]=WALL;
 				break;
-			case PLAYER:
-				if(numOfPlayersOnBoard<NUMBEROFPLAYERS)
+			case 'H':
+				if(numOfHumanPlayersOnBoard<MAX_NUM_OF_HUMAN_PLAYERS)
 				{
+					numOfHumanPlayersOnBoard++;
 					text[i][j]=PLAYER;
-					pList->Add(i,j);
+					pList->Add(i,j,HUMAN_PLAYER);
 					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
-					numOfPlayersOnBoard++;
+				}
+				else text[i][j]=' ';
+				break;
+			case PLAYER:
+				if(numOfComputerPlayersOnBoard<MAX_NUM_OF_COMPUTER_PLAYERS)
+				{
+					numOfComputerPlayersOnBoard++;
+					text[i][j]=PLAYER;
+					pList->Add(i,j,numOfComputerPlayersOnBoard);
+					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
 				}
 				else text[i][j]=' ';
 				break;
@@ -91,7 +102,7 @@ bool Board::checkBoard()
 	}
 	if(validBoard)
 	{
-		while(numOfPlayersOnBoard<NUMBEROFPLAYERS)
+		while(numOfComputerPlayersOnBoard+numOfHumanPlayersOnBoard<MIN_NUM_OF_PLAYERS_ON_BOARD)
 		{
 			validPlace=randomLocation(playerPlace);
 			if(!validPlace)
@@ -101,11 +112,11 @@ bool Board::checkBoard()
 			}
 			else
 			{
+				numOfComputerPlayersOnBoard++;
 				playerPlace.getPlace(x,y);
-				pList->Add(x,y);
+				pList->Add(x,y,numOfComputerPlayersOnBoard);
 				pList->getHead()->getPlayer()->getLocation()->setBoard(this);
 				setContent(playerPlace,PLAYER);
-				numOfPlayersOnBoard++;
 			}
 		}
 	}
@@ -280,7 +291,7 @@ bool Board::isPointInScoreBoard(Point& p)
 
 void Board::printScoreBoard()
 {
-	int SBx,SBy,x,y,score,arrows;
+	int SBx,SBy,x,y,score,numOfRegularArrows,numOfPassingArrows,numOfBombingArrows;
 	char ch;
 	Point p;
 	PlayerItem* curr=pList->getHead();
@@ -290,20 +301,35 @@ void Board::printScoreBoard()
 		x=SBx;
 		y=SBy;
 		scoreBoardPlace.getPlace(x,y);
-		arrows=curr->getPlayer()->getArrows();
+		curr->getPlayer()->getArrows(numOfRegularArrows,numOfPassingArrows,numOfBombingArrows);
 		score=curr->getPlayer()->getScore();
 		ch=curr->getPlayer()->getChar();
 		x+=(ch-1)*2;
 		p.setPlace(x,y);
-		p.draw(ch);
-		cout << " ";
-		if(arrows>9)
+		p.draw(ch);//Draw the player icon
+		if(numOfRegularArrows>9)
 		{
-			cout << arrows;
+			cout << '*';
 		}
 		else
 		{
-			cout << " " << arrows;
+			cout << numOfRegularArrows;
+		}
+		if(numOfPassingArrows>9)
+		{
+			cout << '*';
+		}
+		else
+		{
+			cout << numOfPassingArrows;
+		}
+		if(numOfBombingArrows>9)
+		{
+			cout << '*';
+		}
+		else
+		{
+			cout << numOfBombingArrows;
 		}
 		cout << " ";
 		if(score>9999)
