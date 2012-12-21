@@ -10,10 +10,11 @@ const int MAX_NUM_OF_COMPUTER_PLAYERS=2;
 const int MAX_NUM_OF_HUMAN_PLAYERS=1;
 const int MIN_NUM_OF_PLAYERS_ON_BOARD=2;
 const char FOOD_GIFT='F';
-const char ARROW_GIFT='A';
+const char ARROW_GIFT=(char)(24);
 const char BOMB_GIFT='B';
 const char PLAYER='P';
 const char HUMAN_PLAYER=(char)(3);
+const char ARROW='A';
 const char REGULAR_ARROW=(char)(248);
 const char PASSING_ARROW=(char)(233);
 const char BOMBING_ARROW='*';
@@ -40,14 +41,15 @@ const int SLEEP_TIME=50;
 const int DIRECTION_OPTION=4;
 const int FOOD_BONUS=200;
 const int ARROWS_BONUS=1;
-const int BOMB_BONUS=750;
+const int BOMB_BONUS=-750;
 const int CHANCE_TO_CHANGE_DIRECTION=7;
 
 enum Direction { 
-	Up=0,
-	Right=1,
-	Down=2,
-	Left=3
+	Center=0,
+	Up=1,
+	Right=2,
+	Down=3,
+	Left=4
 };
 
 #endif

@@ -6,6 +6,7 @@
 
 class Player
 {
+protected:
 	Point* location;
 	Direction direct;
 	int numOfRegularArrows;
@@ -16,7 +17,7 @@ class Player
 	Player(const Player&);
 public:
 	Player(int x,int y,char symbol):location(new Point(x,y)),
-		numOfRegularArrows(2),numOfPassingArrows(1),numOfBombingArrows(1),score(1000),ch(symbol),direct(randomDirection()){}
+		numOfRegularArrows(2),numOfPassingArrows(1),numOfBombingArrows(1),score(1000),ch(symbol){}
 	void drawPlayer(){(*location).draw(ch);}
 	Point* getLocation(){return location;}
 	Direction getDirect(){return direct;}
@@ -27,10 +28,9 @@ public:
 	int getScore(){return score;}
 	void setScore(int num){score=num;}
 	char getChar(){return ch;}
-	void setDirection();
-	Direction randomDirection();
-	void move();
-	~Player(){delete location;}
+	virtual void setDirection()=0;
+	virtual void move()=0;
+	virtual ~Player(){delete location;};
 };
 
 #endif

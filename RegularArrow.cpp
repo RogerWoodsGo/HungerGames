@@ -1,8 +1,8 @@
-#include "Arrow.h"
+#include "RegularArrow.h"
 #include "ArrowItem.h"
 #include "Board.h"
 
-void Arrow::move()
+void RegularArrow::move()
 {
 	char nextPlace,currentPlace;
 	Point p;
@@ -15,7 +15,7 @@ void Arrow::move()
 	else
 	{
 		currentPlace=location->getBoard()->getContent(*location);
-		if((currentPlace==REGULAR_ARROW)||(currentPlace==PASSING_ARROW)||(currentPlace==BOMBING_ARROW))
+		if(currentPlace==ARROW)
 		{
 			location->draw(giftSteppedOn);//Drawing the gift I just stepped on
 			location->getBoard()->setContent(*location,giftSteppedOn);//Returning the gift I just stepped on to the text
@@ -26,7 +26,7 @@ void Arrow::move()
 		}
 		else
 		{
-			if((nextPlace==REGULAR_ARROW)||(nextPlace==PASSING_ARROW)||(nextPlace==BOMBING_ARROW))
+			if(nextPlace==ARROW)
 			{
 				setGiftSteppedOn(' ');//Not saving the arrow I am stepping on
 			}

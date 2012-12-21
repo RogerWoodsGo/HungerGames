@@ -1,21 +1,16 @@
-#include "Player.h"
+#include "ComputerPlayer.h"
 #include "PlayerItem.h"
 #include "Board.h"
+#include "general.h"
 
-Direction Player::randomDirection()
+void ComputerPlayer::setDirection()
 {
-	return (Direction)(rand()%DIRECTION_OPTION);
+	direct=(Direction)(rand()%DIRECTION_OPTION+1);
 }
 
-void Player::setDirection()
-{
-	direct=randomDirection();
-}
-
-void Player::move()
+void ComputerPlayer::move()
 {
 	int score=getScore();
-	//int arrows=getArrows();
 	char nextPlace;
 	Point p;
 	if(rand()%CHANCE_TO_CHANGE_DIRECTION==0)
@@ -31,9 +26,7 @@ void Player::move()
 		location->movePoint(p,ch);
 		location->getBoard()->playerFight(*location);
 		break;
-	case REGULAR_ARROW:
-	case PASSING_ARROW:
-	case BOMBING_ARROW:
+	case ARROW:
 		location->movePoint(p,ch);
 		location->getBoard()->arrowHitsPlayer(*location);
 		break;
@@ -47,7 +40,7 @@ void Player::move()
 		break;
 	case BOMB_GIFT:
 		location->movePoint(p,ch);
-		setScore(score-BOMB_BONUS);
+		setScore(score+BOMB_BONUS);
 		break;
 	case ' ':
 		location->movePoint(p,ch);	break;

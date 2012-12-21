@@ -31,6 +31,8 @@ void PlayerList::Remove(Player& player)
 	{
 		saver->setNext(curr->getNext());
 	}
+	curr->getPlayer()->getLocation()->getBoard()->setContent(*(curr->getPlayer()->getLocation()),' ');
+	curr->getPlayer()->getLocation()->draw(' ');
 	delete curr;
 }
 

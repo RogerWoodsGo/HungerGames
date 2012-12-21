@@ -4,13 +4,14 @@
 void ArrowList::Add(int x,int y,Direction direct,char ch)
 {
 	ArrowItem* newArrow;
-	newArrow=new ArrowItem(x,y,direct,head);
+	newArrow=new ArrowItem(x,y,direct,head,ch);
 	head=newArrow;
 }
 
 void ArrowList::Remove(Arrow& arrow)
 {
 	ArrowItem* curr=head,*saver;
+	char giftSteppedOn;
 	while(curr->getArrow()!=&arrow)
 	{
 		if(curr==head)
@@ -31,6 +32,8 @@ void ArrowList::Remove(Arrow& arrow)
 	{
 		saver->setNext(curr->getNext());
 	}
+	giftSteppedOn=curr->getArrow()->getGiftSteppedOn();
+	curr->getArrow()->getLocation()->getBoard()->setContent(*(curr->getArrow()->getLocation()),giftSteppedOn);
 	delete curr;
 }
 

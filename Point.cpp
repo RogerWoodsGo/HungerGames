@@ -39,7 +39,7 @@ void Point::movePoint(Point& p,char ch)
 		p.getPlace(x,y);//Get the new place for arrow
 		setPlace(x,y);//Set the new place for arrow
 		draw(ch);//Draw arrow on screen
-		getBoard()->setContent(p,ch);//Write the arrow to the text	
+		getBoard()->setContent(p,ARROW);//Write the arrow to the text	
 	}
 	else
 	{

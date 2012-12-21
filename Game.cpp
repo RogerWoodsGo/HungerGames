@@ -106,7 +106,6 @@ bool Game::isThereAWinner()
 		score=curr->getPlayer()->getScore();
 		if(score<=0)
 		{
-			curr->getPlayer()->getLocation()->draw(' ');
 			pList.Remove(*(curr->getPlayer()));
 		}
 		curr=next;
@@ -131,7 +130,6 @@ void Game::movePlayers()
 void Game::moveArrows()
 {
 	ArrowItem* curr=aList.getHead(),*next;
-	char giftSteppedOn;
 	while(curr!=0)
 	{
 		if(curr->getArrow()->getIAmAlive()==true)
@@ -142,8 +140,6 @@ void Game::moveArrows()
 		else
 		{
 			next=curr->getNext();
-			giftSteppedOn=curr->getArrow()->getGiftSteppedOn();
-			curr->getArrow()->getLocation()->getBoard()->setContent(*(curr->getArrow()->getLocation()),giftSteppedOn);
 			aList.Remove(*(curr->getArrow()));
 			curr=next;
 		}
@@ -168,7 +164,7 @@ void Game::shootArrows()
 			curr->getPlayer()->getLocation()->getNextMove(direct,p);
 			nextPlace=b->getContent(p);
 			//We don't shoot arrows near a wall or another arrow because we want to see the arrow being shot before it hits something
-			if((nextPlace!=WALL)&&(nextPlace!=REGULAR_ARROW)&&(nextPlace!=PASSING_ARROW)&&(nextPlace!=BOMBING_ARROW))
+			if((nextPlace!=WALL)&&(nextPlace!=ARROW))
 			{
 				curr->getPlayer()->getArrows(numOfRegularArrows,numOfPassingArrows,numOfBombingArrows);
 				p.getPlace(x,y);
@@ -196,7 +192,7 @@ void Game::shootArrows()
 					aList.Add(x,y,direct,arrowChar);
 					aList.getHead()->getArrow()->getLocation()->setBoard(b);
 					aList.getHead()->getArrow()->setGiftSteppedOn(nextPlace);
-					b->setContent(p,arrowChar);
+					b->setContent(p,ARROW);
 				}
 			}
 		}
