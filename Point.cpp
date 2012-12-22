@@ -27,27 +27,3 @@ void Point::getNextMove(Direction direct,Point& p)
 	}
 	p.setPlace(nextX,nextY);
 }
-
-void Point::movePoint(Point& p,char ch)
-{
-	int x,y;
-	Point currentPoint;
-	getPlace(x,y);
-	currentPoint.setPlace(x,y);
-	if((ch==REGULAR_ARROW)||(ch==PASSING_ARROW)||(ch==BOMBING_ARROW))
-	{
-		p.getPlace(x,y);//Get the new place for arrow
-		setPlace(x,y);//Set the new place for arrow
-		draw(ch);//Draw arrow on screen
-		getBoard()->setContent(p,ARROW);//Write the arrow to the text	
-	}
-	else
-	{
-		draw(' ');//Remove player from screen
-		getBoard()->setContent(currentPoint,' ');//Remove player from text
-		p.getPlace(x,y);//Get the new place for player
-		setPlace(x,y);//Set the new place for player
-		draw(ch);//Draw player on screen
-		getBoard()->setContent(p,PLAYER);//Write the player to the text
-	}
-}

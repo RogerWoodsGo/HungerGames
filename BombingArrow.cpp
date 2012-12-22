@@ -1,8 +1,8 @@
-#include "RegularArrow.h"
+#include "BombingArrow.h"
 #include "ArrowItem.h"
 #include "Board.h"
 
-void RegularArrow::move()
+void BombingArrow::move()
 {
 	char nextPlace,currentPlace;
 	Point nextPoint;
@@ -14,18 +14,20 @@ void RegularArrow::move()
 		location->getBoard()->setContent(*location,giftSteppedOn);//Returning the gift I just stepped on to the text
 	}
 	location->getNextMove(direct,nextPoint);
-	nextPlace=location->getBoard()->getContent(nextPoint);
-	if(nextPlace==WALL)
+	nextPoint.getPlace(x,y);//Get the new place for arrow
+	location->setPlace(x,y);//Set the new place for arrow
+	nextPlace=location->getBoard()->getContent(*location);
+	if(nextPlace==PLAYER)
 	{
-		setKillArrow();
+		location->getBoard()->arrowHitsPlayer(*location);
 	}
 	else
 	{
-		nextPoint.getPlace(x,y);//Get the new place for arrow
-		location->setPlace(x,y);//Set the new place for arrow
-		if(nextPlace==PLAYER)
+		if(nextPlace==WALL)
 		{
-			location->getBoard()->arrowHitsPlayer(*location);
+			setKillArrow();
+			location->draw(' ');//Draw space on screen
+			location->getBoard()->setContent(nextPoint,' ');//Write space to the text
 		}
 		else
 		{

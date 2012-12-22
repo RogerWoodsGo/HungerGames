@@ -145,9 +145,9 @@ void Board::printText()
 	{
 		for(int j=0;j<WIDTH;j++)
 		{
-			if(text[i][j]==PLAYER)
+			if((text[i][j]==PLAYER)||(text[i][j]==ARROW))
 			{
-				cout << " ";
+				cout << ' ';
 			}
 			else
 			{
@@ -157,6 +157,8 @@ void Board::printText()
 		cout << endl;
 	}
 	pList->Print();
+	aList->Print();
+	printScoreBoard();
 }
 
 char Board::getContent(Point& p)

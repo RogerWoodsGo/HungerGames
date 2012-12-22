@@ -3,6 +3,8 @@
 
 #include "Arrow.h"
 #include "RegularArrow.h"
+#include "PassingArrow.h"
+#include "BombingArrow.h"
 
 class ArrowItem
 {
@@ -18,11 +20,11 @@ public:
 		}
 		else if(ch==PASSING_ARROW)
 		{
-			pArrow=new RegularArrow(x,y,direct,ch);
+			pArrow=new PassingArrow(x,y,direct,ch);
 		}
 		else if(ch==BOMBING_ARROW)
 		{
-			pArrow=new RegularArrow(x,y,direct,ch);
+			pArrow=new BombingArrow(x,y,direct,ch);
 		}
 	}
 	ArrowItem():pArrow(0),next(0){}
