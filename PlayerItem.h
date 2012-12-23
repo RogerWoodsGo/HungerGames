@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "general.h"
 #include "ComputerPlayer.h"
+#include "HumanPlayer.h"
 
 class PlayerItem
 {
@@ -15,7 +16,7 @@ public:
 	{
 		if(ch==HUMAN_PLAYER)
 		{
-			pPlayer=new ComputerPlayer(x,y,ch);
+			pPlayer=new HumanPlayer(x,y,ch);
 		}
 		else
 		{

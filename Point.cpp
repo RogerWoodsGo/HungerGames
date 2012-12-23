@@ -21,9 +21,9 @@ void Point::getNextMove(Direction direct,Point& p)
 	switch (direct)
 	{
 	case Up:	nextX=(x-1+HEIGHT)%HEIGHT;	break;
-	case Right:	nextY=(y-1+WIDTH)%WIDTH;	break;
+	case Left:	nextY=(y-1+WIDTH)%WIDTH;	break;
 	case Down:	nextX=(x+1+HEIGHT)%HEIGHT;	break;
-	case Left:	nextY=(y+1+WIDTH)%WIDTH;	break;
+	case Right:	nextY=(y+1+WIDTH)%WIDTH;	break;
 	}
 	p.setPlace(nextX,nextY);
 }

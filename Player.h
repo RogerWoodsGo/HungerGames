@@ -21,6 +21,7 @@ public:
 	void drawPlayer(){(*location).draw(ch);}
 	Point* getLocation(){return location;}
 	Direction getDirect(){return direct;}
+	void setDirection(Direction d){direct=d;}
 	int getArrows(){return numOfRegularArrows+numOfPassingArrows+numOfBombingArrows;}
 	void getArrows(int& reg,int& pass,int& bomb){reg=numOfRegularArrows;pass=numOfPassingArrows;bomb=numOfBombingArrows;}
 	void decreaseArrows(int reg,int pass,int bomb){numOfRegularArrows-=reg;numOfPassingArrows-=pass;numOfBombingArrows-=bomb;}
@@ -28,8 +29,8 @@ public:
 	int getScore(){return score;}
 	void setScore(int num){score=num;}
 	char getChar(){return ch;}
-	virtual void setDirection()=0;
-	virtual void move()=0;
+	void move();
+	virtual void tryToMove()=0;
 	virtual ~Player(){delete location;};
 };
 

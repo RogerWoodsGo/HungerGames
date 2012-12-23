@@ -3,21 +3,21 @@
                     WWW      WWW                 O                             
                     WWW      WWW                                               
                     WWW      WWW                                               
-        H           WWW      WWW                                               
-                    WWW      WWW                                               
+        H           WWW      WWW P                                             
+                    WWW  P   WWW                                               
                     WWW      WWW                                               
                     WWWWW  WWWWW    WWWWWWW                                    
                     WWWWW  WWWWW  WWWWWWWWWW                                   
                     WWW      WWW WWWW     WW                                   
             H       WWW      WWWWWW                                            
                     WWW      WWWWWW                                            
-                    WWW   P  WWWWW                                             
+                    WWW      WWWWW                                             
                     WWW      WWWWW   WWWWWWW                                   
-                    WWW      WWWWW   WWWWWWW                         P         
+                    WWW      WWWWW   WWWWWWW                                   
    WWWWWWWWWWWWWWWW            WWW        WWW                                  
    WWWWWWWWWWWWWWWW            WWW        WWW                                  
    WWWWWWWWWWWWWWWW            WWWW       WWW                                  
-   WWWWWWWWWWWWWWWW                    P  WWW                                  
+   WWWWWWWWWWWWWWWW                       WWW                                  
    WWWWWWWWWWWWWWWW              WWWW     WWW                                  
    WWWWWWWWWWWWWWWW               WWWWWWWWWW                                   
                                     WWWWWW                                     
