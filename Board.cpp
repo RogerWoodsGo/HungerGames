@@ -429,7 +429,7 @@ void Board::arrowHitsPlayer(Point& p)
 	while(aCurr!=0)
 	{
 		aCurr->getArrow()->getLocation()->getPlace(arrowX,arrowY);
-		if((x==arrowX)&&(y==arrowX))
+		if((x==arrowX)&&(y==arrowY))
 		{
 			aCurr->getArrow()->setKillArrow();
 		}

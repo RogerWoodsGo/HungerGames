@@ -6,6 +6,7 @@
 
 class BombingArrow: public Arrow
 {
+	BombingArrow(const BombingArrow&);
 public:
 	BombingArrow(int x,int y,Direction arrowDirect,char symbol):Arrow(x,y,arrowDirect,symbol){}
 	virtual void move();

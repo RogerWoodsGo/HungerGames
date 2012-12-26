@@ -5,6 +5,7 @@
 
 class ComputerPlayer: public Player
 {
+	ComputerPlayer(const ComputerPlayer&);
 public:
 	ComputerPlayer(int x,int y,char ch):Player(x,y,ch){changeDirection();};
 	void changeDirection();
