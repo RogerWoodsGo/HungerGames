@@ -41,7 +41,7 @@ void Player::shoot(ArrowList& aList)
 {
 	Point p;
 	char nextPlace,arrowChar=' ';
-	int x,y,numOfRegularArrows,numOfPassingArrows,numOfBombingArrows;
+	int x,y,numOfBombingArrows,numOfPassingArrows,numOfRegularArrows;
 	if(direct!=Center)
 	{
 		location->getNextMove(direct,p);
@@ -49,7 +49,7 @@ void Player::shoot(ArrowList& aList)
 		//We don't shoot arrows near a wall or another arrow because we want to see the arrow being shot before it hits something
 		if((nextPlace!=WALL)&&(nextPlace!=ARROW))
 		{
-			getArrows(numOfRegularArrows,numOfPassingArrows,numOfBombingArrows);
+			getArrows(numOfBombingArrows,numOfPassingArrows,numOfRegularArrows);
 			if((numOfBombingArrows>0)&&(arrowTypeToShoot==1))
 			{
 				decreaseArrows(1,0,0);

@@ -11,8 +11,8 @@ public:
 	ArrowList():head(0){}
 	void add(int x,int y,Direction direct,char ch);
 	void remove(Arrow& arrow);
-	ArrowItem* getHead(){return head;}
-	void print();
+	ArrowItem* getHead()const{return head;}
+	void print()const;
 	~ArrowList();
 };
 

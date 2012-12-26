@@ -99,7 +99,7 @@ bool Game::isThereAWinner()
 	return winnerFound;
 }
 
-void Game::movePlayers()
+void Game::movePlayers()const
 {
 	PlayerItem* curr=pList.getHead();
 	while(curr!=0)

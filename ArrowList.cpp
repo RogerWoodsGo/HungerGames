@@ -37,7 +37,7 @@ void ArrowList::remove(Arrow& arrow)
 	delete curr;
 }
 
-void ArrowList::print()
+void ArrowList::print()const
 {
 	ArrowItem* curr=head;
 	while(curr!=0)

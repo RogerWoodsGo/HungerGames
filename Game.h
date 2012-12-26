@@ -18,7 +18,7 @@ public:
 	void run(char* fileName);
 	void play(char* fileName);
 	bool isThereAWinner();
-	void movePlayers();
+	void movePlayers()const;
 	void moveArrows();
 	void shootArrows();
 	bool checkPressedKeys();

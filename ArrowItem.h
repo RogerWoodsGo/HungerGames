@@ -28,8 +28,8 @@ public:
 		}
 	}
 	ArrowItem():pArrow(0),next(0){}
-	ArrowItem* getNext(){return next;}
-	Arrow* getArrow(){return pArrow;}
+	ArrowItem* getNext()const{return next;}
+	Arrow* getArrow()const{return pArrow;}
 	void setNext(ArrowItem* nextArrow){next=nextArrow;}
 	~ArrowItem(){delete pArrow;}
 };

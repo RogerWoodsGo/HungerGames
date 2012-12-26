@@ -43,7 +43,7 @@ const int FOOD_BONUS=200;
 const int ARROWS_BONUS=1;
 const int BOMB_BONUS=-750;
 const int CHANCE_TO_CHANGE_DIRECTION=7;
-const int SLEEP_TIME=150;
+const int SLEEP_TIME=50;
 
 enum Direction { 
 	Center=0,

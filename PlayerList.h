@@ -11,9 +11,9 @@ public:
 	PlayerList():head(0){}
 	void add(int x,int y,char ch);
 	void remove(Player& player);
-	PlayerItem* getHead(){return head;}
-	void print();
-	void setContent();
+	PlayerItem* getHead()const{return head;}
+	void print()const;
+	void setContent()const;
 	~PlayerList();
 };
 

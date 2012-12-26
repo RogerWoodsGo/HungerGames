@@ -36,7 +36,7 @@ void PlayerList::remove(Player& player)
 	delete curr;
 }
 
-void PlayerList::print()
+void PlayerList::print()const
 {
 	PlayerItem* curr=head;
 	while(curr!=0)
@@ -46,7 +46,7 @@ void PlayerList::print()
 	}
 }
 
-void PlayerList::setContent()
+void PlayerList::setContent()const
 {
 	PlayerItem* curr=head;
 	Board* b=head->getPlayer()->getLocation()->getBoard();

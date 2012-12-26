@@ -17,20 +17,19 @@ class Board
 public:
 	Board();
 	void readFile(char* fileName);
-	//char** getText(){return text;}
 	void setPList(PlayerList& lst){pList=&lst;}
 	void setAList(ArrowList& lst){aList=&lst;}
-	void printText();
-	char getContent(Point& p);
-	void setContent(Point& p,char ch);
+	void printText()const;
+	char getContent(const Point& p)const;
+	void setContent(const Point& p,char ch)const;
 	bool checkBoard();
-	bool randomLocation(Point& p);
-	void throwGifts();
-	bool isPointInScoreBoard(Point& p);
-	bool isPointNearAPlayer(Point& p);
-	void playerFight(Point& p);
-	void arrowHitsPlayer(Point& p);
-	void printScoreBoard();
+	bool randomLocation(Point& p)const;
+	void throwGifts()const;
+	bool isPointInScoreBoard(const Point& p)const;
+	bool isPointNearAPlayer(const Point& p)const;
+	void playerFight(const Point& p)const;
+	void arrowHitsPlayer(const Point& p)const;
+	void printScoreBoard()const;
 	~Board();
 };
 

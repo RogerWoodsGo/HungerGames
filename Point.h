@@ -13,12 +13,12 @@ public:
 	Point(){}
 	Point(int x1,int y1):x(x1),y(y1){}
 	void setBoard(Board* brd){b=brd;}
-	Board* getBoard(){return b;}
+	Board* getBoard()const{return b;}
 	void setPlace(int x1,int y1){x=x1;y=y1;}
-	void getPlace(int& x1,int& y1){x1=x;y1=y;}
+	void getPlace(int& x1,int& y1)const{x1=x;y1=y;}
 	void setNextMove(Point& p);
-	void getNextMove(Direction direct,Point& p);
-	void draw(char c);
+	void getNextMove(Direction direct,Point& p)const;
+	void draw(char c)const;
 };
 
 #endif

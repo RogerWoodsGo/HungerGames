@@ -15,12 +15,12 @@ protected:
 	Arrow(const Arrow&);
 public:
 	Arrow(int x,int y,Direction arrowDirect,char ch):location(new Point(x,y)),direct(arrowDirect),symbol(ch),iAmAlive(true){}
-	void drawArrow(){(*location).draw(symbol);}
+	void drawArrow()const{(*location).draw(symbol);}
 	void setGiftSteppedOn(char ch){giftSteppedOn=ch;}
-	char getGiftSteppedOn(){return giftSteppedOn;}
+	char getGiftSteppedOn()const{return giftSteppedOn;}
 	void setKillArrow(){iAmAlive=false;}
-	bool getIAmAlive(){return iAmAlive;}
-	Point* getLocation(){return location;}
+	bool getIAmAlive()const{return iAmAlive;}
+	Point* getLocation()const{return location;}
 	virtual void move()=0;
 	virtual ~Arrow(){delete location;}
 };

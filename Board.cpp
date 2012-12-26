@@ -139,7 +139,7 @@ bool Board::checkBoard()
 	return validBoard;
 }
 
-void Board::printText()
+void Board::printText()const
 {
 	for(int i=0;i<HEIGHT;i++)
 	{
@@ -161,21 +161,21 @@ void Board::printText()
 	printScoreBoard();
 }
 
-char Board::getContent(Point& p)
+char Board::getContent(const Point& p)const
 {
 	int x,y;
 	p.getPlace(x,y);
 	return text[x][y];
 }
 
-void Board::setContent(Point& p,char ch)
+void Board::setContent(const Point& p,char ch)const
 {
 	int x,y;
 	p.getPlace(x,y);
 	text[x][y]=ch;
 }
 
-bool Board::randomLocation(Point& p)
+bool Board::randomLocation(Point& p)const
 {
 	Point newLocation;
 	char newLocationContent;
@@ -214,7 +214,7 @@ bool Board::randomLocation(Point& p)
 	return newLocationWasFound;
 }
 
-bool Board::isPointNearAPlayer(Point& p)
+bool Board::isPointNearAPlayer(const Point& p)const
 {
 	PlayerItem* curr=pList->getHead();
 	int x,y,playerX,playerY;
@@ -235,7 +235,7 @@ bool Board::isPointNearAPlayer(Point& p)
 	return isPointNearThePlayer;
 }
 
-void Board::throwGifts()
+void Board::throwGifts()const
 {
 	Point giftLocation;
 	int chance=(rand()%GIFT_CHANCE)+1;//1-20
@@ -277,7 +277,7 @@ void Board::throwGifts()
 	}
 }
 
-bool Board::isPointInScoreBoard(Point& p)
+bool Board::isPointInScoreBoard(const Point& p)const
 {
 	int SBx,SBy,x,y;
 	scoreBoardPlace.getPlace(SBx,SBy);
@@ -291,9 +291,9 @@ bool Board::isPointInScoreBoard(Point& p)
 	else return false;
 }
 
-void Board::printScoreBoard()
+void Board::printScoreBoard()const
 {
-	int SBx,SBy,x,y,score,numOfRegularArrows,numOfPassingArrows,numOfBombingArrows;
+	int SBx,SBy,x,y,score,numOfBombingArrows,numOfPassingArrows,numOfRegularArrows;
 	char ch;
 	Point p;
 	PlayerItem* curr=pList->getHead();
@@ -303,13 +303,13 @@ void Board::printScoreBoard()
 		x=SBx;
 		y=SBy;
 		scoreBoardPlace.getPlace(x,y);
-		curr->getPlayer()->getArrows(numOfRegularArrows,numOfPassingArrows,numOfBombingArrows);
+		curr->getPlayer()->getArrows(numOfBombingArrows,numOfPassingArrows,numOfRegularArrows);
 		score=curr->getPlayer()->getScore();
 		ch=curr->getPlayer()->getSymbol();
 		x+=(ch-1)*2;
 		p.setPlace(x,y);
 		p.draw(ch);//Draw the player icon
-		if(numOfRegularArrows>9)
+		if(numOfBombingArrows>9)
 		{
 			cout << '*';
 		}
@@ -325,7 +325,7 @@ void Board::printScoreBoard()
 		{
 			cout << numOfPassingArrows;
 		}
-		if(numOfBombingArrows>9)
+		if(numOfRegularArrows>9)
 		{
 			cout << '*';
 		}
@@ -362,7 +362,7 @@ void Board::printScoreBoard()
 	}
 }
 
-void Board::playerFight(Point& p)
+void Board::playerFight(const Point& p)const
 {
 	int x,y,playerX,playerY,numOfMaxPlayers=0,max=0,score;
 	PlayerItem* curr=pList->getHead();
@@ -409,7 +409,7 @@ void Board::playerFight(Point& p)
 	}
 }
 
-void Board::arrowHitsPlayer(Point& p)
+void Board::arrowHitsPlayer(const Point& p)const
 {
 	PlayerItem* pCurr=pList->getHead();
 	ArrowItem* aCurr=aList->getHead();

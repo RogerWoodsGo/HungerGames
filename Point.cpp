@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <process.h>
 
-void Point::draw(char c)
+void Point::draw(char c)const
 {
 	HANDLE hConsoleOutput;
 	COORD dwCursorPosition;
@@ -15,7 +15,7 @@ void Point::draw(char c)
 	cout << c;
 }
 
-void Point::getNextMove(Direction direct,Point& p)
+void Point::getNextMove(Direction direct,Point& p)const
 {
 	int nextX=x,nextY=y;
 	switch (direct)
