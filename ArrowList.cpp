@@ -1,14 +1,14 @@
 #include "ArrowList.h"
 #include "Board.h"
 
-void ArrowList::Add(int x,int y,Direction direct,char ch)
+void ArrowList::add(int x,int y,Direction direct,char ch)
 {
 	ArrowItem* newArrow;
 	newArrow=new ArrowItem(x,y,direct,head,ch);
 	head=newArrow;
 }
 
-void ArrowList::Remove(Arrow& arrow)
+void ArrowList::remove(Arrow& arrow)
 {
 	ArrowItem* curr=head,*saver;
 	char giftSteppedOn;
@@ -37,7 +37,7 @@ void ArrowList::Remove(Arrow& arrow)
 	delete curr;
 }
 
-void ArrowList::Print()
+void ArrowList::print()
 {
 	ArrowItem* curr=head;
 	while(curr!=0)

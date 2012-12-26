@@ -1,14 +1,14 @@
 #include "PlayerList.h"
 #include "Board.h"
 
-void PlayerList::Add(int x,int y,char ch)
+void PlayerList::add(int x,int y,char ch)
 {
 	PlayerItem* newPlayer;
 	newPlayer=new PlayerItem(x,y,ch,head);
 	head=newPlayer;
 }
 
-void PlayerList::Remove(Player& player)
+void PlayerList::remove(Player& player)
 {
 	PlayerItem* curr=head,*saver;
 	while(curr->getPlayer()!=&player)
@@ -36,12 +36,23 @@ void PlayerList::Remove(Player& player)
 	delete curr;
 }
 
-void PlayerList::Print()
+void PlayerList::print()
 {
 	PlayerItem* curr=head;
 	while(curr!=0)
 	{
 		curr->getPlayer()->drawPlayer();
+		curr=curr->getNext();
+	}
+}
+
+void PlayerList::setContent()
+{
+	PlayerItem* curr=head;
+	Board* b=head->getPlayer()->getLocation()->getBoard();
+	while(curr!=0)
+	{
+		b->setContent(*(curr->getPlayer()->getLocation()),PLAYER);
 		curr=curr->getNext();
 	}
 }

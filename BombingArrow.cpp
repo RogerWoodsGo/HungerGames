@@ -39,7 +39,7 @@ void BombingArrow::move()
 			{
 				setGiftSteppedOn(nextPlace);//Saving the gift on the next step
 			}
-			location->draw(ch);//Draw arrow on screen
+			location->draw(symbol);//Draw arrow on screen
 			location->getBoard()->setContent(nextPoint,ARROW);//Write the arrow to the text	
 		}
 	}

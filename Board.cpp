@@ -32,7 +32,7 @@ void Board::readFile(char* fileName)
 				{
 					numOfHumanPlayersOnBoard++;
 					text[i][j]=PLAYER;
-					pList->Add(i,j,HUMAN_PLAYER);
+					pList->add(i,j,HUMAN_PLAYER);
 					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
 				}
 				else text[i][j]=' ';
@@ -42,7 +42,7 @@ void Board::readFile(char* fileName)
 				{
 					numOfComputerPlayersOnBoard++;
 					text[i][j]=PLAYER;
-					pList->Add(i,j,numOfComputerPlayersOnBoard);
+					pList->add(i,j,numOfComputerPlayersOnBoard);
 					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
 				}
 				else text[i][j]=' ';
@@ -114,7 +114,7 @@ bool Board::checkBoard()
 			{
 				numOfComputerPlayersOnBoard++;
 				playerPlace.getPlace(x,y);
-				pList->Add(x,y,numOfComputerPlayersOnBoard);
+				pList->add(x,y,numOfComputerPlayersOnBoard);
 				pList->getHead()->getPlayer()->getLocation()->setBoard(this);
 				setContent(playerPlace,PLAYER);
 			}
@@ -156,8 +156,8 @@ void Board::printText()
 		}
 		cout << endl;
 	}
-	pList->Print();
-	aList->Print();
+	pList->print();
+	aList->print();
 	printScoreBoard();
 }
 
@@ -305,7 +305,7 @@ void Board::printScoreBoard()
 		scoreBoardPlace.getPlace(x,y);
 		curr->getPlayer()->getArrows(numOfRegularArrows,numOfPassingArrows,numOfBombingArrows);
 		score=curr->getPlayer()->getScore();
-		ch=curr->getPlayer()->getChar();
+		ch=curr->getPlayer()->getSymbol();
 		x+=(ch-1)*2;
 		p.setPlace(x,y);
 		p.draw(ch);//Draw the player icon
@@ -315,7 +315,7 @@ void Board::printScoreBoard()
 		}
 		else
 		{
-			cout << numOfRegularArrows;
+			cout << numOfBombingArrows;
 		}
 		if(numOfPassingArrows>9)
 		{
@@ -331,7 +331,7 @@ void Board::printScoreBoard()
 		}
 		else
 		{
-			cout << numOfBombingArrows;
+			cout << numOfRegularArrows;
 		}
 		cout << " ";
 		if(score>9999)
@@ -367,6 +367,7 @@ void Board::playerFight(Point& p)
 	int x,y,playerX,playerY,numOfMaxPlayers=0,max=0,score;
 	PlayerItem* curr=pList->getHead();
 	p.getPlace(x,y);
+	p.draw(BELL);
 	while(curr!=0)
 	{
 		curr->getPlayer()->getLocation()->getPlace(playerX,playerY);
@@ -390,19 +391,17 @@ void Board::playerFight(Point& p)
 		curr->getPlayer()->getLocation()->getPlace(playerX,playerY);
 		if((x==playerX)&&(y==playerY))
 		{
+			score=curr->getPlayer()->getScore();
 			if(curr->getPlayer()->getScore()<max)
 			{
-				score=curr->getPlayer()->getScore();
 				curr->getPlayer()->setScore(score-LOW_POWER_PLAYER);
 			}
 			else if((curr->getPlayer()->getScore()==max)&&(numOfMaxPlayers==NUM_OF_PLAYERS_WITH_MAX_SCORE))
 			{
-				score=curr->getPlayer()->getScore();
 				curr->getPlayer()->setScore(score-HIGH_POWER_PLAYER);
 			}
 			else if((curr->getPlayer()->getScore()==max)&&(numOfMaxPlayers>NUM_OF_PLAYERS_WITH_MAX_SCORE))
 			{
-				score=curr->getPlayer()->getScore();
 				curr->getPlayer()->setScore(score-EQUAL_POWER_PLAYER);
 			}
 		}
@@ -416,6 +415,7 @@ void Board::arrowHitsPlayer(Point& p)
 	ArrowItem* aCurr=aList->getHead();
 	int x,y,playerX,playerY,arrowX,arrowY,score;
 	p.getPlace(x,y);
+	p.draw(BELL);
 	while(pCurr!=0)
 	{
 		pCurr->getPlayer()->getLocation()->getPlace(playerX,playerY);

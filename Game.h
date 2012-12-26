@@ -11,9 +11,10 @@ class Game
 	PlayerList pList;
 	ArrowList aList;
 	Direction lastDirection;
+	int lastArrowType;
 	Game(const Game&);
 public:
-	Game():lastDirection(Center){};
+	Game():lastDirection(Center),lastArrowType(0){};
 	void run(char* fileName);
 	void play(char* fileName);
 	bool isThereAWinner();

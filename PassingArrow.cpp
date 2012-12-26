@@ -36,6 +36,6 @@ void PassingArrow::move()
 			setGiftSteppedOn(nextPlace);//Saving the gift on the next step
 			location->getBoard()->setContent(nextPoint,ARROW);//Write the arrow to the text	
 		}
-		location->draw(ch);//Draw arrow on screen
+		location->draw(symbol);//Draw arrow on screen
 	}
 }

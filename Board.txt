@@ -1,16 +1,16 @@
                                                                                
                     WWW      WWW                                               
-                    WWW      WWW                 O                             
+        P           WWW      WWW                 O                             
                     WWW      WWW                                               
                     WWW      WWW                                               
-        H           WWW      WWW P                                             
-                    WWW  P   WWW                                               
+    P   H           WWW      WWW                                               
+                    WWW      WWW                                               
                     WWW      WWW                                               
                     WWWWW  WWWWW    WWWWWWW                                    
                     WWWWW  WWWWW  WWWWWWWWWW                                   
                     WWW      WWW WWWW     WW                                   
             H       WWW      WWWWWW                                            
-                    WWW      WWWWWW                                            
+                    WWW      WWWWWW                  P                         
                     WWW      WWWWW                                             
                     WWW      WWWWW   WWWWWWW                                   
                     WWW      WWWWW   WWWWWWW                                   

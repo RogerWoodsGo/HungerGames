@@ -19,6 +19,7 @@ const char REGULAR_ARROW=(char)(248);
 const char PASSING_ARROW='+';
 const char BOMBING_ARROW='*';
 const char WALL=(char)(178);
+const char BELL=(char)(7);
 const int MIN_VALID_BOARD_PLACE_X=1;
 const int MIN_VALID_BOARD_PLACE_Y=1;
 const int MAX_VALID_BOARD_PLACE_X=18;
@@ -37,12 +38,12 @@ const int EQUAL_POWER_PLAYER=50;
 const int NUM_OF_PLAYERS_WITH_MAX_SCORE=1;
 const int ARROW_HIT_PLAYER=500;
 const int PLAYER_ROUND_MOVE=2;
-const int SLEEP_TIME=50;
 const int DIRECTION_OPTION=4;
 const int FOOD_BONUS=200;
 const int ARROWS_BONUS=1;
 const int BOMB_BONUS=-750;
 const int CHANCE_TO_CHANGE_DIRECTION=7;
+const int SLEEP_TIME=150;
 
 enum Direction { 
 	Center=0,

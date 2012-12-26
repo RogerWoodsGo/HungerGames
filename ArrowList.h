@@ -9,10 +9,10 @@ class ArrowList
 	ArrowList(const ArrowList&);
 public:
 	ArrowList():head(0){}
-	void Add(int x,int y,Direction direct,char ch);
-	void Remove(Arrow& arrow);
+	void add(int x,int y,Direction direct,char ch);
+	void remove(Arrow& arrow);
 	ArrowItem* getHead(){return head;}
-	void Print();
+	void print();
 	~ArrowList();
 };
 

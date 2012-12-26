@@ -10,12 +10,12 @@ protected:
 	Point* location;
 	Direction direct;
 	char giftSteppedOn;
-	char ch;
+	char symbol;
 	bool iAmAlive;
 	Arrow(const Arrow&);
 public:
-	Arrow(int x,int y,Direction arrowDirect,char symbol):location(new Point(x,y)),direct(arrowDirect),ch(symbol),iAmAlive(true){}
-	void drawArrow(){(*location).draw(ch);}
+	Arrow(int x,int y,Direction arrowDirect,char ch):location(new Point(x,y)),direct(arrowDirect),symbol(ch),iAmAlive(true){}
+	void drawArrow(){(*location).draw(symbol);}
 	void setGiftSteppedOn(char ch){giftSteppedOn=ch;}
 	char getGiftSteppedOn(){return giftSteppedOn;}
 	void setKillArrow(){iAmAlive=false;}

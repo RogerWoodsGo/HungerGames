@@ -1,6 +1,11 @@
 #include "Player.h"
 #include "Board.h"
 
+void Player::setShootingOption(int arrowType)
+{
+	arrowTypeToShoot=arrowType;
+}
+
 void Player::move()
 {
 	char nextPlace;
@@ -30,6 +35,51 @@ void Player::move()
 		setScore(score+BOMB_BONUS);
 		break;
 	}
-	location->draw(ch);//Draw player on screen
-	location->getBoard()->setContent(nextPoint,PLAYER);//Write the player to the text
+}
+
+void Player::shoot(ArrowList& aList)
+{
+	Point p;
+	char nextPlace,arrowChar=' ';
+	int x,y,numOfRegularArrows,numOfPassingArrows,numOfBombingArrows;
+	if(direct!=Center)
+	{
+		location->getNextMove(direct,p);
+		nextPlace=location->getBoard()->getContent(p);
+		//We don't shoot arrows near a wall or another arrow because we want to see the arrow being shot before it hits something
+		if((nextPlace!=WALL)&&(nextPlace!=ARROW))
+		{
+			getArrows(numOfRegularArrows,numOfPassingArrows,numOfBombingArrows);
+			if((numOfBombingArrows>0)&&(arrowTypeToShoot==1))
+			{
+				decreaseArrows(1,0,0);
+				arrowChar=BOMBING_ARROW;
+			}
+			if((numOfPassingArrows>0)&&(arrowTypeToShoot==2))
+			{
+				decreaseArrows(0,1,0);
+				arrowChar=PASSING_ARROW;
+			}
+			if((numOfRegularArrows>0)&&(arrowTypeToShoot==3))
+			{
+				decreaseArrows(0,0,1);
+				arrowChar=REGULAR_ARROW;
+			}
+			if(arrowChar!=' ')
+			{
+				if(nextPlace==PLAYER)
+				{
+					location->getBoard()->arrowHitsPlayer(p);
+				}
+				else
+				{
+					p.getPlace(x,y);
+					aList.add(x,y,direct,arrowChar);
+					aList.getHead()->getArrow()->getLocation()->setBoard(location->getBoard());
+					aList.getHead()->getArrow()->setGiftSteppedOn(nextPlace);
+					location->getBoard()->setContent(p,ARROW);
+				}
+			}
+		}
+	}
 }

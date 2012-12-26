@@ -41,6 +41,8 @@ void Game::play(char* fileName)
 			{
 				movePlayers();
 			}
+			pList.setContent();
+			pList.print();
 			if(playCounter%(PLAYER_ROUND_MOVE*4)==0)//A player can shoot an arrow every 4th move so its every 8th arrow move because arrows are twice as fast as the player
 			{
 				shootArrows();
@@ -61,7 +63,7 @@ void Game::play(char* fileName)
 			system("cls");
 			if((pList.getHead()!=0)&&(pList.getHead()->getPlayer()->getScore()>0))
 			{
-				cout << pList.getHead()->getPlayer()->getChar() << " is the winner!!! Thank you for playing our hunger game." << endl;
+				cout << pList.getHead()->getPlayer()->getSymbol() << " is the winner!!! Thank you for playing our hunger game." << endl;
 			}
 			else
 			{	
@@ -86,7 +88,7 @@ bool Game::isThereAWinner()
 		score=curr->getPlayer()->getScore();
 		if(score<=0)
 		{
-			pList.Remove(*(curr->getPlayer()));
+			pList.remove(*(curr->getPlayer()));
 		}
 		curr=next;
 		if(pList.getHead()->getNext()==0)
@@ -124,63 +126,28 @@ void Game::moveArrows()
 		else
 		{
 			next=curr->getNext();
-			aList.Remove(*(curr->getArrow()));
+			aList.remove(*(curr->getArrow()));
 			curr=next;
 		}
 	}
+
 }
 
 void Game::shootArrows()
 {
 	PlayerItem* curr=pList.getHead();
-	Point p;
-	char nextPlace,arrowChar;
-	int x,y,numOfArrows,numOfRegularArrows,numOfPassingArrows,numOfBombingArrows;
-	Direction direct;
 	while(curr!=0)
 	{
-		numOfArrows=curr->getPlayer()->getArrows();
-		if(numOfArrows>0)
+		if(typeid(*(curr->getPlayer())).name()==typeid(HumanPlayer).name())
 		{
-			direct=curr->getPlayer()->getDirect();
-			if(direct!=Center)
-			{
-				curr->getPlayer()->getLocation()->getNextMove(direct,p);
-				nextPlace=b.getContent(p);
-				//We don't shoot arrows near a wall or another arrow because we want to see the arrow being shot before it hits something
-				if((nextPlace!=WALL)&&(nextPlace!=ARROW))
-				{
-					curr->getPlayer()->getArrows(numOfRegularArrows,numOfPassingArrows,numOfBombingArrows);
-					if(numOfBombingArrows>0)
-					{
-						curr->getPlayer()->decreaseArrows(0,0,1);
-						arrowChar=BOMBING_ARROW;
-					}
-					else if(numOfPassingArrows>0)
-					{
-						curr->getPlayer()->decreaseArrows(0,1,0);
-						arrowChar=PASSING_ARROW;
-					}
-					else
-					{
-						curr->getPlayer()->decreaseArrows(1,0,0);
-						arrowChar=REGULAR_ARROW;
-					}
-					if(nextPlace==PLAYER)
-					{
-						b.arrowHitsPlayer(p);
-					}
-					else
-					{
-						p.getPlace(x,y);
-						aList.Add(x,y,direct,arrowChar);
-						aList.getHead()->getArrow()->getLocation()->setBoard(&b);
-						aList.getHead()->getArrow()->setGiftSteppedOn(nextPlace);
-						b.setContent(p,ARROW);
-					}
-				}
-			}
+			curr->getPlayer()->setShootingOption(lastArrowType);
+			lastArrowType=0;
 		}
+		else
+		{
+			curr->getPlayer()->setShootingOption((rand()%3)+1);
+		}
+		curr->getPlayer()->shoot(aList);
 		curr=curr->getNext();
 	}
 }
@@ -206,19 +173,19 @@ bool Game::checkPressedKeys()
 	case 's':
 	case 'S':
 		lastDirection=Down;
-		break;/*
-			  case 'i':
-			  case 'I':
-
-			  break;
-			  case 'o':
-			  case 'O':
-
-			  break;
-			  case 'p':
-			  case 'P':
-
-			  break;*/
+		break;
+	case 'i':
+	case 'I':
+		lastArrowType=1;
+		break;
+	case 'o':
+	case 'O':
+		lastArrowType=2;
+		break;
+	case 'p':
+	case 'P':
+		lastArrowType=3;
+		break;
 	case ESC:
 		system("cls");
 		cout << "Do you want to stop the game (y/n)? ";
