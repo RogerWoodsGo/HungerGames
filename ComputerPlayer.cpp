@@ -24,3 +24,16 @@ void ComputerPlayer::tryToMove()
 		move();
 	}
 }
+
+bool ComputerPlayer::timeToShoot()
+{
+	if(shootTime%(PLAYER_ROUND_MOVE*4)==0) //player can shoot an arrow every 4th move so its every 8th arrow move because arrows are twice as fast as the player
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	shootTime++;
+}
