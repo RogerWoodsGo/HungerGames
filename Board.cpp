@@ -367,7 +367,7 @@ void Board::playerFight(const Point& p)const
 	int x,y,playerX,playerY,numOfMaxPlayers=0,max=0,score;
 	PlayerItem* curr=pList->getHead();
 	p.getPlace(x,y);
-	p.draw(BELL);
+	p.draw(BELL);//Ring a bell when players fight
 	while(curr!=0)
 	{
 		curr->getPlayer()->getLocation()->getPlace(playerX,playerY);
@@ -415,7 +415,7 @@ void Board::arrowHitsPlayer(const Point& p)const
 	ArrowItem* aCurr=aList->getHead();
 	int x,y,playerX,playerY,arrowX,arrowY,score;
 	p.getPlace(x,y);
-	p.draw(BELL);
+	p.draw(BELL);//Ring a bell when arrow hits player
 	while(pCurr!=0)
 	{
 		pCurr->getPlayer()->getLocation()->getPlace(playerX,playerY);
