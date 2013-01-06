@@ -11,56 +11,64 @@ Board::Board()
 	scoreBoardPlace.setPlace(0,0);
 }
 
-void Board::readFile(char* fileName)
+bool Board::readFile(char* fileName)
 {
 	FILE* f;
 	char ch;
 	bool OWasFound=false;
 	f=fopen(fileName,"r");
-	for(int i=0;i<HEIGHT;i++)
+	if(f==NULL)
 	{
-		for(int j=0;j<WIDTH;j++)
-		{
-			ch=(char)(fgetc(f));
-			switch(ch)
-			{
-			case 'W':
-				text[i][j]=WALL;
-				break;
-			case 'H':
-				if(numOfHumanPlayersOnBoard<MAX_NUM_OF_HUMAN_PLAYERS)
-				{
-					numOfHumanPlayersOnBoard++;
-					text[i][j]=PLAYER;
-					pList->add(i,j,HUMAN_PLAYER);
-					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
-				}
-				else text[i][j]=' ';
-				break;
-			case PLAYER:
-				if(numOfComputerPlayersOnBoard<MAX_NUM_OF_COMPUTER_PLAYERS)
-				{
-					numOfComputerPlayersOnBoard++;
-					text[i][j]=PLAYER;
-					pList->add(i,j,numOfComputerPlayersOnBoard);
-					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
-				}
-				else text[i][j]=' ';
-				break;
-			case 'O':
-				if(!OWasFound)
-				{
-					OWasFound=true;
-					scoreBoardPlace.setPlace(i,j);
-				}
-				text[i][j]=' ';
-				break;
-			default: text[i][j]=' ';
-			}
-		}
-		fgetc(f);
+		return false;
 	}
-	fclose(f);
+	else
+	{
+		for(int i=0;i<HEIGHT;i++)
+		{
+			for(int j=0;j<WIDTH;j++)
+			{
+				ch=(char)(fgetc(f));
+				switch(ch)
+				{
+				case 'W':
+					text[i][j]=WALL;
+					break;
+				case 'H':
+					if(numOfHumanPlayersOnBoard<MAX_NUM_OF_HUMAN_PLAYERS)
+					{
+						numOfHumanPlayersOnBoard++;
+						text[i][j]=PLAYER;
+						pList->add(i,j,HUMAN_PLAYER);
+						pList->getHead()->getPlayer()->getLocation()->setBoard(this);
+					}
+					else text[i][j]=' ';
+					break;
+				case PLAYER:
+					if(numOfComputerPlayersOnBoard<MAX_NUM_OF_COMPUTER_PLAYERS)
+					{
+						numOfComputerPlayersOnBoard++;
+						text[i][j]=PLAYER;
+						pList->add(i,j,numOfComputerPlayersOnBoard);
+						pList->getHead()->getPlayer()->getLocation()->setBoard(this);
+					}
+					else text[i][j]=' ';
+					break;
+				case 'O':
+					if(!OWasFound)
+					{
+						OWasFound=true;
+						scoreBoardPlace.setPlace(i,j);
+					}
+					text[i][j]=' ';
+					break;
+				default: text[i][j]=' ';
+				}
+			}
+			fgetc(f);
+		}
+		fclose(f);
+		return true;
+	}
 }
 
 bool Board::checkBoard()

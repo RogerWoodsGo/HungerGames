@@ -26,8 +26,11 @@ void Game::play(char* fileName)
 	bool stopGame=false,validBoard;
 	b.setPList(pList);
 	b.setAList(aList);
-	b.readFile(fileName);
-	validBoard=b.checkBoard();
+	validBoard=b.readFile(fileName);
+	if(validBoard)
+	{
+		validBoard=b.checkBoard();
+	}
 	if(validBoard)
 	{
 		b.printText();
@@ -65,7 +68,7 @@ void Game::play(char* fileName)
 	}
 	else 
 	{
-		cout << "The text file isn't valid" << endl;
+		cout << "The text file isn't valid or doesn't exist" << endl;
 	}
 }
 
@@ -126,7 +129,6 @@ void Game::moveArrows()
 			curr=next;
 		}
 	}
-
 }
 
 void Game::shootArrows()

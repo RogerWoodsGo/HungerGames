@@ -16,7 +16,7 @@ class Board
 	Board(const Board&);
 public:
 	Board();
-	void readFile(char* fileName);
+	bool readFile(char* fileName);
 	void setPList(PlayerList& lst){pList=&lst;}
 	void setAList(ArrowList& lst){aList=&lst;}
 	void printText()const;
