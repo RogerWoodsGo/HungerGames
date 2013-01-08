@@ -10,17 +10,15 @@ class Game
 	Board b;
 	PlayerList pList;
 	ArrowList aList;
-	Direction lastDirection;
-	int lastArrowType;
+	int playCounter;
 	Game(const Game&);
 public:
-	Game():lastDirection(Center),lastArrowType(0){};
+	Game():playCounter(0){};
 	void run(char* fileName);
 	void play(char* fileName);
 	bool isThereAWinner();
-	void movePlayers()const;
+	void playPlayers();
 	void moveArrows();
-	void shootArrows();
 	bool checkPressedKeys();
 };
 

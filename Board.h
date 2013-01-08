@@ -3,6 +3,7 @@
 
 #include "PlayerList.h"
 #include "ArrowList.h"
+#include "Player.h"
 #include "Point.h"
 
 class Board
@@ -13,6 +14,7 @@ class Board
 	Point scoreBoardPlace;
 	PlayerList* pList;
 	ArrowList* aList;
+	Player* human;
 	Board(const Board&);
 public:
 	Board();
@@ -30,6 +32,8 @@ public:
 	void playerFight(const Point& p)const;
 	void arrowHitsPlayer(const Point& p)const;
 	void printScoreBoard()const;
+	void setHumanPlayer(Player* p){human=p;}
+	Player* getHumanPlayer()const{return human;}
 	~Board();
 };
 

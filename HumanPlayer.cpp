@@ -14,3 +14,8 @@ void HumanPlayer::tryToMove()
 			move();
 	}
 }
+
+void HumanPlayer::tryToShoot(ArrowList& aList,int playCounter)
+{
+	shoot(aList);
+}

@@ -10,18 +10,17 @@ class Player
 protected:
 	Point* location;
 	Direction direct;
-	int numOfRegularArrows;
-	int numOfPassingArrows;
 	int numOfBombingArrows;
+	int numOfPassingArrows;
+	int numOfRegularArrows;
 	int score;
-	int arrowTypeToShoot;
+	ArrowType arrowToShoot;
 	char symbol;
-	int timeToMove;
-	int shootTime;
+	int lastShootingRound;
 	Player(const Player&);
 public:
 	Player(int x,int y,char ch):location(new Point(x,y)),
-		numOfRegularArrows(2),numOfPassingArrows(1),numOfBombingArrows(1),score(10000),symbol(ch),arrowTypeToShoot(0),timeToMove(0){}
+		numOfRegularArrows(2),numOfPassingArrows(1),numOfBombingArrows(1),score(10000),symbol(ch),arrowToShoot(None),lastShootingRound(0){}
 	void drawPlayer()const{(*location).draw(symbol);}
 	Point* getLocation()const{return location;}
 	Direction getDirect()const{return direct;}
@@ -33,9 +32,10 @@ public:
 	void setScore(int num){score=num;}
 	char getSymbol()const{return symbol;}
 	void move();
-	void shoot(ArrowList& aList);
-	void setShootingOption(int arrowType);
+	bool shoot(ArrowList& aList);
+	void setShootingOption(ArrowType arrow);
 	virtual void tryToMove()=0;
+	virtual void tryToShoot(ArrowList& aList,int playCounter)=0;
 	virtual ~Player(){delete location;};
 };
 

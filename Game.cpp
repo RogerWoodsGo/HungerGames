@@ -1,7 +1,6 @@
 #include "Game.h"
 #include "general.h"
 #include "Point.h"
-#include "HumanPlayer.h"
 #include <Windows.h>
 #include <conio.h>
 #include <process.h>
@@ -24,7 +23,6 @@ void Game::run(char* fileName)
 void Game::play(char* fileName)
 {
 	bool stopGame=false,validBoard;
-	int playCounter=0;
 	b.setPList(pList);
 	b.setAList(aList);
 	validBoard=b.readFile(fileName);
@@ -40,16 +38,9 @@ void Game::play(char* fileName)
 			playCounter++;
 			moveArrows();
 			b.throwGifts();
-			if(playCounter%PLAYER_ROUND_MOVE==0)
-			{
-				movePlayers();
-			}
+			playPlayers();
 			pList.setContent();
 			pList.print();
-			if(playCounter%(PLAYER_ROUND_MOVE*4)==0)//A player can shoot an arrow every 4th move so its every 8th arrow move because arrows are twice as fast as the player
-			{
-				shootArrows();
-			}
 			b.printScoreBoard();
 			if(_kbhit())
 			{
@@ -91,6 +82,10 @@ bool Game::isThereAWinner()
 		score=curr->getPlayer()->getScore();
 		if(score<=0)
 		{
+			if(b.getHumanPlayer()==curr->getPlayer())
+			{
+				b.setHumanPlayer(0);
+			}
 			pList.remove(*(curr->getPlayer()));
 		}
 		curr=next;
@@ -102,16 +97,16 @@ bool Game::isThereAWinner()
 	return winnerFound;
 }
 
-void Game::movePlayers()const
+void Game::playPlayers()
 {
 	PlayerItem* curr=pList.getHead();
 	while(curr!=0)
 	{
-		if(typeid(*(curr->getPlayer())).name()==typeid(HumanPlayer).name())
+		if(playCounter%2==0)
 		{
-			curr->getPlayer()->setDirection(lastDirection);
+			curr->getPlayer()->tryToMove();
 		}
-		curr->getPlayer()->tryToMove();
+		curr->getPlayer()->tryToShoot(aList,playCounter);
 		curr=curr->getNext();
 	}
 }
@@ -135,60 +130,13 @@ void Game::moveArrows()
 	}
 }
 
-void Game::shootArrows()
-{
-	PlayerItem* curr=pList.getHead();
-	while(curr!=0)
-	{
-		if(typeid(*(curr->getPlayer())).name()==typeid(HumanPlayer).name())
-		{
-			curr->getPlayer()->setShootingOption(lastArrowType);
-			lastArrowType=0;
-		}
-		else
-		{
-			curr->getPlayer()->setShootingOption((rand()%3)+1);
-		}
-		curr->getPlayer()->shoot(aList);
-		curr=curr->getNext();
-	}
-}
-
 bool Game::checkPressedKeys()
 {
 	bool answerPressed=false,stopGame=false;
-	char answer;
-	switch(_getch())
+	char answer,ch;
+	ch=_getch();
+	if(ch==ESC)
 	{
-	case 'a':
-	case 'A':
-		lastDirection=Left;
-		break;
-	case 'd':
-	case 'D':
-		lastDirection=Right;
-		break;
-	case 'w':
-	case 'W':
-		lastDirection=Up;
-		break;
-	case 's':
-	case 'S':
-		lastDirection=Down;
-		break;
-	case 'i':
-	case 'I':
-		lastArrowType=1;
-		break;
-	case 'o':
-	case 'O':
-		lastArrowType=2;
-		break;
-	case 'p':
-	case 'P':
-		lastArrowType=3;
-		break;
-	case ESC:
 		system("cls");
 		cout << "Do you want to stop the game (y/n)? ";
 		while(!answerPressed)
@@ -209,9 +157,40 @@ bool Game::checkPressedKeys()
 				}
 			}
 		}
-		answerPressed=false;
-		break;
-	default: stopGame=false;
+	}
+	else if(b.getHumanPlayer()!=0)
+	{
+		switch(ch)
+		{
+		case 'a':
+		case 'A':
+			b.getHumanPlayer()->setDirection(Left);
+			break;
+		case 'd':
+		case 'D':
+			b.getHumanPlayer()->setDirection(Right);
+			break;
+		case 'w':
+		case 'W':
+			b.getHumanPlayer()->setDirection(Up);
+			break;
+		case 's':
+		case 'S':
+			b.getHumanPlayer()->setDirection(Down);
+			break;
+		case 'i':
+		case 'I':
+			b.getHumanPlayer()->setShootingOption(Bombing);
+			break;
+		case 'o':
+		case 'O':
+			b.getHumanPlayer()->setShootingOption(Passing);
+			break;
+		case 'p':
+		case 'P':
+			b.getHumanPlayer()->setShootingOption(Regular);
+			break;
+		}
 	}
 	fflush(stdin);
 	return stopGame;

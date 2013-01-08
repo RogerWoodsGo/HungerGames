@@ -40,6 +40,7 @@ bool Board::readFile(char* fileName)
 						text[i][j]=PLAYER;
 						pList->add(i,j,HUMAN_PLAYER);
 						pList->getHead()->getPlayer()->getLocation()->setBoard(this);
+						setHumanPlayer(pList->getHead()->getPlayer());
 					}
 					else text[i][j]=' ';
 					break;
@@ -217,7 +218,6 @@ bool Board::randomLocation(Point& p)const
 				}
 			}
 		}
-
 	}
 	return newLocationWasFound;
 }

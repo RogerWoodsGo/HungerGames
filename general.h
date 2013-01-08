@@ -45,12 +45,19 @@ const int BOMB_BONUS=-750;
 const int CHANCE_TO_CHANGE_DIRECTION=7;
 const int SLEEP_TIME=50;
 
-enum Direction { 
+enum Direction{ 
 	Center=0,
 	Up=1,
 	Right=2,
 	Down=3,
 	Left=4
+};
+
+enum ArrowType{
+	None=0,
+	Bombing=1,
+	Passing=2,
+	Regular=3
 };
 
 #endif

@@ -24,3 +24,15 @@ void ComputerPlayer::tryToMove()
 		move();
 	}
 }
+
+void ComputerPlayer::tryToShoot(ArrowList& aList,int playCounter)
+{
+	if(playCounter-lastShootingRound>=8||lastShootingRound==0)//Computer players can shoot an arrow every 4th move so its every 8th arrow move because arrows are twice as fast as the player
+	{
+		setShootingOption(ArrowType((rand()%3)+1));
+		if(shoot(aList))
+		{
+			lastShootingRound=playCounter;
+		}
+	}
+}

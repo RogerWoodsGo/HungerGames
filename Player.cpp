@@ -1,9 +1,9 @@
 #include "Player.h"
 #include "Board.h"
 
-void Player::setShootingOption(int arrowType)
+void Player::setShootingOption(ArrowType arrow)
 {
-	arrowTypeToShoot=arrowType;
+	arrowToShoot=arrow;
 }
 
 void Player::move()
@@ -37,11 +37,12 @@ void Player::move()
 	}
 }
 
-void Player::shoot(ArrowList& aList)
+bool Player::shoot(ArrowList& aList)
 {
 	Point p;
 	char nextPlace,arrowChar=' ';
 	int x,y,numOfBombingArrows,numOfPassingArrows,numOfRegularArrows;
+	bool arrowShot=false;
 	if(direct!=Center)
 	{
 		location->getNextMove(direct,p);
@@ -50,20 +51,23 @@ void Player::shoot(ArrowList& aList)
 		if((nextPlace!=WALL)&&(nextPlace!=ARROW))
 		{
 			getArrows(numOfBombingArrows,numOfPassingArrows,numOfRegularArrows);
-			if((numOfBombingArrows>0)&&(arrowTypeToShoot==1))
+			if((numOfBombingArrows>0)&&(arrowToShoot==Bombing))
 			{
 				decreaseArrows(1,0,0);
 				arrowChar=BOMBING_ARROW;
+				arrowShot=true;
 			}
-			if((numOfPassingArrows>0)&&(arrowTypeToShoot==2))
+			if((numOfPassingArrows>0)&&(arrowToShoot==Passing))
 			{
 				decreaseArrows(0,1,0);
 				arrowChar=PASSING_ARROW;
+				arrowShot=true;
 			}
-			if((numOfRegularArrows>0)&&(arrowTypeToShoot==3))
+			if((numOfRegularArrows>0)&&(arrowToShoot==Regular))
 			{
 				decreaseArrows(0,0,1);
 				arrowChar=REGULAR_ARROW;
+				arrowShot=true;
 			}
 			if(arrowChar!=' ')
 			{
@@ -82,4 +86,6 @@ void Player::shoot(ArrowList& aList)
 			}
 		}
 	}
+	arrowToShoot=None;
+	return arrowShot;
 }
