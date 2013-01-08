@@ -24,6 +24,7 @@ void Game::run(char* fileName)
 void Game::play(char* fileName)
 {
 	bool stopGame=false,validBoard;
+	int playCounter=0;
 	b.setPList(pList);
 	b.setAList(aList);
 	validBoard=b.readFile(fileName);
@@ -36,12 +37,19 @@ void Game::play(char* fileName)
 		b.printText();
 		while((!stopGame)&&(!isThereAWinner()))
 		{
+			playCounter++;
 			moveArrows();
 			b.throwGifts();
-			movePlayers();
+			if(playCounter%PLAYER_ROUND_MOVE==0)
+			{
+				movePlayers();
+			}
 			pList.setContent();
 			pList.print();
-			shootArrows();
+			if(playCounter%(PLAYER_ROUND_MOVE*4)==0)//A player can shoot an arrow every 4th move so its every 8th arrow move because arrows are twice as fast as the player
+			{
+				shootArrows();
+			}
 			b.printScoreBoard();
 			if(_kbhit())
 			{
@@ -99,15 +107,11 @@ void Game::movePlayers()const
 	PlayerItem* curr=pList.getHead();
 	while(curr!=0)
 	{
-		if(curr->getPlayer()->getTimeToMove()%PLAYER_ROUND_MOVE==0)
+		if(typeid(*(curr->getPlayer())).name()==typeid(HumanPlayer).name())
 		{
-			if(typeid(*(curr->getPlayer())).name()==typeid(HumanPlayer).name())
-			{
-				curr->getPlayer()->setDirection(lastDirection);
-			}
-			curr->getPlayer()->tryToMove();
+			curr->getPlayer()->setDirection(lastDirection);
 		}
-		curr->getPlayer()->updateTimeToMove();
+		curr->getPlayer()->tryToMove();
 		curr=curr->getNext();
 	}
 }
@@ -136,20 +140,16 @@ void Game::shootArrows()
 	PlayerItem* curr=pList.getHead();
 	while(curr!=0)
 	{
-		if(curr->getPlayer()->timeToShoot())
+		if(typeid(*(curr->getPlayer())).name()==typeid(HumanPlayer).name())
 		{
-			if(typeid(*(curr->getPlayer())).name()==typeid(HumanPlayer).name())
-			{
-				curr->getPlayer()->setShootingOption(lastArrowType);
-				lastArrowType=0;
-			}
-			else
-			{
-				curr->getPlayer()->setShootingOption((rand()%3)+1);
-			}
-			curr->getPlayer()->shoot(aList);
+			curr->getPlayer()->setShootingOption(lastArrowType);
+			lastArrowType=0;
 		}
-		curr->getPlayer()->updateTimeToShoot();
+		else
+		{
+			curr->getPlayer()->setShootingOption((rand()%3)+1);
+		}
+		curr->getPlayer()->shoot(aList);
 		curr=curr->getNext();
 	}
 }

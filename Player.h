@@ -32,14 +32,10 @@ public:
 	int getScore()const{return score;}
 	void setScore(int num){score=num;}
 	char getSymbol()const{return symbol;}
-	void updateTimeToMove(){timeToMove++;}
-	void updateTimeToShoot(){shootTime++;}
-	int getTimeToMove(){return timeToMove;}
 	void move();
 	void shoot(ArrowList& aList);
 	void setShootingOption(int arrowType);
 	virtual void tryToMove()=0;
-	virtual bool timeToShoot()=0;
 	virtual ~Player(){delete location;};
 };
 

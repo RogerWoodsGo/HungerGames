@@ -9,7 +9,6 @@ class HumanPlayer: public Player
 public:
 	HumanPlayer(int x,int y,char ch):Player(x,y,ch){setDirection(Center);};
 	virtual void tryToMove();
-	virtual bool timeToShoot(){return true;}
 	~HumanPlayer(){}
 };
 
