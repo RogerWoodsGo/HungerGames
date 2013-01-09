@@ -6,26 +6,139 @@
 #include <process.h>
 
 const int ESC=27;
-void Game::run(char* fileName)
+void Game::run(char** argv)
 {
 	system("cls");
-	if(fileName==NULL)
+	if((numOfFiles==0)||(numOfFiles>5)||(!organizeFiles(argv)))
 	{
-		cout << "Please specify a file" << endl;
+		cout << "Usage:\tHunger.exe <Board File> <Option>=<File> ..." << endl << endl;
+		cout << "Options:" << endl;
+		cout << "\tC1\tFile for the 1st file player" << endl;
+		cout << "\tC2\tFile for the 2nd file player" << endl;
+		cout << "\tC3\tFile for the 3rd file player" << endl;
+		cout << "\tE\tFile for gifts to throw on board" << endl << endl;
+		cout << "*\tEvery other file or file without an option will be considered as a board file" << endl;
+		cout << "**\tEvery option can be sent only once" << endl;
+		cout << "***\tNote: You must send a borad file to the game!!!" << endl;
 	}
 	else
 	{
-		play(fileName);
+		system("cls");
+		play();
 	}
 	cin.get();
 }
 
-void Game::play(char* fileName)
+bool Game::organizeFiles(char** argv)
+{
+	bool res=true;
+	int i;
+	for(i=0;i<NUM_OF_FILE_TYPES;++i)
+	{
+		files[i]=NULL;
+	}
+	i=1;
+	while((i<=numOfFiles)&&(res))
+	{
+		switch(argv[i][0])
+		{
+		case 'e':
+		case 'E':
+			if(argv[i][1]=='=')
+			{
+				res=insertToFiles(E,argv[i]+2);
+			}
+			else
+			{
+				res=insertToFiles(BoardFile,argv[i]);
+			}
+			break;
+		case 'c':
+		case 'C':
+			if((argv[i][1]=='1')||(argv[i][1]=='2')||(argv[i][1]=='3'))
+			{
+				if((argv[i][1]=='1')&&(argv[i][2]=='='))
+				{
+					res=insertToFiles(C1,argv[i]+3);
+				}
+				else if((argv[i][1]=='2')&&(argv[i][2]=='='))
+				{
+					res=insertToFiles(C2,argv[i]+3);
+				}
+				else if((argv[i][1]=='3')&&(argv[i][2]=='='))
+				{
+					res=insertToFiles(C3,argv[i]+3);
+				}
+				else
+				{
+					res=insertToFiles(BoardFile,argv[i]);
+				}
+			}
+			else
+			{
+				res=insertToFiles(BoardFile,argv[i]);
+			}
+			break;
+		default: res=insertToFiles(BoardFile,argv[i]);
+		}
+		i++;
+	}
+	char* fileTypes[]={"Board","C1","C2","C3","E"};
+	cout << "The game loaded the following files:" << endl;
+	for(i=0;i<NUM_OF_FILE_TYPES;++i)
+	{
+		cout << fileTypes[i] << "\t";
+		if(files[i])
+		{
+			cout << files[i] << endl;
+		}
+		else
+		{
+			cout << "--" << endl;
+		}
+	}
+	if(res)
+	{
+		Sleep(4000);
+	}
+	else
+	{
+		cout << "\nThere was a problem processing the sent files, Follow the usage!" << endl << endl;
+	}
+	return res;
+}
+
+bool Game::insertToFiles(FileType type,char* str)
+{
+	bool res;
+	ifstream file;
+	if(files[type]==NULL)
+	{
+		file.open(str,ifstream::in);
+		if(file)
+		{
+			files[type]=str;
+			file.close();
+			res=true;
+		}
+		else
+		{
+			res=false;
+		}
+	}
+	else
+	{
+		res=false;
+	}
+	return res;
+}
+
+void Game::play()
 {
 	bool stopGame=false,validBoard;
 	b.setPList(pList);
 	b.setAList(aList);
-	validBoard=b.readFile(fileName);
+	validBoard=b.readFile(files);
 	if(validBoard)
 	{
 		validBoard=b.checkBoard();
@@ -67,7 +180,7 @@ void Game::play(char* fileName)
 	}
 	else 
 	{
-		cout << "The text file isn't valid or doesn't exist" << endl;
+		cout << "The Board file isn't valid or doesn't exist" << endl;
 	}
 }
 
@@ -102,7 +215,7 @@ void Game::playPlayers()
 	PlayerItem* curr=pList.getHead();
 	while(curr!=0)
 	{
-		if(playCounter%2==0)
+		if(playCounter%PLAYER_ROUND_MOVE==0)
 		{
 			curr->getPlayer()->tryToMove();
 		}

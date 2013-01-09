@@ -11,6 +11,7 @@ class Board
 	char** text;
 	int numOfComputerPlayersOnBoard;
 	int numOfHumanPlayersOnBoard;
+	int numOfFilePlayersOnBoard;
 	Point scoreBoardPlace;
 	PlayerList* pList;
 	ArrowList* aList;
@@ -18,7 +19,7 @@ class Board
 	Board(const Board&);
 public:
 	Board();
-	bool readFile(char* fileName);
+	bool readFile(char** files);
 	void setPList(PlayerList& lst){pList=&lst;}
 	void setAList(ArrowList& lst){aList=&lst;}
 	void printText()const;

@@ -3,6 +3,7 @@
 
 #include <iostream>
 using namespace std;
+#include <fstream>
 
 const int WIDTH=79;
 const int HEIGHT=24;
@@ -43,6 +44,7 @@ const int FOOD_BONUS=200;
 const int ARROWS_BONUS=1;
 const int BOMB_BONUS=-750;
 const int CHANCE_TO_CHANGE_DIRECTION=7;
+const int NUM_OF_FILE_TYPES=5;
 const int SLEEP_TIME=50;
 
 enum Direction{ 
@@ -58,6 +60,14 @@ enum ArrowType{
 	Bombing=1,
 	Passing=2,
 	Regular=3
+};
+
+enum FileType{
+	BoardFile=0,
+	C1=1,
+	C2=2,
+	C3=3,
+	E=4
 };
 
 #endif

@@ -11,15 +11,16 @@ Board::Board()
 	scoreBoardPlace.setPlace(0,0);
 }
 
-bool Board::readFile(char* fileName)
+bool Board::readFile(char** files)
 {
-	FILE* f;
+	bool res;
+	ifstream boardFile;
 	char ch;
 	bool OWasFound=false;
-	f=fopen(fileName,"r");
-	if(f==NULL)
+	boardFile.open(files[BoardFile],ifstream::in);
+	if(boardFile==NULL)
 	{
-		return false;
+		res=false;
 	}
 	else
 	{
@@ -27,7 +28,7 @@ bool Board::readFile(char* fileName)
 		{
 			for(int j=0;j<WIDTH;j++)
 			{
-				ch=(char)(fgetc(f));
+				ch=(char)(boardFile.get());
 				switch(ch)
 				{
 				case 'W':
@@ -65,11 +66,12 @@ bool Board::readFile(char* fileName)
 				default: text[i][j]=' ';
 				}
 			}
-			fgetc(f);
+			boardFile.get();
 		}
-		fclose(f);
-		return true;
+		boardFile.close();
+		res=true;
 	}
+	return res;
 }
 
 bool Board::checkBoard()

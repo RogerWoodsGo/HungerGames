@@ -1,9 +1,9 @@
 #include "Game.h"
 #include <time.h>
 
-void main(int argc,char* argv[])
+void main(int argc,char** argv)
 {
-	Game g;
+	Game g(argc);
 	srand((unsigned)(time(0)));
-	g.run(argv[1]);
+	g.run(argv);
 }
