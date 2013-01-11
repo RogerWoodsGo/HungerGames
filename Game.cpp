@@ -11,15 +11,19 @@ void Game::run(char** argv)
 	system("cls");
 	if((numOfFiles==0)||(numOfFiles>5)||(!organizeFiles(argv)))
 	{
-		cout << "Usage:\tHunger.exe <Board File> <Option>=<File> ..." << endl << endl;
-		cout << "Options:" << endl;
+		cout << "\nUsage:\tHunger.exe <Board File> <Option>=<File> ..." << endl;
+		cout << "\nOptions:" << endl;
 		cout << "\tC1\tFile for the 1st file player" << endl;
 		cout << "\tC2\tFile for the 2nd file player" << endl;
 		cout << "\tC3\tFile for the 3rd file player" << endl;
-		cout << "\tE\tFile for gifts to throw on board" << endl << endl;
-		cout << "*\tEvery other file or file without an option will be considered as a board file" << endl;
-		cout << "**\tEvery option can be sent only once" << endl;
-		cout << "***\tNote: You must send a borad file to the game!!!" << endl;
+		cout << "\tE\tFile for gifts to throw on board" << endl;
+		cout << "\nRules:" << endl;
+		cout << "*\tYou must send one borad file to the game!!!" << endl;
+		cout << "*\tA file without an option will be considered as a board file" << endl;
+		cout << "*\tEvery option can be sent only once" << endl;
+		cout << "*\tIn order to use C2 option you have to send a C1 file also" << endl;
+		cout << "*\tIn order to use C3 option you have to send a C2 file also" << endl;
+		cout << "*\tIn case you don't send an E file the gifts will be thrown randomly" << endl;
 	}
 	else
 	{
@@ -84,7 +88,7 @@ bool Game::organizeFiles(char** argv)
 		i++;
 	}
 	char* fileTypes[]={"Board","C1","C2","C3","E"};
-	cout << "The game loaded the following files:" << endl;
+	cout << "\nThe game loaded the following files:" << endl;
 	for(i=0;i<NUM_OF_FILE_TYPES;++i)
 	{
 		cout << fileTypes[i] << "\t";
@@ -97,18 +101,35 @@ bool Game::organizeFiles(char** argv)
 			cout << "--" << endl;
 		}
 	}
+	if(!files[BoardFile])
+	{
+		cout << "You must send one borad file to the game!!!" << endl;
+		res=false;
+	}
 	if(res)
 	{
+		if(files[C1])
+		{
+			if((!files[C2])&&(files[C3]))
+			{
+				cout << "In order to use C3 option you have to send a C2 file also" << endl;
+				res=false;
+			}
+		}
+		else
+		{
+			if((files[C2])||(files[C3]))
+			{
+				cout << "*\tIn order to use C2/C3 option you have to send a C1 file also" << endl;
+				res=false;
+			}
+		}
 		Sleep(4000);
-	}
-	else
-	{
-		cout << "\nThere was a problem processing the sent files, Follow the usage!" << endl << endl;
 	}
 	return res;
 }
 
-bool Game::insertToFiles(FileType type,char* str)
+bool Game::insertToFiles(const FileType type,char* str)
 {
 	bool res;
 	ifstream file;
@@ -123,6 +144,7 @@ bool Game::insertToFiles(FileType type,char* str)
 		}
 		else
 		{
+			cout << "Error opening file: " << str << endl;
 			res=false;
 		}
 	}
@@ -135,16 +157,18 @@ bool Game::insertToFiles(FileType type,char* str)
 
 void Game::play()
 {
+	ifstream giftFile;
 	bool stopGame=false,validBoard;
 	b.setPList(pList);
 	b.setAList(aList);
-	validBoard=b.readFile(files);
+	b.readFile(files);
+	validBoard=b.checkBoard();
 	if(validBoard)
 	{
-		validBoard=b.checkBoard();
-	}
-	if(validBoard)
-	{
+		if(files[E]!=NULL)
+		{
+			b.fileHandle(files[E],true);
+		}
 		b.printText();
 		while((!stopGame)&&(!isThereAWinner()))
 		{
@@ -177,6 +201,7 @@ void Game::play()
 				cout << "Game over. Thank you for playing our hunger game." << endl;
 			}
 		}
+		b.fileHandle(files[E],false);
 	}
 	else 
 	{

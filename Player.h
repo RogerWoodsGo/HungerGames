@@ -36,7 +36,7 @@ public:
 	void setShootingOption(ArrowType arrow);
 	virtual void tryToMove()=0;
 	virtual void tryToShoot(ArrowList& aList,int playCounter)=0;
-	virtual ~Player(){delete location;};
+	virtual ~Player(){delete location;}
 };
 
 #endif

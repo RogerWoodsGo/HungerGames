@@ -7,7 +7,7 @@ class HumanPlayer: public Player
 {
 	HumanPlayer(const HumanPlayer&);
 public:
-	HumanPlayer(int x,int y,char ch):Player(x,y,ch){setDirection(Center);};
+	HumanPlayer(int x,int y,char ch):Player(x,y,ch){setDirection(Center);}
 	virtual void tryToMove();
 	virtual void tryToShoot(ArrowList& aList,int playCounter);
 	~HumanPlayer(){}

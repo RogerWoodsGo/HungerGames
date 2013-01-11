@@ -18,7 +18,7 @@ public:
 	Game(int argc):playCounter(0),numOfFiles(argc-1),files(new char*[NUM_OF_FILE_TYPES]){}
 	void run(char** argv);
 	bool organizeFiles(char** argv);
-	bool insertToFiles(FileType type,char* str);
+	bool insertToFiles(const FileType type,char* str);
 	void play();
 	bool isThereAWinner();
 	void playPlayers();

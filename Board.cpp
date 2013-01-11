@@ -8,70 +8,62 @@ Board::Board()
 		text[i]=new char[WIDTH];
 	numOfComputerPlayersOnBoard=0;
 	numOfHumanPlayersOnBoard=0;
+	numOfFilePlayersOnBoard=0;
 	scoreBoardPlace.setPlace(0,0);
 }
 
-bool Board::readFile(char** files)
+void Board::readFile(char** files)
 {
-	bool res;
+	//bool res;
 	ifstream boardFile;
 	char ch;
 	bool OWasFound=false;
 	boardFile.open(files[BoardFile],ifstream::in);
-	if(boardFile==NULL)
+	for(int i=0;i<HEIGHT;i++)
 	{
-		res=false;
-	}
-	else
-	{
-		for(int i=0;i<HEIGHT;i++)
+		for(int j=0;j<WIDTH;j++)
 		{
-			for(int j=0;j<WIDTH;j++)
+			ch=(char)(boardFile.get());
+			switch(ch)
 			{
-				ch=(char)(boardFile.get());
-				switch(ch)
+			case 'W':
+				text[i][j]=WALL;
+				break;
+			case 'H':
+				if(numOfHumanPlayersOnBoard<MAX_NUM_OF_HUMAN_PLAYERS)
 				{
-				case 'W':
-					text[i][j]=WALL;
-					break;
-				case 'H':
-					if(numOfHumanPlayersOnBoard<MAX_NUM_OF_HUMAN_PLAYERS)
-					{
-						numOfHumanPlayersOnBoard++;
-						text[i][j]=PLAYER;
-						pList->add(i,j,HUMAN_PLAYER);
-						pList->getHead()->getPlayer()->getLocation()->setBoard(this);
-						setHumanPlayer(pList->getHead()->getPlayer());
-					}
-					else text[i][j]=' ';
-					break;
-				case PLAYER:
-					if(numOfComputerPlayersOnBoard<MAX_NUM_OF_COMPUTER_PLAYERS)
-					{
-						numOfComputerPlayersOnBoard++;
-						text[i][j]=PLAYER;
-						pList->add(i,j,numOfComputerPlayersOnBoard);
-						pList->getHead()->getPlayer()->getLocation()->setBoard(this);
-					}
-					else text[i][j]=' ';
-					break;
-				case 'O':
-					if(!OWasFound)
-					{
-						OWasFound=true;
-						scoreBoardPlace.setPlace(i,j);
-					}
-					text[i][j]=' ';
-					break;
-				default: text[i][j]=' ';
+					numOfHumanPlayersOnBoard++;
+					text[i][j]=PLAYER;
+					pList->add(i,j,HUMAN_PLAYER);
+					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
+					setHumanPlayer(pList->getHead()->getPlayer());
 				}
+				else text[i][j]=' ';
+				break;
+			case PLAYER:
+				if(numOfComputerPlayersOnBoard<MAX_NUM_OF_COMPUTER_PLAYERS)
+				{
+					numOfComputerPlayersOnBoard++;
+					text[i][j]=PLAYER;
+					pList->add(i,j,numOfComputerPlayersOnBoard);
+					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
+				}
+				else text[i][j]=' ';
+				break;
+			case 'O':
+				if(!OWasFound)
+				{
+					OWasFound=true;
+					scoreBoardPlace.setPlace(i,j);
+				}
+				text[i][j]=' ';
+				break;
+			default: text[i][j]=' ';
 			}
-			boardFile.get();
 		}
-		boardFile.close();
-		res=true;
+		boardFile.get();
 	}
-	return res;
+	boardFile.close();
 }
 
 bool Board::checkBoard()
@@ -247,42 +239,62 @@ bool Board::isPointNearAPlayer(const Point& p)const
 
 void Board::throwGifts()const
 {
-	Point giftLocation;
+	if(giftFile.is_open())
+	{
+		fileGifts();
+	}
+	else
+	{
+		autoGifts();
+	}
+}
+
+void Board::autoGifts()const
+{
 	int chance=(rand()%GIFT_CHANCE)+1;//1-20
 	//Bomb 0.05
 	if(chance%int((1/BOMB_CHANCE))==0)//20
 	{
-		if(randomLocation(giftLocation))
-		{
-			if(!isPointNearAPlayer(giftLocation))
-			{
-				setContent(giftLocation,BOMB_GIFT);
-				giftLocation.draw(BOMB_GIFT);
-			}
-		}
+		tryToThrowAGift(BOMB_GIFT);
 	}
 	//Arrow 0.1
 	if(chance%int((1/ARROW_CHANCE))==0)//10,20
 	{
-		if(randomLocation(giftLocation))
-		{
-			if(!isPointNearAPlayer(giftLocation))
-			{
-				setContent(giftLocation,ARROW_GIFT);
-				giftLocation.draw(ARROW_GIFT);
-			}
-		}
+		tryToThrowAGift(ARROW_GIFT);
 	}
 	//Food 0.2
 	if(chance%int((1/FOOD_CHANCE))==0)//5,10,15,20
 	{
-		if(randomLocation(giftLocation))
+		tryToThrowAGift(FOOD_GIFT);
+	}
+}
+
+void Board::fileGifts()const
+{
+
+}
+
+void Board::fileHandle(char* nameOfFile,bool action)
+{
+	if(action)
+	{
+		giftFile.open(nameOfFile,ifstream::in);
+	}
+	else
+	{
+		giftFile.close();
+	}
+}
+
+void Board::tryToThrowAGift(const char ch)const
+{
+	Point giftLocation;
+	if(randomLocation(giftLocation))
+	{
+		if(!isPointNearAPlayer(giftLocation))
 		{
-			if(!isPointNearAPlayer(giftLocation))
-			{
-				setContent(giftLocation,FOOD_GIFT);
-				giftLocation.draw(FOOD_GIFT);
-			}
+			setContent(giftLocation,ch);
+			giftLocation.draw(ch);
 		}
 	}
 }
