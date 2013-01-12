@@ -1,10 +1,10 @@
 #include "PlayerList.h"
 #include "Board.h"
 
-void PlayerList::add(int x,int y,char ch)
+void PlayerList::add(int x,int y,char ch,PlayerType type)
 {
 	PlayerItem* newPlayer;
-	newPlayer=new PlayerItem(x,y,ch,head);
+	newPlayer=new PlayerItem(x,y,ch,head,type);
 	head=newPlayer;
 }
 

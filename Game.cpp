@@ -167,18 +167,18 @@ void Game::play()
 	{
 		if(files[E]!=NULL)
 		{
-			b.fileHandle(files[E],true);
+			b.mapFile(b.getGiftMap(),files[E]);
 		}
 		b.printText();
 		while((!stopGame)&&(!isThereAWinner()))
 		{
 			playCounter++;
 			moveArrows();
-			b.throwGifts();
+			b.throwGifts(playCounter);
 			playPlayers();
 			pList.setContent();
 			pList.print();
-			b.printScoreBoard();
+			b.printScoreBoard(playCounter);
 			if(_kbhit())
 			{
 				stopGame=checkPressedKeys();
@@ -201,7 +201,6 @@ void Game::play()
 				cout << "Game over. Thank you for playing our hunger game." << endl;
 			}
 		}
-		b.fileHandle(files[E],false);
 	}
 	else 
 	{

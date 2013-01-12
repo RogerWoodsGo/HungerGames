@@ -9,7 +9,7 @@ class PlayerList
 	PlayerList(const PlayerList&);
 public:
 	PlayerList():head(0){}
-	void add(int x,int y,char ch);
+	void add(int x,int y,char ch,PlayerType type);
 	void remove(Player& player);
 	PlayerItem* getHead()const{return head;}
 	void print()const;

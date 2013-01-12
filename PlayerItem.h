@@ -12,15 +12,16 @@ class PlayerItem
 	PlayerItem* next;
 	PlayerItem(const PlayerItem&);
 public:
-	PlayerItem(int x,int y,char ch,PlayerItem* head):next(head)
+	PlayerItem(int x,int y,char ch,PlayerItem* head,PlayerType type):next(head)
 	{
-		if(ch==HUMAN_PLAYER)
+		switch(type)
 		{
+		case HPlayer:
 			pPlayer=new HumanPlayer(x,y,ch);
-		}
-		else
-		{
+			break;
+		case PPlayer:
 			pPlayer=new ComputerPlayer(x,y,ch);
+			break;
 		}
 	}
 	PlayerItem():pPlayer(0),next(0){}

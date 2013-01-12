@@ -4,6 +4,8 @@
 #include <iostream>
 using namespace std;
 #include <fstream>
+#include <map>
+#include <vector>
 
 const int WIDTH=79;
 const int HEIGHT=24;
@@ -68,6 +70,12 @@ enum FileType{
 	C2=2,
 	C3=3,
 	E=4
+};
+
+enum PlayerType{
+	PPlayer=0,
+	CPlayer=1,
+	HPlayer=2
 };
 
 #endif
