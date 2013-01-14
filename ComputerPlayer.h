@@ -9,7 +9,7 @@ class ComputerPlayer: public Player
 public:
 	ComputerPlayer(int x,int y,char ch):Player(x,y,ch){changeDirection();}
 	void changeDirection();
-	virtual void tryToMove();
+	virtual void tryToMove(int playCounter);
 	virtual void tryToShoot(ArrowList& aList,int playCounter);
 	~ComputerPlayer(){}
 };

@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "general.h"
+#include "FilePlayer.h"
 
 Board::Board()
 {
@@ -10,7 +11,8 @@ Board::Board()
 	numOfHumanPlayersOnBoard=0;
 	numOfFilePlayersOnBoard=0;
 	scoreBoardPlace.setPlace(0,0);
-	giftMap.empty();
+	giftMap=new map<int,vector<char>*>;
+	(*giftMap).empty();
 }
 
 void Board::readFile(char** files)
@@ -29,12 +31,28 @@ void Board::readFile(char** files)
 			case 'W':
 				text[i][j]=WALL;
 				break;
+			case 'C':
+				if((numOfFilePlayersOnBoard<MAX_NUM_OF_FILE_PLAYERS)&&
+					(getNumOfPlayerOnBoard()<3)&&(files[(FileType)(numOfFilePlayersOnBoard+1)]!=NULL))
+				{
+						numOfFilePlayersOnBoard++;
+						text[i][j]=PLAYER;
+						pList->add(i,j,numOfFilePlayersOnBoard,File_Player);
+						FilePlayer* fp=dynamic_cast<FilePlayer*>(pList->getHead()->getPlayer());
+						if(fp!=NULL)
+						{
+							mapFile(fp->getEventMap(),files[(FileType)(numOfFilePlayersOnBoard)]);
+						}
+						fp->getLocation()->setBoard(this);
+				}
+				else text[i][j]=' ';
+				break;
 			case 'H':
 				if((numOfHumanPlayersOnBoard<MAX_NUM_OF_HUMAN_PLAYERS)&&(getNumOfPlayerOnBoard()<3))
 				{
 					numOfHumanPlayersOnBoard++;
 					text[i][j]=PLAYER;
-					pList->add(i,j,HUMAN_PLAYER,HPlayer);
+					pList->add(i,j,HUMAN_PLAYER,Human_Player);
 					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
 					setHumanPlayer(pList->getHead()->getPlayer());
 				}
@@ -45,7 +63,7 @@ void Board::readFile(char** files)
 				{
 					numOfComputerPlayersOnBoard++;
 					text[i][j]=PLAYER;
-					pList->add(i,j,numOfComputerPlayersOnBoard,PPlayer);
+					pList->add(i,j,numOfComputerPlayersOnBoard,Computer_Player);
 					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
 				}
 				else text[i][j]=' ';
@@ -66,7 +84,7 @@ void Board::readFile(char** files)
 	boardFile.close();
 }
 
-void Board::mapFile(map<int,vector<char>*>& eventMap,const char* file)
+void Board::mapFile(map<int,vector<char>*>* eventMap,const char* file)
 {
 	int num=0;
 	char ch;
@@ -75,13 +93,13 @@ void Board::mapFile(map<int,vector<char>*>& eventMap,const char* file)
 	while (!inFile.eof())
 	{
 		inFile >> num;
-		eventMap[num]=new vector<char>;
+		(*eventMap)[num]=new vector<char>;
 		ch=inFile.get();
 		while((ch!='\n')&&(!inFile.eof()))
 		{
 			if(ch!=' ')
 			{
-				(*(eventMap[num])).push_back(ch);
+				(*((*eventMap)[num])).push_back(ch);
 			}
 			ch=inFile.get();
 		}
@@ -128,7 +146,7 @@ bool Board::checkBoard()
 	}
 	if(validBoard)
 	{
-		while(numOfComputerPlayersOnBoard+numOfHumanPlayersOnBoard<MIN_NUM_OF_PLAYERS_ON_BOARD)
+		while(getNumOfPlayerOnBoard()<MIN_NUM_OF_PLAYERS_ON_BOARD)
 		{
 			validPlace=randomLocation(playerPlace);
 			if(!validPlace)
@@ -140,7 +158,7 @@ bool Board::checkBoard()
 			{
 				numOfComputerPlayersOnBoard++;
 				playerPlace.getPlace(x,y);
-				pList->add(x,y,numOfComputerPlayersOnBoard,PPlayer);
+				pList->add(x,y,numOfComputerPlayersOnBoard,Computer_Player);
 				pList->getHead()->getPlayer()->getLocation()->setBoard(this);
 				setContent(playerPlace,PLAYER);
 			}
@@ -260,11 +278,11 @@ bool Board::isPointNearAPlayer(const Point& p)const
 	return isPointNearThePlayer;
 }
 
-void Board::throwGifts(int playCounter)const
+void Board::throwGifts(int playCounter)
 {
-	if(giftMap.size())
+	if((*giftMap).size())
 	{
-		throwMapGifts(giftMap,playCounter);
+		throwMapGifts(playCounter);
 	}
 	else
 	{
@@ -292,12 +310,12 @@ void Board::throwAutoGifts()const
 	}
 }
 
-void Board::throwMapGifts(map<int,vector<char>*> giftMap,int playCounter)const
+void Board::throwMapGifts(int playCounter)
 {
 	char ch;
-	if(giftMap[playCounter])
+	if((*giftMap)[playCounter])
 	{
-		vector<char> giftVector=*(giftMap[playCounter]);
+		vector<char> giftVector=*((*giftMap)[playCounter]);
 		vector<char>::iterator itr=giftVector.begin();
 		vector<char>::iterator itrEnd=giftVector.end();
 		while(itr!=itrEnd)
@@ -501,10 +519,10 @@ void Board::arrowHitsPlayer(const Point& p)const
 		aCurr=aCurr->getNext();
 	}
 }
-void Board::freeMap(map<int,vector<char>*>& eventMap)
+void Board::freeMap(map<int,vector<char>*>* eventMap)
 {
-	map<int,vector<char>*>::iterator itr=eventMap.begin();
-	map<int,vector<char>*>::iterator itrEnd=eventMap.end();
+	map<int,vector<char>*>::iterator itr=(*eventMap).begin();
+	map<int,vector<char>*>::iterator itrEnd=(*eventMap).end();
 	while(itr!=itrEnd)
 	{
 		delete itr->second;
@@ -515,6 +533,7 @@ void Board::freeMap(map<int,vector<char>*>& eventMap)
 Board::~Board()
 {
 	freeMap(giftMap);
+	delete giftMap;
 	for(int i=0;i<HEIGHT;i++)
 	{
 		delete text[i];

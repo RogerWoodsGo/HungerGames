@@ -5,7 +5,6 @@
 #include "ArrowList.h"
 #include "Player.h"
 #include "Point.h"
-#include "file.h"
 
 class Board
 {
@@ -17,13 +16,13 @@ class Board
 	PlayerList* pList;
 	ArrowList* aList;
 	Player* human;
-	map<int,vector<char>*> giftMap;
+	map<int,vector<char>*>* giftMap;
 	Board(const Board&);
 public:
 	Board();
 	void readFile(char** files);
-	void mapFile(map<int,vector<char>*>& eventMap,const char* file);
-	map<int,vector<char>*>& getGiftMap(){return giftMap;}
+	void mapFile(map<int,vector<char>*>* eventMap,const char* file);
+	map<int,vector<char>*>* getGiftMap(){return giftMap;}
 	void setPList(PlayerList& lst){pList=&lst;}
 	void setAList(ArrowList& lst){aList=&lst;}
 	void printText()const;
@@ -31,9 +30,9 @@ public:
 	void setContent(const Point& p,char ch)const;
 	bool checkBoard();
 	bool randomLocation(Point& p)const;
-	void throwGifts(int playCounter)const;
+	void throwGifts(int playCounter);
 	void throwAutoGifts()const;
-	void throwMapGifts(map<int,vector<char>*> giftMap,int playCounter)const;
+	void throwMapGifts(int playCounter);
 	void tryToThrowAGift(const char ch)const;
 	bool isPointInScoreBoard(const Point& p)const;
 	bool isPointNearAPlayer(const Point& p)const;
@@ -43,7 +42,7 @@ public:
 	void setHumanPlayer(Player* p){human=p;}
 	int getNumOfPlayerOnBoard(){return numOfComputerPlayersOnBoard+numOfHumanPlayersOnBoard+numOfFilePlayersOnBoard;}
 	Player* getHumanPlayer()const{return human;}
-	void freeMap(map<int,vector<char>*>& eventMap);
+	void freeMap(map<int,vector<char>*>* eventMap);
 	~Board();
 };
 

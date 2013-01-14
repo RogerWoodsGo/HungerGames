@@ -7,21 +7,26 @@ void ComputerPlayer::changeDirection()
 	setDirection((Direction)(rand()%DIRECTION_OPTION+1));
 }
 
-void ComputerPlayer::tryToMove()
+void ComputerPlayer::tryToMove(int playCounter)
 {
 	char nextPlace;
 	Point nextPoint;
-	if(rand()%CHANCE_TO_CHANGE_DIRECTION==0)
-		changeDirection();
-	location->getNextMove(direct,nextPoint);
-	nextPlace=location->getBoard()->getContent(nextPoint);
-	if(nextPlace==WALL)
+	if(playCounter%PLAYER_ROUND_MOVE==0)
 	{
-		changeDirection();
-	}
-	else
-	{
-		move();
+		if(rand()%CHANCE_TO_CHANGE_DIRECTION==0)
+		{
+			changeDirection();
+		}
+		location->getNextMove(direct,nextPoint);
+		nextPlace=location->getBoard()->getContent(nextPoint);
+		if(nextPlace==WALL)
+		{
+			changeDirection();
+		}
+		else
+		{
+			move();
+		}
 	}
 }
 

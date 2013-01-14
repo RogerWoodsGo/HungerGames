@@ -11,6 +11,7 @@ const int WIDTH=79;
 const int HEIGHT=24;
 const int MAX_NUM_OF_COMPUTER_PLAYERS=2;
 const int MAX_NUM_OF_HUMAN_PLAYERS=1;
+const int MAX_NUM_OF_FILE_PLAYERS=3;
 const int MIN_NUM_OF_PLAYERS_ON_BOARD=2;
 const char FOOD_GIFT='F';
 const char ARROW_GIFT=(char)(24);
@@ -35,6 +36,7 @@ const int GIFT_CHANCE=20;
 const double BOMB_CHANCE=0.05;
 const double ARROW_CHANCE=0.1;
 const double FOOD_CHANCE=0.2;
+const int VECTOR_LIMIT=2;
 const int LOW_POWER_PLAYER=200;
 const int HIGH_POWER_PLAYER=10;
 const int EQUAL_POWER_PLAYER=50;
@@ -73,9 +75,9 @@ enum FileType{
 };
 
 enum PlayerType{
-	PPlayer=0,
-	CPlayer=1,
-	HPlayer=2
+	Computer_Player=0,
+	File_Player=1,
+	Human_Player=2
 };
 
 #endif

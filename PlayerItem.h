@@ -5,6 +5,7 @@
 #include "general.h"
 #include "ComputerPlayer.h"
 #include "HumanPlayer.h"
+#include "FilePlayer.h"
 
 class PlayerItem
 {
@@ -16,11 +17,14 @@ public:
 	{
 		switch(type)
 		{
-		case HPlayer:
+		case Human_Player:
 			pPlayer=new HumanPlayer(x,y,ch);
 			break;
-		case PPlayer:
+		case Computer_Player:
 			pPlayer=new ComputerPlayer(x,y,ch);
+			break;
+		case File_Player:
+			pPlayer=new FilePlayer(x,y,ch);
 			break;
 		}
 	}

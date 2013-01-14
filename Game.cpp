@@ -239,10 +239,7 @@ void Game::playPlayers()
 	PlayerItem* curr=pList.getHead();
 	while(curr!=0)
 	{
-		if(playCounter%PLAYER_ROUND_MOVE==0)
-		{
-			curr->getPlayer()->tryToMove();
-		}
+		curr->getPlayer()->tryToMove(playCounter);
 		curr->getPlayer()->tryToShoot(aList,playCounter);
 		curr=curr->getNext();
 	}

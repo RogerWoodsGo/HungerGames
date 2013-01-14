@@ -1,23 +1,23 @@
                                                                                
                     WWW      WWW                                               
-        P           WWW      WWW                 O                             
+        C           WWW      WWW                 O                             
+                    WWW      WWW                                               
+                    WWW      WWW     C                                         
+            C       WWW      WWW                                               
                     WWW      WWW                                               
                     WWW      WWW                                               
-    P   H           WWW      WWW                                               
-                    WWW      WWW                                               
-                    WWW      WWW                                               
-                    WWWWW  WWWWW    WWWWWWW                                    
+               P    WWWWW  WWWWW    WWWWWWW      C                             
                     WWWWW  WWWWW  WWWWWWWWWW                                   
-                    WWW      WWW WWWW     WW                                   
-            H       WWW      WWWWWW                                            
-                    WWW      WWWWWW                  P                         
+       C            WWW      WWW WWWW     WW                                   
+                    WWW      WWWWWW                                            
+                    WWW      WWWWWW   P              P                         
                     WWW      WWWWW                                             
                     WWW      WWWWW   WWWWWWW                                   
                     WWW      WWWWW   WWWWWWW                                   
    WWWWWWWWWWWWWWWW            WWW        WWW                                  
    WWWWWWWWWWWWWWWW            WWW        WWW                                  
-   WWWWWWWWWWWWWWWW            WWWW       WWW                                  
-   WWWWWWWWWWWWWWWW                       WWW                                  
+   WWWWWWWWWWWWWWWW            WWWW    H  WWW                                  
+   WWWWWWWWWWWWWWWW                       WWW          H                       
    WWWWWWWWWWWWWWWW              WWWW     WWW                                  
    WWWWWWWWWWWWWWWW               WWWWWWWWWW                                   
                                     WWWWWW                                     
