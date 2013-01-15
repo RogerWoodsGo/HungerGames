@@ -7,12 +7,14 @@ using namespace std;
 #include <map>
 #include <vector>
 
+const int ESC=27;
 const int WIDTH=79;
 const int HEIGHT=24;
 const int MAX_NUM_OF_COMPUTER_PLAYERS=2;
 const int MAX_NUM_OF_HUMAN_PLAYERS=1;
 const int MAX_NUM_OF_FILE_PLAYERS=3;
 const int MIN_NUM_OF_PLAYERS_ON_BOARD=2;
+const int MAX_NUM_OF_PLAYERS_ON_BOARD=3;
 const char FOOD_GIFT='F';
 const char ARROW_GIFT=(char)(24);
 const char BOMB_GIFT='B';
@@ -44,11 +46,14 @@ const int NUM_OF_PLAYERS_WITH_MAX_SCORE=1;
 const int ARROW_HIT_PLAYER=500;
 const int PLAYER_ROUND_MOVE=2;
 const int DIRECTION_OPTION=4;
+const int SHOOTING_OPTION=3;
 const int FOOD_BONUS=200;
 const int ARROWS_BONUS=1;
 const int BOMB_BONUS=-750;
 const int CHANCE_TO_CHANGE_DIRECTION=7;
 const int NUM_OF_FILE_TYPES=5;
+const int NUM_OF_ROUNDS_TO_WAIT=3;
+const int TIME_TO_REVIEW_FILES=4000;
 const int SLEEP_TIME=50;
 
 enum Direction{ 

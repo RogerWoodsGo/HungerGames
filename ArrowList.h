@@ -8,7 +8,7 @@ class ArrowList
 	ArrowItem* head;
 	ArrowList(const ArrowList&);
 public:
-	ArrowList():head(0){}
+	ArrowList():head(NULL){}
 	void add(int x,int y,Direction direct,char ch);
 	void remove(Arrow& arrow);
 	ArrowItem* getHead()const{return head;}

@@ -28,7 +28,6 @@ public:
 			break;
 		}
 	}
-	PlayerItem():pPlayer(0),next(0){}
 	PlayerItem* getNext()const{return next;}
 	Player* getPlayer()const{return pPlayer;}
 	void setNext(PlayerItem* nextPlayer){next=nextPlayer;}

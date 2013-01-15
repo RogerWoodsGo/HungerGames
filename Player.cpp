@@ -56,18 +56,21 @@ bool Player::shoot(ArrowList& aList)
 				decreaseArrows(1,0,0);
 				arrowChar=BOMBING_ARROW;
 				arrowShot=true;
+				arrowToShoot=None;
 			}
 			if((numOfPassingArrows>0)&&(arrowToShoot==Passing))
 			{
 				decreaseArrows(0,1,0);
 				arrowChar=PASSING_ARROW;
 				arrowShot=true;
+				arrowToShoot=None;
 			}
 			if((numOfRegularArrows>0)&&(arrowToShoot==Regular))
 			{
 				decreaseArrows(0,0,1);
 				arrowChar=REGULAR_ARROW;
 				arrowShot=true;
+				arrowToShoot=None;
 			}
 			if(arrowChar!=' ')
 			{
@@ -86,6 +89,5 @@ bool Player::shoot(ArrowList& aList)
 			}
 		}
 	}
-	arrowToShoot=None;
 	return arrowShot;
 }

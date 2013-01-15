@@ -39,7 +39,7 @@ void PlayerList::remove(Player& player)
 void PlayerList::print()const
 {
 	PlayerItem* curr=head;
-	while(curr!=0)
+	while(curr!=NULL)
 	{
 		curr->getPlayer()->drawPlayer();
 		curr=curr->getNext();
@@ -50,7 +50,7 @@ void PlayerList::setContent()const
 {
 	PlayerItem* curr=head;
 	Board* b=head->getPlayer()->getLocation()->getBoard();
-	while(curr!=0)
+	while(curr!=NULL)
 	{
 		b->setContent(*(curr->getPlayer()->getLocation()),PLAYER);
 		curr=curr->getNext();
@@ -60,7 +60,7 @@ void PlayerList::setContent()const
 PlayerList::~PlayerList()
 {
 	PlayerItem* curr=head,*saver;
-	while(curr!=0)
+	while(curr!=NULL)
 	{
 		saver=curr->getNext();
 		delete curr;

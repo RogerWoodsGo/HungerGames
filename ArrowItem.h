@@ -27,7 +27,6 @@ public:
 			pArrow=new BombingArrow(x,y,direct,ch);
 		}
 	}
-	ArrowItem():pArrow(0),next(0){}
 	ArrowItem* getNext()const{return next;}
 	Arrow* getArrow()const{return pArrow;}
 	void setNext(ArrowItem* nextArrow){next=nextArrow;}

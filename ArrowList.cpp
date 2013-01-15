@@ -40,7 +40,7 @@ void ArrowList::remove(Arrow& arrow)
 void ArrowList::print()const
 {
 	ArrowItem* curr=head;
-	while(curr!=0)
+	while(curr!=NULL)
 	{
 		curr->getArrow()->drawArrow();
 		curr=curr->getNext();
@@ -50,7 +50,7 @@ void ArrowList::print()const
 ArrowList::~ArrowList()
 {
 	ArrowItem* curr=head,*saver;
-	while(curr!=0)
+	while(curr!=NULL)
 	{
 		saver=curr->getNext();
 		delete curr;

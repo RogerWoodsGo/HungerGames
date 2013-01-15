@@ -5,11 +5,10 @@
 #include <conio.h>
 #include <process.h>
 
-const int ESC=27;
 void Game::run(char** argv)
 {
 	system("cls");
-	if((numOfFiles==0)||(numOfFiles>5)||(!organizeFiles(argv)))
+	if((numOfFiles==0)||(numOfFiles>NUM_OF_FILE_TYPES)||(!organizeFiles(argv)))
 	{
 		cout << "\nUsage:\tHunger.exe <Board File> <Option>=<File> ..." << endl;
 		cout << "\nOptions:" << endl;
@@ -120,11 +119,11 @@ bool Game::organizeFiles(char** argv)
 		{
 			if((files[C2])||(files[C3]))
 			{
-				cout << "*\tIn order to use C2/C3 option you have to send a C1 file also" << endl;
+				cout << "In order to use C2/C3 option you have to send a C1 file also" << endl;
 				res=false;
 			}
 		}
-		Sleep(4000);
+		Sleep(TIME_TO_REVIEW_FILES);
 	}
 	return res;
 }
@@ -192,7 +191,7 @@ void Game::play()
 		else
 		{
 			system("cls");
-			if((pList.getHead()!=0)&&(pList.getHead()->getPlayer()->getScore()>0))
+			if((pList.getHead()!=NULL)&&(pList.getHead()->getPlayer()->getScore()>0))
 			{
 				cout << pList.getHead()->getPlayer()->getSymbol() << " is the winner!!! Thank you for playing our hunger game." << endl;
 			}
@@ -213,7 +212,7 @@ bool Game::isThereAWinner()
 	int score;
 	bool winnerFound=false;
 	PlayerItem* curr=pList.getHead(),*next;
-	while((curr!=0)&&(!winnerFound))
+	while((curr!=NULL)&&(!winnerFound))
 	{
 		next=curr->getNext();
 		score=curr->getPlayer()->getScore();
@@ -221,12 +220,12 @@ bool Game::isThereAWinner()
 		{
 			if(b.getHumanPlayer()==curr->getPlayer())
 			{
-				b.setHumanPlayer(0);
+				b.setHumanPlayer(NULL);
 			}
 			pList.remove(*(curr->getPlayer()));
 		}
 		curr=next;
-		if(pList.getHead()->getNext()==0)
+		if(pList.getHead()->getNext()==NULL)
 		{
 			winnerFound=true;
 		}
@@ -237,7 +236,7 @@ bool Game::isThereAWinner()
 void Game::playPlayers()
 {
 	PlayerItem* curr=pList.getHead();
-	while(curr!=0)
+	while(curr!=NULL)
 	{
 		curr->getPlayer()->tryToMove(playCounter);
 		curr->getPlayer()->tryToShoot(aList,playCounter);
@@ -248,7 +247,7 @@ void Game::playPlayers()
 void Game::moveArrows()
 {
 	ArrowItem* curr=aList.getHead(),*next;
-	while(curr!=0)
+	while(curr!=NULL)
 	{
 		if(curr->getArrow()->getIAmAlive()==true)
 		{
@@ -292,7 +291,7 @@ bool Game::checkPressedKeys()
 			}
 		}
 	}
-	else if(b.getHumanPlayer()!=0)
+	else if(b.getHumanPlayer()!=NULL)
 	{
 		switch(ch)
 		{

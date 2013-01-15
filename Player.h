@@ -20,7 +20,7 @@ protected:
 	Player(const Player&);
 public:
 	Player(int x,int y,char ch):location(new Point(x,y)),
-		numOfRegularArrows(2),numOfPassingArrows(1),numOfBombingArrows(1),score(10000),symbol(ch),arrowToShoot(None),lastShootingRound(0){}
+		numOfRegularArrows(2),numOfPassingArrows(1),numOfBombingArrows(1),score(1000),symbol(ch),arrowToShoot(None),lastShootingRound(0){}
 	void drawPlayer()const{(*location).draw(symbol);}
 	Point* getLocation()const{return location;}
 	Direction getDirect()const{return direct;}

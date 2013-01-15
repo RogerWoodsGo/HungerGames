@@ -14,7 +14,8 @@ protected:
 	bool iAmAlive;
 	Arrow(const Arrow&);
 public:
-	Arrow(int x,int y,Direction arrowDirect,char ch):location(new Point(x,y)),direct(arrowDirect),symbol(ch),iAmAlive(true){}
+	Arrow(int x,int y,Direction arrowDirect,char ch):
+	  location(new Point(x,y)),direct(arrowDirect),symbol(ch),iAmAlive(true),giftSteppedOn(' '){}
 	void drawArrow()const{(*location).draw(symbol);}
 	void setGiftSteppedOn(char ch){giftSteppedOn=ch;}
 	char getGiftSteppedOn()const{return giftSteppedOn;}

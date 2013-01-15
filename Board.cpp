@@ -5,7 +5,7 @@
 Board::Board()
 {
 	text=new char*[HEIGHT];
-	for(int i=0;i<HEIGHT;i++)
+	for(int i=0;i<HEIGHT;++i)
 		text[i]=new char[WIDTH];
 	numOfComputerPlayersOnBoard=0;
 	numOfHumanPlayersOnBoard=0;
@@ -13,6 +13,7 @@ Board::Board()
 	scoreBoardPlace.setPlace(0,0);
 	giftMap=new map<int,vector<char>*>;
 	(*giftMap).empty();
+	human=NULL;
 }
 
 void Board::readFile(char** files)
@@ -21,9 +22,9 @@ void Board::readFile(char** files)
 	char ch;
 	bool OWasFound=false;
 	boardFile.open(files[BoardFile],ifstream::in);
-	for(int i=0;i<HEIGHT;i++)
+	for(int i=0;i<HEIGHT;++i)
 	{
-		for(int j=0;j<WIDTH;j++)
+		for(int j=0;j<WIDTH;++j)
 		{
 			ch=(char)(boardFile.get());
 			switch(ch)
@@ -33,11 +34,11 @@ void Board::readFile(char** files)
 				break;
 			case 'C':
 				if((numOfFilePlayersOnBoard<MAX_NUM_OF_FILE_PLAYERS)&&
-					(getNumOfPlayerOnBoard()<3)&&(files[(FileType)(numOfFilePlayersOnBoard+1)]!=NULL))
+					(getNumOfPlayerOnBoard()<MAX_NUM_OF_PLAYERS_ON_BOARD)&&(files[(FileType)(numOfFilePlayersOnBoard+1)]!=NULL))
 				{
 						numOfFilePlayersOnBoard++;
 						text[i][j]=PLAYER;
-						pList->add(i,j,numOfFilePlayersOnBoard,File_Player);
+						pList->add(i,j,getNumOfPlayerOnBoard(),File_Player);
 						FilePlayer* fp=dynamic_cast<FilePlayer*>(pList->getHead()->getPlayer());
 						if(fp!=NULL)
 						{
@@ -48,7 +49,7 @@ void Board::readFile(char** files)
 				else text[i][j]=' ';
 				break;
 			case 'H':
-				if((numOfHumanPlayersOnBoard<MAX_NUM_OF_HUMAN_PLAYERS)&&(getNumOfPlayerOnBoard()<3))
+				if((numOfHumanPlayersOnBoard<MAX_NUM_OF_HUMAN_PLAYERS)&&(getNumOfPlayerOnBoard()<MAX_NUM_OF_PLAYERS_ON_BOARD))
 				{
 					numOfHumanPlayersOnBoard++;
 					text[i][j]=PLAYER;
@@ -59,11 +60,11 @@ void Board::readFile(char** files)
 				else text[i][j]=' ';
 				break;
 			case PLAYER:
-				if((numOfComputerPlayersOnBoard<MAX_NUM_OF_COMPUTER_PLAYERS)&&(getNumOfPlayerOnBoard()<3))
+				if((numOfComputerPlayersOnBoard<MAX_NUM_OF_COMPUTER_PLAYERS)&&(getNumOfPlayerOnBoard()<MAX_NUM_OF_PLAYERS_ON_BOARD))
 				{
 					numOfComputerPlayersOnBoard++;
 					text[i][j]=PLAYER;
-					pList->add(i,j,numOfComputerPlayersOnBoard,Computer_Player);
+					pList->add(i,j,getNumOfPlayerOnBoard(),Computer_Player);
 					pList->getHead()->getPlayer()->getLocation()->setBoard(this);
 				}
 				else text[i][j]=' ';
@@ -94,6 +95,7 @@ void Board::mapFile(map<int,vector<char>*>* eventMap,const char* file)
 	{
 		inFile >> num;
 		(*eventMap)[num]=new vector<char>;
+		(*(*eventMap)[num]).empty();
 		ch=inFile.get();
 		while((ch!='\n')&&(!inFile.eof()))
 		{
@@ -121,7 +123,7 @@ bool Board::checkBoard()
 	}
 	if(validBoard)
 	{
-		while(curr!=0)
+		while(curr!=NULL)
 		{
 			curr->getPlayer()->getLocation()->getPlace(x,y);
 			playerPlace.setPlace(x,y);
@@ -169,12 +171,12 @@ bool Board::checkBoard()
 		scoreBoardPlace.getPlace(x,y);
 		y--;
 		x--;
-		for(int i=y;i<y+SCORE_BOARD_WIDTH;i++)
+		for(int i=y;i<y+SCORE_BOARD_WIDTH;++i)
 		{
 			text[x][i]=WALL;
 			text[x+(SCORE_BOARD_HEIGHT-1)][i]=WALL;
 		}
-		for(int j=x+1;j<x+SCORE_BOARD_HEIGHT;j++)
+		for(int j=x+1;j<x+SCORE_BOARD_HEIGHT;++j)
 		{
 			text[j][y]=WALL;
 			text[j][y+(SCORE_BOARD_WIDTH-1)]=WALL;
@@ -185,9 +187,9 @@ bool Board::checkBoard()
 
 void Board::printText()const
 {
-	for(int i=0;i<HEIGHT;i++)
+	for(int i=0;i<HEIGHT;++i)
 	{
-		for(int j=0;j<WIDTH;j++)
+		for(int j=0;j<WIDTH;++j)
 		{
 			if((text[i][j]==PLAYER)||(text[i][j]==ARROW))
 			{
@@ -240,9 +242,9 @@ bool Board::randomLocation(Point& p)const
 	}
 	if(!newLocationWasFound)
 	{
-		for(x=0;x<HEIGHT;x++)
+		for(x=0;x<HEIGHT;++x)
 		{
-			for(y=0;y<WIDTH;y++)
+			for(y=0;y<WIDTH;++y)
 			{
 				newLocation.setPlace(x,y);
 				newLocationContent=getContent(newLocation);
@@ -263,7 +265,7 @@ bool Board::isPointNearAPlayer(const Point& p)const
 	int x,y,playerX,playerY;
 	p.getPlace(x,y);
 	bool isPointNearThePlayer=false;
-	while((curr!=0)&&(!isPointNearThePlayer))
+	while((curr!=NULL)&&(!isPointNearThePlayer))
 	{
 		curr->getPlayer()->getLocation()->getPlace(playerX,playerY);
 		playerX-=DISTANCE_BETWEEN_ITEM_TO_PLAYER;
@@ -375,13 +377,7 @@ void Board::printScoreBoard(int playCounter)const
 	Point p;
 	PlayerItem* curr=pList->getHead();
 	scoreBoardPlace.getPlace(SBx,SBy);
-	SBx++;
-	SBy+=3;
-	p.setPlace(SBx,SBy);
-	p.draw(' ');
-	cout << playCounter;
-	scoreBoardPlace.getPlace(SBx,SBy);
-	while(curr!=0)
+	while(curr!=NULL)
 	{
 		x=SBx;
 		y=SBy;
@@ -451,7 +447,7 @@ void Board::playerFight(const Point& p)const
 	PlayerItem* curr=pList->getHead();
 	p.getPlace(x,y);
 	p.draw(BELL);//Ring a bell when players fight
-	while(curr!=0)
+	while(curr!=NULL)
 	{
 		curr->getPlayer()->getLocation()->getPlace(playerX,playerY);
 		if((x==playerX)&&(y==playerY))
@@ -469,7 +465,7 @@ void Board::playerFight(const Point& p)const
 		curr=curr->getNext();
 	}
 	curr=pList->getHead();
-	while(curr!=0)
+	while(curr!=NULL)
 	{
 		curr->getPlayer()->getLocation()->getPlace(playerX,playerY);
 		if((x==playerX)&&(y==playerY))
@@ -499,7 +495,7 @@ void Board::arrowHitsPlayer(const Point& p)const
 	int x,y,playerX,playerY,arrowX,arrowY,score;
 	p.getPlace(x,y);
 	p.draw(BELL);//Ring a bell when arrow hits player
-	while(pCurr!=0)
+	while(pCurr!=NULL)
 	{
 		pCurr->getPlayer()->getLocation()->getPlace(playerX,playerY);
 		if((x==playerX)&&(y==playerY))
@@ -509,7 +505,7 @@ void Board::arrowHitsPlayer(const Point& p)const
 		}
 		pCurr=pCurr->getNext();
 	}
-	while(aCurr!=0)
+	while(aCurr!=NULL)
 	{
 		aCurr->getArrow()->getLocation()->getPlace(arrowX,arrowY);
 		if((x==arrowX)&&(y==arrowY))
@@ -534,7 +530,7 @@ Board::~Board()
 {
 	freeMap(giftMap);
 	delete giftMap;
-	for(int i=0;i<HEIGHT;i++)
+	for(int i=0;i<HEIGHT;++i)
 	{
 		delete text[i];
 	}
